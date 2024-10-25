@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deaths vs Healthcare Expenditure</title>
+  <style>
+    /* Chart container styling */
+    #chart-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    #chart {
+      margin: auto;
+      width: 960px;
+      height: 500px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .line {
+      fill: none;
+      stroke-width: 2px;
+    }
+    .tooltip {
+      position: absolute;
+      background-color: #f9f9f9;
+      border: 1px solid #d3d3d3;
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 14px;
+      pointer-events: none;
+      visibility: hidden;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="chart-container">
+    <button id="deaths-btn">Show Deaths</button>
+    <button id="expenditure-btn">Show Healthcare Expenditure</button>
+    <div id="chart"></div>
+  </div>
+
+  <!-- D3 Library -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Custom JavaScript file for the line chart -->
+  <script src="script2.js"></script>
+
+</body>
+</html>
