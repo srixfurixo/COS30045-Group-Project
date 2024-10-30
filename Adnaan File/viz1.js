@@ -14,8 +14,6 @@ function init() {
 }
 
 // Function to create sliders
-
-//Year Slider 
 function createSliders() {
     const yearSliderContainer = d3.select("#viz1").append("div").attr("class", "slider-container");
     yearSliderContainer.append("label").attr("for", "year-slider").text("Year: ");
@@ -100,6 +98,18 @@ function updateVisualization(json, w, h) {
         // Clear previous tooltip
         svg.selectAll(".tooltip").remove();
 
+        // Create tooltip element
+        const tooltip = d3.select("#viz1").append("div")
+            .attr("class", "tooltip")
+            .style("position", "absolute")
+            .style("background", "rgba(255, 255, 255, 0.9)")
+            .style("border", "1px solid #ccc")
+            .style("border-radius", "4px")
+            .style("padding", "8px")
+            .style("pointer-events", "none") // Prevents mouse events
+            .style("transition", "opacity 0.2s")
+            .style("display", "none"); // Hidden by default
+
         // Define the Map 
         var projection = d3.geoMercator()
             .center([0, 20])
@@ -137,25 +147,23 @@ function updateVisualization(json, w, h) {
                 d3.select(this)
                     .style("filter", "none"); // Remove blur from hovered country
 
-                // Create tooltip
+                // Create tooltip content
                 const country = d.properties.name;
                 const deaths = deathsByCountry[country] || 0;
                 const expenditure = expenditureByCountry[country] || 0;
 
-                svg.append("text")
-                    .attr("class", "tooltip")
-                    .attr("x", event.pageX)
-                    .attr("y", event.pageY)
-                    .attr("text-anchor", "middle")
-                    .attr("fill", "black")
-                    .text(`${country}: \n${deaths} deaths \n$${expenditure} expenditure`);
+                tooltip
+                    .style("left", (event.pageX + 5) + "px")
+                    .style("top", (event.pageY - 28) + "px")
+                    .style("display", "block")
+                    .html(`${country}: <br>${deaths} deaths <br>$${expenditure} expenditure`);
             })
             .on("mouseout", function() {
                 // Remove the blur effect from all countries
                 svg.selectAll("path")
                     .style("filter", "none");
                 // Remove tooltip
-                svg.selectAll(".tooltip").remove();
+                tooltip.style("display", "none");
             });
 
         // Add legend
@@ -189,7 +197,7 @@ function addLegend(color, extent) {
 
     colorRange.forEach((color, i) => {
         gradient.append("stop")
-            .attr("offset", `${i * step}%`) // Fixed string interpolation
+            .attr("offset", `${i * step}%`)
             .attr("stop-color", color);
     });
 
