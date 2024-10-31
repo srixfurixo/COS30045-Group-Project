@@ -1,8 +1,7 @@
 import pandas as pd
 
-# Step 1: Load both datasets
-cleaned_data_path = 'cleaned_data_no_covid_deaths_percent.csv'  # Path to your cleaned dataset
-expenditure_data_path = 'health_expenditure.csv'  # Path to your health expenditure dataset
+cleaned_data_path = 'cleaned_data_no_covid_deaths_percent.csv'  
+expenditure_data_path = 'health_expenditure.csv'  
 
 df_cleaned = pd.read_csv(cleaned_data_path)
 df_expenditure = pd.read_csv(expenditure_data_path)
