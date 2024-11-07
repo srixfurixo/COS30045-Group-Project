@@ -12,159 +12,195 @@ function init() {
             .attr("height", height);
     }
 
-    // Load and process the data
-    d3.csv("monthly_deaths.csv")
-        .then(function(data) {
-            if (!data) {
-                throw new Error("No CSV data received");
+    // Load and process the GeoJSON data
+    d3.json("custom.geo.json")
+        .then(function (json) {
+            if (!json) {
+                throw new Error("No GeoJSON data received");
             }
-            updateVisualization(data, width, height); 
+            window.geoJsonData = json;
+            updateVisualization(window.geoJsonData, width, height);
         })
-        .catch(function(error) {
-            console.error("Error loading CSV:", error);
-            container.html("Error loading data: " + error.message);
+        .catch(function (error) {
+            console.error("Error loading GeoJSON:", error);
+            container.html("Error loading map data: " + error.message);
         });
 }
 
-function parseData(data) {
-    const dataByCountryDate = {};
-    data.forEach(d => {
-        // Create the date using just the year and month
-        const date = new Date(d.Year, d.Month - 1);
-        const country = d.Country;
-        const deaths = +d.Deaths;
-        const expenditure = +d.Expenditure;
+function updateVisualization(json, w, h) {
+    d3.csv("monthly_deaths.csv")
+        .then(function (data) {
+            if (!data) {
+                throw new Error("No CSV data received");
+            }
 
-        if (!dataByCountryDate[country]) {
-            dataByCountryDate[country] = [];
-        }
-        dataByCountryDate[country].push({ date, deaths, expenditure });
-    });
-    return dataByCountryDate;
+            // Get distinct countries from the data
+            const countries = Array.from(new Set(data.map(d => d.Country)));
+
+            // Create dropdown for countries
+            let dropdown = d3.select("#country-select");
+            if (dropdown.empty()) {
+                dropdown = d3.select("#content")
+                    .insert("select", "#chart")
+                    .attr("id", "country-select");
+
+                dropdown.selectAll("option")
+                    .data(countries)
+                    .enter()
+                    .append("option")
+                    .text(d => d)
+                    .property("selected", d => d === "Australia");
+
+                dropdown.on("change", function () {
+                    updateMapAndChart(data, json, w, h);
+                });
+            }
+
+            updateMapAndChart(data, json, w, h);
+        })
+        .catch(function (error) {
+            console.error("Error loading CSV:", error);
+            d3.select("#chart").html("Error loading data: " + error.message);
+        });
 }
 
-function updateVisualization(data, w, h) {
-    const parsedData = parseData(data);
+function updateMapAndChart(data, json, w, h) {
+    const selectedCountry = d3.select("#country-select").property("value");
 
-    // Countries to display
-    const countries = ["Canada", "Turkiye"];
+    // Filter data for selected country
+    const filteredData = data.filter(d => d.Country === selectedCountry);
 
-    // Filter data for selected countries
-    const filteredData = {};
-    countries.forEach(country => {
-        filteredData[country] = parsedData[country];
+    // Update the map (using the first data point for now)
+    updateMap(json, filteredData.length > 0 ? [filteredData[0]] : [], w, h); // Pass an empty array if no data
+
+    // Prepare data for the area chart
+    const groupedData = groupDataByYearAndMonth(filteredData);
+
+    // Update the area chart
+    updateAreaChart(groupedData, w, h);
+}
+
+function groupDataByYearAndMonth(data) {
+    const grouped = {};
+    data.forEach(d => {
+        const key = `${d.Year}-${d.Month}`;
+        if (!grouped[key]) {
+            grouped[key] = {
+                Year: +d.Year,
+                Month: +d.Month,
+                Deaths: 0,
+                Expenditure: 0
+            };
+        }
+        grouped[key].Deaths += +d.Deaths;
+        grouped[key].Expenditure += +d.Expenditure;
     });
+    return Object.values(grouped);
+}
 
-    // Select the existing SVG
-    var svg = d3.select("#chart svg");
+function updateMap(json, data, w, h) {
+    const svg = d3.select("#chart svg");
+    svg.selectAll("*").remove(); // Clear existing SVG elements
 
-    // Clear existing paths and elements within the SVG
-    svg.selectAll("*").remove();
+    const projection = d3.geoMercator()
+        .fitSize([w, h], json);
+    const path = d3.geoPath().projection(projection);
 
-    // Normalize data for each country
-    const normalizedData = {};
-    countries.forEach(country => {
-        const maxDeaths = d3.max(filteredData[country], d => d.deaths);
-        const maxExpenditure = d3.max(filteredData[country], d => d.expenditure);
-        normalizedData[country] = filteredData[country].map(d => ({
-            date: d.date,
-            deaths: maxDeaths > 0 ? d.deaths / maxDeaths : 0,
-            expenditure: maxExpenditure > 0 ? d.expenditure / maxExpenditure : 0
-        }));
-    });
+    // Create a color scale
+    const colorScale = d3.scaleSequential(d3.interpolateBlues)
+        .domain([0, d3.max(data, d => d.Deaths)]); // Adjust domain as needed
 
-    // Combine normalized deaths and expenditure
-    const combinedData = {};
-    countries.forEach(country => {
-        combinedData[country] = normalizedData[country].map(d => ({
-            date: d.date,
-            combined: (d.deaths + d.expenditure) / 2
-        }));
-    });
+    // Draw the map features
+    svg.selectAll("path")
+        .data(json.features)
+        .enter()
+        .append("path")
+        .attr("d", path)
+        .attr("fill", d => {
+            const countryData = data.find(item => item.Country === d.properties.ADMIN);
+            return countryData ? colorScale(countryData.Deaths) : "lightgray";
+        })
+        .append("title") // Add tooltip
+        .text(d => {
+            const countryData = data.find(item => item.Country === d.properties.ADMIN);
+            return countryData ? `${d.properties.ADMIN}: ${countryData.Deaths} deaths` : d.properties.ADMIN;
+        });
+}
 
-    // Set up scales
-    const x = d3.scaleTime()
-        .domain([
-            d3.min(countries, country => d3.min(combinedData[country], d => d.date)),
-            d3.max(countries, country => d3.max(combinedData[country], d => d.date))
-        ])
-        .range([40, w - 30]);
+function updateAreaChart(data, w, h) {
+    const svg = d3.select("#chart svg");
+    svg.selectAll("*").remove(); // Clear existing SVG elements
 
-    const y = d3.scaleLinear()
-        .domain([0, 1])
-        .range([h - 30, 20]);
+    const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+    const width = w - margin.left - margin.right;
+    const height = h - margin.top - margin.bottom;
 
-    // Create area generators for each country
-    const areaGenerators = {};
-    countries.forEach(country => {
-        areaGenerators[country] = d3.area()
-            .x(d => x(d.date))
-            .y0(y(0))
-            .y1(d => y(d.combined));
-    });
+    const xScale = d3.scaleTime()
+        .domain(d3.extent(data, d => new Date(d.Year, d.Month - 1)))
+        .range([0, width]);
+    const yScale = d3.scaleLinear()
+        .domain([0, d3.max(data, d => d.Deaths)])
+        .range([height, 0]);
 
-    // Create tooltip
-    const tooltip = d3.select("body")
-        .append("div")
+    const area = d3.area()
+        .x(d => xScale(new Date(d.Year, d.Month - 1)))
+        .y0(height)
+        .y1(d => yScale(d.Deaths));
+
+    const g = svg.append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Add tooltip
+    const tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
-        .style("opacity", 0)
-        .style("position", "absolute")
-        .style("pointer-events", "none");
+        .style("opacity", 0);
 
-    // Append paths for each country's area with tooltip functionality
-    countries.forEach((country, i) => {
-        svg.append("path")
-            .attr("fill", i === 0 ? "blue" : "red") // Set color based on index
-            .attr("d", areaGenerators[country](combinedData[country]))
-            .on("mouseover", function(event, d) {
-                // Get the date corresponding to the mouse position
-                const date = x.invert(event.offsetX);
+    g.append("path")
+        .datum(data)
+        .attr("fill", "steelblue")
+        .attr("d", area)
+        .on("mouseover", function (event, d) {
+            const bisectDate = d3.bisector(d => new Date(d.Year, d.Month - 1)).left;
+            const x0 = xScale.invert(event.offsetX - margin.left);
+            const i = bisectDate(d, x0, 1);
 
-                // Find the closest data point to the mouse position
-                const closestDataPoint = combinedData[country].reduce((a, b) => {
-                    return Math.abs(a.date - date) < Math.abs(b.date - date) ? a : b;
-                });
+            if (i > 0 && i < d.length) {
+                const d0 = d[i - 1];
+                const d1 = d[i];
+                const selectedData = x0 - d0.date > d1.date - x0 ? d1 : d0;
 
-                // Display the tooltip with raw data
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);
-                tooltip.html(
-                        `<strong>${country}</strong><br/>` +
-                        `Date: ${closestDataPoint.date.toLocaleDateString('default', { year: 'numeric', month: 'long' })}<br/>` + // Use toLocaleDateString with specific options
-                        `Deaths: ${filteredData[country].find(item => item.date.getTime() === closestDataPoint.date.getTime()).deaths}<br/>` + 
-                        `Expenditure: ${filteredData[country].find(item => item.date.getTime() === closestDataPoint.date.getTime()).expenditure}` 
-                    )
+                tooltip.html(`
+                    <strong>Year:</strong> ${selectedData.Year}<br>
+                    <strong>Month:</strong> ${getMonthName(selectedData.Month)}<br> 
+                    <strong>Deaths:</strong> ${selectedData.Deaths}<br>
+                    <strong>Expenditure:</strong> ${selectedData.Expenditure}
+                `)
                     .style("left", (event.pageX + 5) + "px")
                     .style("top", (event.pageY - 28) + "px");
-            })
-            .on("mouseout", function() {
-                // Hide the tooltip
-                tooltip.transition()
-                    .duration(500)
-                    .style("opacity", 0);
-            });
-    });
+            }
+        })
+        .on("mouseout", function (d) {
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+        });
 
-    // Add the x-axis.
-    svg.append("g")
-        .attr("transform", `translate(0,${h - 30})`)
-        .call(d3.axisBottom(x).ticks(w / 80).tickSizeOuter(0));
+    g.append("g")
+        .attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(xScale));
 
-    // Add the y-axis, remove the domain line, and add a label.
-    svg.append("g")
-        .attr("transform", `translate(40,0)`)
-        .call(d3.axisLeft(y).ticks(h / 40))
-        .call(g => g.select(".domain").remove())
-        .call(g => g.append("text")
-            .attr("x", -40)
-            .attr("y", 10)
-            .attr("fill", "currentColor")
-            .attr("text-anchor", "start")
-            .text("↑ Combined Metric (Normalized)"));
+    g.append("g")
+        .call(d3.axisLeft(yScale));
 }
 
-// ... (your addLegend function - adjust as needed)
+function getMonthName(monthNumber) {
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"];
+    return monthNames[monthNumber - 1];
+}
 
 // Initialize on window load
 window.addEventListener('load', init);

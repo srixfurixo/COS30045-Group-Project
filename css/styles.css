@@ -200,3 +200,32 @@ article p {
   outline: none; /* Remove default focus outline */
   box-shadow: 0 0 0 2px #2171b5; /* Add a focus ring */
 }
+
+#country-select {
+  display: block; /* Make it a block-level element */
+  margin: 20px auto; /* Center horizontally with top/bottom margin */
+  padding: 8px 12px; /* Add some padding */
+  font-size: 16px; /* Adjust font size as needed */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 4px; /* Add rounded corners */
+  width: 200px; /* Adjust width as needed */
+  text-align: center; /* Center the text within the dropdown */
+  appearance: none; /* Remove default dropdown arrow in some browsers */
+  -webkit-appearance: none; 
+  -moz-appearance: none; 
+}
+
+/* Optional: Add a custom dropdown arrow */
+#country-select::-ms-expand { 
+  display: none; /* Hide the default arrow in IE11 */
+}
+
+#country-select::after {
+  content: '\25BC'; /* Unicode character for a down arrow */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none; 
+ /* Prevent the arrow from interfering with clicks */
+}
