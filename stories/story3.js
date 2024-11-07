@@ -15,12 +15,9 @@ var radarConfig = {
   maxValue: 1.0, // Adjust based on your data's maximum value
   minValue: 0,
   radians: 2 * Math.PI,
-  color: d3.scale.ordinal()
-    .domain(d3.range(10))
-    .range([
-      "#006400", "#228B22", "#32CD32", "#7CFC00", "#ADFF2F", // Shades of green for top 5
-      "#00008B", "#0000CD", "#4169E1", "#1E90FF", "#87CEFA"  // Shades of blue for bottom 5
-    ]),
+  color: function(d, i) {
+    return d.color; // Use the color assigned in the data
+  },
   axisLine: true,
   axisText: true,
   circles: true,
@@ -93,7 +90,7 @@ var RadarChart = {
         var bbox = tooltip.select("text").text(msg).node().getBBox();
 
         tooltip.select("rect")
-        .classed('visible', 1).attr("x", 0)
+        .classed('visible', 1)
         .attr("x", bbox.x - padding)
         .attr("y", bbox.y - padding)
         .attr("width", bbox.width + (padding*2))
@@ -146,7 +143,7 @@ var RadarChart = {
           return getPosition(i, range, factor, Math.cos);
         }
 
-        // levels && axes
+        // levels & axes
         var levelFactors = d3.range(0, cfg.levels).map(function(level) {
           return radius * ((level + 1) / cfg.levels);
         });
@@ -298,8 +295,8 @@ var RadarChart = {
           d3.select(this).classed(classed);
         })
         // styles should only be transitioned with css
-        .style('stroke', function(d, i) { return cfg.color(i); })
-        .style('fill', function(d, i) { return cfg.color(i); })
+        .style('stroke', function(d, i) { return cfg.color(d, i); })
+        .style('fill', function(d, i) { return cfg.color(d, i); })
         .transition().duration(cfg.transitionDuration)
         // svg attrs with js
         .attr('points',function(d) {
@@ -360,7 +357,7 @@ var RadarChart = {
             d3.select(this).classed(classed);
           })
           // styles should only be transitioned with css
-          .style('fill', function(d) { return cfg.color(d[1]); })
+          .style('fill', function(d) { return cfg.color(data[d[1]], d[1]); })
           .transition().duration(cfg.transitionDuration)
           // svg attrs with js
           .attr('r', cfg.radius)
@@ -456,28 +453,35 @@ function init() {
 function prepareRadarData(top5Data, bottom5Data) {
   var vaccines = ["Pfizer/BioNTech", "Moderna", "Oxford/AstraZeneca", "Johnson&Johnson", "Sputnik V"];
 
-  // Process each country individually
-  var top5 = top5Data.map(function(country) {
+  // Define color arrays
+  var topColors = ["#006400", "#228B22", "#32CD32", "#7CFC00", "#ADFF2F"]; // Green shades
+  var bottomColors = ["#00008B", "#0000CD", "#4169E1", "#1E90FF", "#87CEFA"]; // Blue shades
+
+  // Process top countries
+  var top5 = top5Data.map(function(country, index) {
     return {
-      className: country.Country, // Use country name as className
+      className: country.country, // Use 'country' from CSV
       axes: vaccines.map(function(vaccine) {
         return {
           axis: vaccine,
           value: parseFloat(country[vaccine]) || 0
         };
-      })
+      }),
+      color: topColors[index % topColors.length] // Assign color from topColors
     };
   });
 
-  var bottom5 = bottom5Data.map(function(country) {
+  // Process bottom countries
+  var bottom5 = bottom5Data.map(function(country, index) {
     return {
-      className: country.Country, // Use country name as className
+      className: country.country, // Use 'country' from CSV
       axes: vaccines.map(function(vaccine) {
         return {
           axis: vaccine,
           value: parseFloat(country[vaccine]) || 0
         };
-      })
+      }),
+      color: bottomColors[index % bottomColors.length] // Assign color from bottomColors
     };
   });
 
@@ -503,7 +507,7 @@ function createLegend(data) {
     .attr('y', function(d, i){ return i * 20;})
     .attr('width', 10)
     .attr('height', 10)
-    .style('fill', function(d, i){ return radarConfig.color(i); });
+    .style('fill', function(d){ return d.color; });
 
   legend.selectAll('text')
     .data(data)
