@@ -1,85 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analysis</title>
-    
-    <!-- Preconnect for Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<head>
+  <meta charset="UTF-8">
+  <title>Total ICU Beds Available Compared to Mortality</title>
 
-    <!-- External Stylesheets -->
-    <link rel="stylesheet" href="../css/styles.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <!-- Preconnect for Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- D3.js Library -->
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- D3.js Library -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
 
-    <!-- Your custom JS script -->
-    <script src="story4.js" defer></script>
-  </head>
-  
-  <body>
-    <!-- Logo Header -->
-    <header class="logo-header bg-primary">
-      <div class="container">
-        <a class="logo text-center text-white" href="../index.html">FORMULA DATA</a>
-      </div>
-    </header>
+  <!-- Your custom JS script -->
+  <script src="story4.js" defer></script>
+</head>
 
-    <!-- Navigation -->
-    <nav class="story-header">
-      <div>
-        <ul class="story-list">
-          <li class="story">
-            <a class="story-link" href="story1.html">Story 1 <i class="bi bi-globe-americas ms-2"></i></a>
-          </li>
-          <li class="story">
-            <a class="story-link" href="story2.html">Story 2 <i class="bi bi-hospital ms-2"></i></a>
-          </li>
-          <li class="story">
-            <a class="story-link" href="story3.html">Story 3 <i class="bi bi-clipboard-pulse ms-2"></i></a>
-          </li>
-          <li class="story">
-            <a class="story-link" href="story4.html">Story 4</a>
-          </li>
-          <li class="story">
-            <a class="story-link" href="story5.html">Story 5</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <!-- Content -->
-    <div class="content">
-      <h2 class="title">Total ICU Beds Available Compared to Mortality</h2>
+<body>
+  <!-- Logo Header -->
+  <header class="logo-header bg-primary">
+    <div class="container">
+      <a class="logo text-center text-white" href="../index.html">FORMULA DATA</a>
     </div>
+  </header>
 
-    <!-- Dropdowns for country and year selection -->
-    <div id="dropdownContainer" class="container mt-4">
-      <!-- Country Dropdown -->
-      <div>
-        <label for="countrySelector">Select Country:</label>
+  <!-- Navigation -->
+  <nav class="story-header">
+    <div>
+      <ul class="story-list">
+        <li class="story">
+          <a class="story-link" href="story1.html">Story 1 <i class="bi bi-globe-americas ms-2"></i></a>
+        </li>
+        <li class="story">
+          <a class="story-link" href="story2.html">Story 2 <i class="bi bi-hospital ms-2"></i></a>
+        </li>
+        <li class="story">
+          <a class="story-link" href="story3.html">Story 3 <i class="bi bi-clipboard-pulse ms-2"></i></a>
+        </li>
+        <li class="story">
+          <a class="story-link" href="story4.html">Story 4</a>
+        </li>
+        <li class="story">
+          <a class="story-link" href="story5.html">Story 5</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="content">
+    <h2 class="title text-center mt-4">Total ICU Beds Available Compared to Mortality</h2>
+  </div>
+
+  <!-- Dropdown for country selection -->
+  <div id="dropdownContainer" class="container mt-4">
+    <!-- Country Dropdown -->
+    <div class="row">
+      <div class="col-md-4 offset-md-4">
+        <label for="countrySelector" class="form-label">Select Country:</label>
         <select id="countrySelector" class="form-select" aria-label="Select Country">
           <!-- Country options will be populated dynamically by JS -->
         </select>
       </div>
-
-      <!-- Year Dropdown -->
-      <div class="mt-3">
-        <label for="yearSelector">Select Year:</label>
-        <select id="yearSelector" class="form-select" aria-label="Select Year">
-          <!-- Year options will be populated dynamically by JS -->
-        </select>
-      </div>
     </div>
+  </div>
 
-    <!-- SVG container for D3 chart -->
-    <div id="chartContainer" class="container mt-4"></div>
+  <!-- SVG container for D3 chart -->
+  <div id="chartContainer" class="container mt-4"></div>
 
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  </body>
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

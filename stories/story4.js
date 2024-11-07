@@ -1,97 +1,138 @@
+// Path to the CSV file
+const dataFile = "../Datasets/total_icu_beds.csv";
+
 function init() {
     const w = 1000;  // Width of the chart
-    const h = 600;  // Height of the chart
+    const h = 600;   // Height of the chart
+    const margin = { top: 50, right: 50, bottom: 50, left: 80 };
 
     // Create SVG container
     const svg = d3.select("#chartContainer").append("svg")
-        .attr("width", w)
-        .attr("height", h)
-        .style("border", "1px solid black")
-        .style("display", "block")
-        .style("margin", "0 auto");  // Center horizontally
+        .attr("width", w + margin.left + margin.right)
+        .attr("height", h + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+    // Variables to store current selections
+    let currentCountry;
+    let currentData;
 
     // Load CSV data
-    d3.csv("Datasets/total_icu_beds.csv").then(function(data) {
-        // Log data for debugging
-        console.log(data);
-
+    d3.csv(dataFile).then(function(data) {
         // Convert the columns to appropriate data types
         data.forEach(d => {
             d.Deaths = +d.Deaths;  // Convert to number
-            d.Healthcare_Expenditure = +d.Healthcare_Expenditure;
-            d.Total_Beds = +d.Total_Beds;
+            d["Total ICU Beds"] = +d["Total ICU Beds"]; // Convert to number
             d.Year = +d.Year;  // Convert to number
+            d.Month = +d.Month; // Convert to number
+        });
+
+        // Combine Year and Month into a Date object
+        data.forEach(d => {
+            d.Date = new Date(d.Year, d.Month - 1); // Months are zero-based
         });
 
         // Log data after conversion
         console.log("Processed Data: ", data);
 
-        // Populate dropdowns with unique countries and years
+        // Set default selections
+        currentCountry = data[0].Country;
+        currentData = data.filter(d => d.Country === currentCountry);
+
+        // Populate dropdowns with unique countries
         populateDropdowns(data);
 
         // Set up scales for axes
-        const x = d3.scaleBand()
+        const x = d3.scaleTime()
             .range([0, w])
-            .padding(0.1)
-            .domain(data.map(d => d.Year)); // Set domain to years from data
+            .domain(d3.extent(currentData, d => d.Date));
 
-        // Set up logarithmic scale for y-axis
-        const y = d3.scaleLog()
+        const yLeft = d3.scaleLinear()
             .range([h, 0])
-            .domain([1, d3.max(data, d => Math.max(d.Deaths, d.Healthcare_Expenditure, d.Total_Beds))]); // Start from 1 to avoid log(0) issues
+            .domain([0, d3.max(currentData, d => d.Deaths)]);
 
-        // Create X-axis (Year)
-        svg.append("g")
-            .attr("transform", `translate(0, ${h})`)  // Move X-axis to the bottom
-            .call(d3.axisBottom(x));
+        const yRight = d3.scaleLinear()
+            .range([h, 0])
+            .domain([0, d3.max(currentData, d => d["Total ICU Beds"])]);
 
-        // Create Y-axis
+        // Create X-axis (Date)
+        const xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat("%Y-%m"));
         svg.append("g")
-            .call(d3.axisLeft(y));  // Y-axis starts from the left
+            .attr("class", "x-axis")
+            .attr("transform", `translate(0, ${h})`)
+            .call(xAxis)
+            .selectAll("text")
+            .attr("transform", "rotate(-45)")
+            .style("text-anchor", "end");
+
+        // Create Y-axis for Deaths (Left)
+        const yAxisLeft = svg.append("g")
+            .attr("class", "y-axis-left")
+            .call(d3.axisLeft(yLeft));
+
+        // Create Y-axis for Total ICU Beds (Right)
+        const yAxisRight = svg.append("g")
+            .attr("class", "y-axis-right")
+            .attr("transform", `translate(${w}, 0)`)
+            .call(d3.axisRight(yRight));
 
         // Add axis labels
         svg.append("text")
-            .attr("transform", `translate(${w / 2}, ${h - 5})`)
+            .attr("transform", `translate(${w / 2}, ${h + margin.bottom - 5})`)
             .style("text-anchor", "middle")
             .style("font-size", "14px")
             .style("fill", "black")
-            .text("Year");
+            .text("Date");
 
         svg.append("text")
-            .attr("transform", "rotate(-90)") // Rotate label for Y-axis
+            .attr("transform", "rotate(-90)")
             .attr("x", -h / 2)
-            .attr("y", 15)
+            .attr("y", -margin.left + 20)
             .style("text-anchor", "middle")
             .style("font-size", "14px")
-            .style("fill", "black")
-            .text("Log Scale Values");
+            .style("fill", "steelblue")
+            .text("Deaths");
 
-        // Default line graph (deaths)
-        let currentCountry = data[0].Country;
-        let currentYear = 2020;
+        svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -h / 2)
+            .attr("y", w + margin.right - 20)
+            .style("text-anchor", "middle")
+            .style("font-size", "14px")
+            .style("fill", "red")
+            .text("Total ICU Beds");
 
-        // Function to filter data based on country and year
-        function filterData(country, year) {
-            return data.filter(d => d.Country === country && d.Year === year);
-        }
+        // Line generator function for Deaths
+        const lineDeaths = d3.line()
+            .x(d => x(d.Date))
+            .y(d => yLeft(d.Deaths));
 
-        // Draw the line graph
-        const line = d3.line()
-            .x(d => x(d.Year) + x.bandwidth() / 2) // Position on x-axis
-            .y(d => y(d.Deaths));  // Position on y-axis based on "Deaths"
+        // Line generator function for Total ICU Beds
+        const lineICU = d3.line()
+            .x(d => x(d.Date))
+            .y(d => yRight(d["Total ICU Beds"]));
 
-        svg.append("path")
-            .data([data])
-            .attr("class", "line")
-            .attr("d", line)
+        // Draw the line for Deaths
+        const pathDeaths = svg.append("path")
+            .datum(currentData)
+            .attr("class", "line-deaths")
+            .attr("d", lineDeaths)
             .style("fill", "none")
-            .style("stroke", "blue")
+            .style("stroke", "steelblue")
             .style("stroke-width", 2);
 
-        // Function to populate dropdowns with unique countries and years
+        // Draw the line for Total ICU Beds
+        const pathICU = svg.append("path")
+            .datum(currentData)
+            .attr("class", "line-icu")
+            .attr("d", lineICU)
+            .style("fill", "none")
+            .style("stroke", "red")
+            .style("stroke-width", 2);
+
+        // Function to populate dropdowns with unique countries
         function populateDropdowns(data) {
             const countries = Array.from(new Set(data.map(d => d.Country))).sort();
-            const years = Array.from(new Set(data.map(d => d.Year))).sort();
 
             // Populate Country dropdown
             const countrySelector = d3.select("#countrySelector");
@@ -102,53 +143,54 @@ function init() {
                 .attr("value", d => d)
                 .text(d => d);
 
-            // Populate Year dropdown
-            const yearSelector = d3.select("#yearSelector");
-            yearSelector.selectAll("option")
-                .data(years)
-                .enter()
-                .append("option")
-                .attr("value", d => d)
-                .text(d => d);
-
-            // Set default selections
+            // Set default selection
             countrySelector.property("value", currentCountry);
-            yearSelector.property("value", currentYear);
 
             // Update chart when dropdown selection changes
             countrySelector.on("change", function() {
                 currentCountry = this.value;
                 updateChart();
             });
-
-            yearSelector.on("change", function() {
-                currentYear = +this.value;
-                updateChart();
-            });
         }
 
-        // Function to update the chart based on country and year selection
+        // Function to update the chart based on country selection
         function updateChart() {
-            const filteredData = filterData(currentCountry, currentYear);
+            currentData = data.filter(d => d.Country === currentCountry);
 
-            // Remove the old line
-            svg.selectAll(".line").remove();
+            // Update scales
+            x.domain(d3.extent(currentData, d => d.Date));
+            yLeft.domain([0, d3.max(currentData, d => d.Deaths)]);
+            yRight.domain([0, d3.max(currentData, d => d["Total ICU Beds"])]);
 
-            // Draw the new line graph with updated data
-            const line = d3.line()
-                .x(d => x(d.Year) + x.bandwidth() / 2) // Position on x-axis
-                .y(d => y(d.Deaths));  // Position on y-axis based on "Deaths"
+            // Update axes
+            svg.select(".x-axis")
+                .transition()
+                .duration(750)
+                .call(xAxis);
 
-            svg.append("path")
-                .data([filteredData])
-                .attr("class", "line")
-                .attr("d", line)
-                .style("fill", "none")
-                .style("stroke", "blue")
-                .style("stroke-width", 2);
+            svg.select(".y-axis-left")
+                .transition()
+                .duration(750)
+                .call(d3.axisLeft(yLeft));
+
+            svg.select(".y-axis-right")
+                .transition()
+                .duration(750)
+                .call(d3.axisRight(yRight));
+
+            // Update lines
+            pathDeaths.datum(currentData)
+                .transition()
+                .duration(750)
+                .attr("d", lineDeaths);
+
+            pathICU.datum(currentData)
+                .transition()
+                .duration(750)
+                .attr("d", lineICU);
         }
     }).catch(error => {
         console.error("Error loading or processing the CSV file: ", error);
     });
-};
+}
 window.onload = init;
