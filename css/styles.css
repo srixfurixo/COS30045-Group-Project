@@ -8,6 +8,17 @@ nav {
   text-align: center;
 }
 
+#content-slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;  /* Make sure it takes full width */
+  position: relative;
+}
+
 .chart-container {
   position: relative;
   width: 100%;

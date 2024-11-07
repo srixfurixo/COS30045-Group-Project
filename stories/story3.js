@@ -1,6 +1,6 @@
 // Paths to the CSV files
-var top5DataFile = "../Datasets/filtered_vaccine_data_top_5_latest.csv";
-var bottom5DataFile = "../Datasets/filtered_vaccine_data_bottom_5_latest.csv";
+var top5DataFile = "../Datasets/log_scaled_vaccine_data_top_5.csv";
+var bottom5DataFile = "../Datasets/log_scaled_vaccine_data_bottom_5.csv";
 
 // Configuration for the radar chart
 var radarConfig = {
@@ -75,28 +75,49 @@ var RadarChart = {
   chart: function() {
     // default config
     var cfg = Object.create(RadarChart.defaultConfig);
-    function setTooltip(tooltip, msg){
-      if(msg === false || msg == undefined){
+    function setTooltip(tooltip, msg, data) {
+      if(msg === false || msg == undefined) {
         tooltip.classed("visible", 0);
         tooltip.select("rect").classed("visible", 0);
-      }else{
+      } else {
         tooltip.classed("visible", 1);
-
+    
         var container = tooltip.node().parentNode;
         var coords = d3.mouse(container);
-
-        tooltip.select("text").classed('visible', 1).style("fill", cfg.tooltipColor);
-        var padding=5;
-        var bbox = tooltip.select("text").text(msg).node().getBBox();
-
+    
+        // Format tooltip text with multiple lines if data is provided
+        var tooltipText = data ? 
+          "Country: " + msg + "\n" + 
+          "Vaccine: " + data.axis + "\n" +
+          "Value: " + d3.format(".2f")(data.value) :
+          msg;
+    
+        var tooltipLines = tooltipText.split('\n');
+        
+        tooltip.select("text")
+          .classed('visible', 1)
+          .style("fill", cfg.tooltipColor)
+          .selectAll('tspan')
+          .data(tooltipLines)
+          .enter()
+          .append('tspan')
+          .attr('x', 0)
+          .attr('dy', function(d, i) { return i * 1.2 + 'em'; })
+          .text(function(d) { return d; });
+    
+        var bbox = tooltip.select("text").node().getBBox();
+        var padding = 5;
+    
         tooltip.select("rect")
-        .classed('visible', 1)
-        .attr("x", bbox.x - padding)
-        .attr("y", bbox.y - padding)
-        .attr("width", bbox.width + (padding*2))
-        .attr("height", bbox.height + (padding*2))
-        .attr("rx","5").attr("ry","5")
-        .style("fill", cfg.backgroundTooltipColor).style("opacity", cfg.backgroundTooltipOpacity);
+          .classed('visible', 1)
+          .attr("x", bbox.x - padding)
+          .attr("y", bbox.y - padding)
+          .attr("width", bbox.width + (padding*2))
+          .attr("height", bbox.height + (padding*2))
+          .attr("rx", "5").attr("ry", "5")
+          .style("fill", cfg.backgroundTooltipColor)
+          .style("opacity", cfg.backgroundTooltipOpacity);
+    
         tooltip.attr("transform", "translate(" + (coords[0]+10) + "," + (coords[1]-10) + ")");
       }
     }
@@ -338,7 +359,8 @@ var RadarChart = {
           .classed({circle: 1, 'd3-enter': 1})
           .on('mouseover', function(dd){
             d3.event.stopPropagation();
-            setTooltip(tooltip, dd[0].axis + ": " + dd[0].value);
+            var countryData = data[dd[1]];
+            setTooltip(tooltip, countryData.className, dd[0]);
           })
           .on('mouseout', function(dd){
             d3.event.stopPropagation();
