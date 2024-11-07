@@ -1,9 +1,10 @@
 const dataFile = "../Datasets/total_icu_beds.csv";
 
 function init() {
-    const w = 1000;  // Width of the chart
-    const h = 600;   // Height of the chart
-    const margin = { top: 50, right: 50, bottom: 50, left: 80 };
+    const w = 500;  // Width of the chart
+    const h = 400;   // Height of the chart
+    const margin = { top: 1, right: 80, bottom: 80, left: 80 };
+
 
     // Create SVG container
     const svg = d3.select("#chartContainer").append("svg")
@@ -77,7 +78,7 @@ function init() {
 
         // Add axis labels
         svg.append("text")
-            .attr("transform", `translate(${w / 2}, ${h + margin.bottom - 5})`)
+            .attr("transform", `translate(${w / 2}, ${h + margin.bottom - 20})`)
             .style("text-anchor", "middle")
             .style("font-size", "14px")
             .style("fill", "black")
@@ -86,7 +87,7 @@ function init() {
         svg.append("text")
             .attr("transform", "rotate(-90)")
             .attr("x", -h / 2)
-            .attr("y", -margin.left + 20)
+            .attr("y", -margin.left + 40)
             .style("text-anchor", "middle")
             .style("font-size", "14px")
             .style("fill", "steelblue")
