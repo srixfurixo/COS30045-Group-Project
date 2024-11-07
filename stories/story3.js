@@ -1,8 +1,6 @@
-// Paths to the CSV files
 var top5DataFile = "../Datasets/log_scaled_vaccine_data_top_5.csv";
 var bottom5DataFile = "../Datasets/log_scaled_vaccine_data_bottom_5.csv";
 
-// Configuration for the radar chart
 var radarConfig = {
   containerClass: 'radar-chart',
   w: 600,

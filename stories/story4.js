@@ -1,4 +1,3 @@
-// Path to the CSV file
 const dataFile = "../Datasets/total_icu_beds.csv";
 
 function init() {
