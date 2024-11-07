@@ -1,269 +1,519 @@
-// Adjust the paths to your CSV files relative to this script
-const top5DataFile = "../Datasets/filtered_vaccine_data_top_5_countries.csv";
-const bottom5DataFile = "../Datasets/filtered_vaccine_data_bottom_5_countries.csv";
+// Paths to the CSV files
+var top5DataFile = "../Datasets/filtered_vaccine_data_top_5_latest.csv";
+var bottom5DataFile = "../Datasets/filtered_vaccine_data_bottom_5_latest.csv";
 
 // Configuration for the radar chart
-const radarConfig = {
+var radarConfig = {
+  containerClass: 'radar-chart',
+  w: 600,
+  h: 600,
+  factor: 0.95,
+  factorLegend: 1,
+  levels: 5,
+  levelTick: true,
+  TickLength: 10,
+  maxValue: 1.0, // Adjust based on your data's maximum value
+  minValue: 0,
+  radians: 2 * Math.PI,
+  color: d3.scale.ordinal()
+    .domain(d3.range(10))
+    .range([
+      "#006400", "#228B22", "#32CD32", "#7CFC00", "#ADFF2F", // Shades of green for top 5
+      "#00008B", "#0000CD", "#4169E1", "#1E90FF", "#87CEFA"  // Shades of blue for bottom 5
+    ]),
+  axisLine: true,
+  axisText: true,
+  circles: true,
+  radius: 5,
+  open: false,
+  backgroundTooltipColor: "#555",
+  backgroundTooltipOpacity: "0.7",
+  tooltipColor: "white",
+  axisJoin: function(d, i) {
+    return d.className || i;
+  },
+  tooltipFormatValue: function(d) {
+    return d;
+  },
+  tooltipFormatClass: function(d) {
+    return d;
+  },
+  transitionDuration: 300
+};
+
+// RadarChart module (your provided template)
+var RadarChart = {
+  defaultConfig: {
+    containerClass: 'radar-chart',
     w: 600,
     h: 600,
-    margin: { top: 50, right: 50, bottom: 50, left: 50 },
-    levels: 5,
-    maxValue: 1.0, // Adjust based on your data's maximum value
-    labelFactor: 1.2,
-    wrapWidth: 60,
-    opacityArea: 0.35,
-    dotRadius: 4,
-    opacityCircles: 0.1,
-    strokeWidth: 2,
-    roundStrokes: true,
-    color: d3.scaleOrdinal().range(["#6baed6", "#3182bd"]) // Colors for top 5 and bottom 5
+    factor: 0.95,
+    factorLegend: 1,
+    levels: 3,
+    levelTick: false,
+    TickLength: 10,
+    maxValue: 0,
+    minValue: 0,
+    radians: 2 * Math.PI,
+    color: d3.scale.category10(),
+    axisLine: true,
+    axisText: true,
+    circles: true,
+    radius: 5,
+    open: false,
+    backgroundTooltipColor: "#555",
+    backgroundTooltipOpacity: "0.7",
+    tooltipColor: "white",
+    axisJoin: function(d, i) {
+      return d.className || i;
+    },
+    tooltipFormatValue: function(d) {
+      return d;
+    },
+    tooltipFormatClass: function(d) {
+      return d;
+    },
+    transitionDuration: 300
+  },
+  chart: function() {
+    // default config
+    var cfg = Object.create(RadarChart.defaultConfig);
+    function setTooltip(tooltip, msg){
+      if(msg === false || msg == undefined){
+        tooltip.classed("visible", 0);
+        tooltip.select("rect").classed("visible", 0);
+      }else{
+        tooltip.classed("visible", 1);
+
+        var container = tooltip.node().parentNode;
+        var coords = d3.mouse(container);
+
+        tooltip.select("text").classed('visible', 1).style("fill", cfg.tooltipColor);
+        var padding=5;
+        var bbox = tooltip.select("text").text(msg).node().getBBox();
+
+        tooltip.select("rect")
+        .classed('visible', 1).attr("x", 0)
+        .attr("x", bbox.x - padding)
+        .attr("y", bbox.y - padding)
+        .attr("width", bbox.width + (padding*2))
+        .attr("height", bbox.height + (padding*2))
+        .attr("rx","5").attr("ry","5")
+        .style("fill", cfg.backgroundTooltipColor).style("opacity", cfg.backgroundTooltipOpacity);
+        tooltip.attr("transform", "translate(" + (coords[0]+10) + "," + (coords[1]-10) + ")");
+      }
+    }
+    function radar(selection) {
+      selection.each(function(data) {
+        var container = d3.select(this);
+        var tooltip = container.selectAll('g.tooltip').data([data[0]]);
+
+        var tt = tooltip.enter()
+        .append('g')
+        .classed('tooltip', true);
+
+        tt.append('rect').classed("tooltip", true);
+        tt.append('text').classed("tooltip", true);
+
+        // allow simple notation
+        data = data.map(function(datum) {
+          if(datum instanceof Array) {
+            datum = {axes: datum};
+          }
+          return datum;
+        });
+
+        var maxValue = Math.max(cfg.maxValue, d3.max(data, function(d) {
+          return d3.max(d.axes, function(o){ return o.value; });
+        }));
+        maxValue -= cfg.minValue;
+
+        var allAxis = data[0].axes.map(function(i, j){ return {name: i.axis, xOffset: (i.xOffset)?i.xOffset:0, yOffset: (i.yOffset)?i.yOffset:0}; });
+        var total = allAxis.length;
+        var radius = cfg.factor * Math.min(cfg.w / 2, cfg.h / 2);
+        var radius2 = Math.min(cfg.w / 2, cfg.h / 2);
+
+        container.classed(cfg.containerClass, 1);
+
+        function getPosition(i, range, factor, func){
+          factor = typeof factor !== 'undefined' ? factor : 1;
+          return range * (1 - factor * func(i * cfg.radians / total));
+        }
+        function getHorizontalPosition(i, range, factor){
+          return getPosition(i, range, factor, Math.sin);
+        }
+        function getVerticalPosition(i, range, factor){
+          return getPosition(i, range, factor, Math.cos);
+        }
+
+        // levels && axes
+        var levelFactors = d3.range(0, cfg.levels).map(function(level) {
+          return radius * ((level + 1) / cfg.levels);
+        });
+
+        var levelGroups = container.selectAll('g.level-group').data(levelFactors);
+
+        levelGroups.enter().append('g');
+        levelGroups.exit().remove();
+
+        levelGroups.attr('class', function(d, i) {
+          return 'level-group level-group-' + i;
+        });
+
+        var levelLine = levelGroups.selectAll('.level').data(function(levelFactor) {
+          return d3.range(0, total).map(function() { return levelFactor; });
+        });
+
+        levelLine.enter().append('line');
+        levelLine.exit().remove();
+
+        if (cfg.levelTick){
+          levelLine
+          .attr('class', 'level')
+          .attr('x1', function(levelFactor, i){
+            if (radius == levelFactor) {
+              return getHorizontalPosition(i, levelFactor);
+            } else {
+              return getHorizontalPosition(i, levelFactor) + (cfg.TickLength / 2) * Math.cos(i * cfg.radians / total);
+            }
+          })
+          .attr('y1', function(levelFactor, i){
+            if (radius == levelFactor) {
+              return getVerticalPosition(i, levelFactor);
+            } else {
+              return getVerticalPosition(i, levelFactor) - (cfg.TickLength / 2) * Math.sin(i * cfg.radians / total);
+            }
+          })
+          .attr('x2', function(levelFactor, i){
+            if (radius == levelFactor) {
+              return getHorizontalPosition(i+1, levelFactor);
+            } else {
+              return getHorizontalPosition(i, levelFactor) - (cfg.TickLength / 2) * Math.cos(i * cfg.radians / total);
+            }
+          })
+          .attr('y2', function(levelFactor, i){
+            if (radius == levelFactor) {
+              return getVerticalPosition(i+1, levelFactor);
+            } else {
+              return getVerticalPosition(i, levelFactor) + (cfg.TickLength / 2) * Math.sin(i * cfg.radians / total);
+            }
+          })
+          .attr('transform', function(levelFactor) {
+            return 'translate(' + (cfg.w/2-levelFactor) + ', ' + (cfg.h/2-levelFactor) + ')';
+          });
+        }
+        else{
+          levelLine
+          .attr('class', 'level')
+          .attr('x1', function(levelFactor, i){ return getHorizontalPosition(i, levelFactor); })
+          .attr('y1', function(levelFactor, i){ return getVerticalPosition(i, levelFactor); })
+          .attr('x2', function(levelFactor, i){ return getHorizontalPosition(i+1, levelFactor); })
+          .attr('y2', function(levelFactor, i){ return getVerticalPosition(i+1, levelFactor); })
+          .attr('transform', function(levelFactor) {
+            return 'translate(' + (cfg.w/2-levelFactor) + ', ' + (cfg.h/2-levelFactor) + ')';
+          });
+        }
+        if(cfg.axisLine || cfg.axisText) {
+          var axis = container.selectAll('.axis').data(allAxis);
+
+          var newAxis = axis.enter().append('g');
+          if(cfg.axisLine) {
+            newAxis.append('line');
+          }
+          if(cfg.axisText) {
+            newAxis.append('text');
+          }
+
+          axis.exit().remove();
+
+          axis.attr('class', 'axis');
+
+          if(cfg.axisLine) {
+            axis.select('line')
+            .attr('x1', cfg.w/2)
+            .attr('y1', cfg.h/2)
+            .attr('x2', function(d, i) { return (cfg.w/2-radius2)+getHorizontalPosition(i, radius2, cfg.factor); })
+            .attr('y2', function(d, i) { return (cfg.h/2-radius2)+getVerticalPosition(i, radius2, cfg.factor); });
+          }
+
+          if(cfg.axisText) {
+            axis.select('text')
+            .attr('class', function(d, i){
+              var p = getHorizontalPosition(i, 0.5);
+
+              return 'legend ' +
+              ((p < 0.4) ? 'left' : ((p > 0.6) ? 'right' : 'middle'));
+            })
+            .attr('dy', function(d, i) {
+              var p = getVerticalPosition(i, 0.5);
+              return ((p < 0.1) ? '1em' : ((p > 0.9) ? '0' : '0.5em'));
+            })
+            .text(function(d) { return d.name; })
+            .attr('x', function(d, i){ return d.xOffset+ (cfg.w/2-radius2)+getHorizontalPosition(i, radius2, cfg.factorLegend); })
+            .attr('y', function(d, i){ return d.yOffset+ (cfg.h/2-radius2)+getVerticalPosition(i, radius2, cfg.factorLegend); });
+          }
+        }
+
+        // content
+        data.forEach(function(d){
+          d.axes.forEach(function(axis, i) {
+            axis.x = (cfg.w/2-radius2)+getHorizontalPosition(i, radius2, (parseFloat(Math.max(axis.value - cfg.minValue, 0))/maxValue)*cfg.factor);
+            axis.y = (cfg.h/2-radius2)+getVerticalPosition(i, radius2, (parseFloat(Math.max(axis.value - cfg.minValue, 0))/maxValue)*cfg.factor);
+          });
+        });
+        var polygon = container.selectAll(".area").data(data, cfg.axisJoin);
+
+        var polygonType = 'polygon';
+        if (cfg.open) {
+          polygonType = 'polyline';
+        }
+
+        polygon.enter().append(polygonType)
+        .classed({area: 1, 'd3-enter': 1})
+        .on('mouseover', function (dd){
+          d3.event.stopPropagation();
+          container.classed('focus', 1);
+          d3.select(this).classed('focused', 1);
+          setTooltip(tooltip, dd.className);
+        })
+        .on('mouseout', function(){
+          d3.event.stopPropagation();
+          container.classed('focus', 0);
+          d3.select(this).classed('focused', 0);
+          setTooltip(tooltip, false);
+        });
+
+        polygon.exit()
+        .classed('d3-exit', 1) // trigger css transition
+        .transition().duration(cfg.transitionDuration)
+        .remove();
+
+        polygon
+        .each(function(d, i) {
+          var classed = {'d3-exit': 0}; // if exiting element is being reused
+          classed['radar-chart-serie' + i] = 1;
+          if(d.className) {
+            classed[d.className] = 1;
+          }
+          d3.select(this).classed(classed);
+        })
+        // styles should only be transitioned with css
+        .style('stroke', function(d, i) { return cfg.color(i); })
+        .style('fill', function(d, i) { return cfg.color(i); })
+        .transition().duration(cfg.transitionDuration)
+        // svg attrs with js
+        .attr('points',function(d) {
+          return d.axes.map(function(p) {
+            return [p.x, p.y].join(',');
+          }).join(' ');
+        })
+        .each('start', function() {
+          d3.select(this).classed('d3-enter', 0); // trigger css transition
+        });
+
+        if(cfg.circles && cfg.radius) {
+
+          var circleGroups = container.selectAll('g.circle-group').data(data, cfg.axisJoin);
+
+          circleGroups.enter().append('g').classed({'circle-group': 1, 'd3-enter': 1});
+          circleGroups.exit()
+          .classed('d3-exit', 1) // trigger css transition
+          .transition().duration(cfg.transitionDuration).remove();
+
+          circleGroups
+          .each(function(d) {
+            var classed = {'d3-exit': 0}; // if exiting element is being reused
+            if(d.className) {
+              classed[d.className] = 1;
+            }
+            d3.select(this).classed(classed);
+          })
+          .transition().duration(cfg.transitionDuration)
+          .each('start', function() {
+            d3.select(this).classed('d3-enter', 0); // trigger css transition
+          });
+
+          var circle = circleGroups.selectAll('.circle').data(function(datum, i) {
+            return datum.axes.map(function(d) { return [d, i]; });
+          });
+
+          circle.enter().append('circle')
+          .classed({circle: 1, 'd3-enter': 1})
+          .on('mouseover', function(dd){
+            d3.event.stopPropagation();
+            setTooltip(tooltip, dd[0].axis + ": " + dd[0].value);
+          })
+          .on('mouseout', function(dd){
+            d3.event.stopPropagation();
+            setTooltip(tooltip, false);
+            container.classed('focus', 0);
+          });
+
+          circle.exit()
+          .classed('d3-exit', 1) // trigger css transition
+          .transition().duration(cfg.transitionDuration).remove();
+
+          circle
+          .each(function(d) {
+            var classed = {'d3-exit': 0}; // if exit element reused
+            classed['radar-chart-serie'+d[1]] = 1;
+            d3.select(this).classed(classed);
+          })
+          // styles should only be transitioned with css
+          .style('fill', function(d) { return cfg.color(d[1]); })
+          .transition().duration(cfg.transitionDuration)
+          // svg attrs with js
+          .attr('r', cfg.radius)
+          .attr('cx', function(d) {
+            return d[0].x;
+          })
+          .attr('cy', function(d) {
+            return d[0].y;
+          })
+          .each('start', function() {
+            d3.select(this).classed('d3-enter', 0); // trigger css transition
+          });
+
+          //Make sure layer order is correct
+          var poly_node = polygon.node();
+          if (poly_node) {
+            poly_node.parentNode.appendChild(poly_node);
+          }
+
+          var cg_node = circleGroups.node();
+          if (cg_node) {
+            cg_node.parentNode.appendChild(cg_node);
+          }
+
+          // ensure tooltip is upmost layer
+          var tooltipEl = tooltip.node();
+          if (tooltipEl) {
+            tooltipEl.parentNode.appendChild(tooltipEl);
+          }
+        }
+      });
+    }
+
+    radar.config = function(value) {
+      if(!arguments.length) {
+        return cfg;
+      }
+      if(arguments.length > 1) {
+        cfg[arguments[0]] = arguments[1];
+      }
+      else {
+        d3.entries(value || {}).forEach(function(option) {
+          cfg[option.key] = option.value;
+        });
+      }
+      return radar;
+    };
+
+    return radar;
+  },
+  draw: function(id, d, options) {
+    var chart = RadarChart.chart().config(options);
+    var cfg = chart.config();
+
+    d3.select(id).select('svg').remove();
+    d3.select(id)
+    .append("svg")
+    .attr("width", cfg.w)
+    .attr("height", cfg.h)
+    .datum(d)
+    .call(chart);
+  }
 };
 
 // Initialization function
 function init() {
-    // Load both CSV files and prepare data for radar chart
-    Promise.all([
-        d3.csv(top5DataFile),
-        d3.csv(bottom5DataFile)
-    ]).then(([top5Data, bottom5Data]) => {
-        // Prepare data for radar chart
-        const processedData = prepareRadarData(top5Data, bottom5Data);
+  // Load both CSV files using D3 v3's csv function with callbacks
+  d3.csv(top5DataFile, function(errorTop5, top5Data) {
+    if (errorTop5) {
+      console.error("Error loading top 5 data:", errorTop5);
+      return;
+    }
 
-        // Create the radar chart
-        RadarChart("#radarChart", processedData, radarConfig);
-    }).catch(error => {
-        console.error("Error loading data:", error);
+    d3.csv(bottom5DataFile, function(errorBottom5, bottom5Data) {
+      if (errorBottom5) {
+        console.error("Error loading bottom 5 data:", errorBottom5);
+        return;
+      }
+
+      // Prepare data for radar chart
+      var processedData = prepareRadarData(top5Data, bottom5Data);
+
+      // Create the radar chart
+      RadarChart.draw("#radarChart", processedData, radarConfig);
+
+      // Add Legend
+      createLegend(processedData);
     });
+  });
 }
 
 // Function to transform data for radar chart input format
 function prepareRadarData(top5Data, bottom5Data) {
-    const vaccines = ["Pfizer/BioNTech", "Moderna", "Oxford/AstraZeneca", "Johnson&Johnson", "Sputnik V"];
+  var vaccines = ["Pfizer/BioNTech", "Moderna", "Oxford/AstraZeneca", "Johnson&Johnson", "Sputnik V"];
 
-    const top5 = vaccines.map(vaccine => ({
-        axis: vaccine,
-        value: d3.mean(top5Data, d => +d[vaccine] || 0)
-    }));
+  // Process each country individually
+  var top5 = top5Data.map(function(country) {
+    return {
+      className: country.Country, // Use country name as className
+      axes: vaccines.map(function(vaccine) {
+        return {
+          axis: vaccine,
+          value: parseFloat(country[vaccine]) || 0
+        };
+      })
+    };
+  });
 
-    const bottom5 = vaccines.map(vaccine => ({
-        axis: vaccine,
-        value: d3.mean(bottom5Data, d => +d[vaccine] || 0)
-    }));
+  var bottom5 = bottom5Data.map(function(country) {
+    return {
+      className: country.Country, // Use country name as className
+      axes: vaccines.map(function(vaccine) {
+        return {
+          axis: vaccine,
+          value: parseFloat(country[vaccine]) || 0
+        };
+      })
+    };
+  });
 
-    return [top5, bottom5];
+  // Combine top5 and bottom5 data
+  return top5.concat(bottom5);
 }
 
-// RadarChart function adjusted for D3 v7
-function RadarChart(id, data, options) {
-    const cfg = {
-        // Default configurations
-        w: 600,                // Width of the circle
-        h: 600,                // Height of the circle
-        margin: { top: 50, right: 50, bottom: 50, left: 50 }, // Margin around the circle
-        levels: 3,             // How many levels or inner circles should be drawn
-        maxValue: 0,           // What is the value that the biggest circle will represent
-        labelFactor: 1.25,     // How much farther than the radius of the outer circle should the labels be placed
-        wrapWidth: 60,         // The number of pixels after which a label needs to be given a new line
-        opacityArea: 0.35,     // The opacity of the area of the blob
-        dotRadius: 4,          // The size of the colored circles of each blog
-        opacityCircles: 0.1,   // The opacity of the circles of each blob
-        strokeWidth: 2,        // The width of the stroke around each blob
-        roundStrokes: false,   // If true, the area and stroke will follow a round path (cardinal-closed)
-        color: d3.scaleOrdinal(d3.schemeCategory10) // Color function
-    };
+// Function to create the legend
+function createLegend(data) {
+  var svg = d3.select("#radarChart svg");
 
-    // Put all of the options into a variable called cfg
-    if ('undefined' !== typeof options) {
-        for (const i in options) {
-            if ('undefined' !== typeof options[i]) {
-                cfg[i] = options[i];
-            }
-        }
-    }
+  var legend = svg.append("g")
+    .attr("class", "legend")
+    .attr("height", 200)
+    .attr("width", 200)
+    .attr('transform', 'translate(20,20)');
 
-    // If the supplied maxValue is smaller than the actual one, replace by the max in the data
-    const maxValue = Math.max(cfg.maxValue, d3.max(data, i => d3.max(i.map(o => o.value))));
+  legend.selectAll('rect')
+    .data(data)
+    .enter()
+    .append('rect')
+    .attr('x', radarConfig.w - 100)
+    .attr('y', function(d, i){ return i * 20;})
+    .attr('width', 10)
+    .attr('height', 10)
+    .style('fill', function(d, i){ return radarConfig.color(i); });
 
-    const allAxis = data[0].map(i => i.axis); // Names of each axis
-    const total = allAxis.length; // The number of different axes
-    const radius = Math.min(cfg.w / 2, cfg.h / 2); // Radius of the outermost circle
-    const angleSlice = Math.PI * 2 / total; // The width in radians of each "slice"
-
-    // Scale for the radius
-    const rScale = d3.scaleLinear()
-        .range([0, radius])
-        .domain([0, maxValue]);
-
-    // Remove whatever chart with the same id/class was present before
-    d3.select(id).select("svg").remove();
-
-    // Initiate the radar chart SVG
-    const svg = d3.select(id).append("svg")
-        .attr("width", cfg.w + cfg.margin.left + cfg.margin.right)
-        .attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
-        .attr("class", "radar");
-
-    // Append a g element
-    const g = svg.append("g")
-        .attr("transform", "translate(" + (cfg.w / 2 + cfg.margin.left) + "," + (cfg.h / 2 + cfg.margin.top) + ")");
-
-    // Filter for the outside glow
-    const filter = g.append('defs').append('filter').attr('id','glow');
-    filter.append('feGaussianBlur').attr('stdDeviation','2.5').attr('result','coloredBlur');
-    const feMerge = filter.append('feMerge');
-    feMerge.append('feMergeNode').attr('in','coloredBlur');
-    feMerge.append('feMergeNode').attr('in','SourceGraphic');
-
-    // Draw the Circular grid
-    const axisGrid = g.append("g").attr("class", "axisWrapper");
-
-    // Draw the background circles
-    axisGrid.selectAll(".levels")
-        .data(d3.range(1, (cfg.levels + 1)).reverse())
-        .enter()
-        .append("circle")
-        .attr("class", "gridCircle")
-        .attr("r", d => radius / cfg.levels * d)
-        .style("fill", "#CDCDCD")
-        .style("stroke", "#CDCDCD")
-        .style("fill-opacity", cfg.opacityCircles)
-        .style("filter" , "url(#glow)");
-
-    // Text indicating at what % each level is
-    axisGrid.selectAll(".axisLabel")
-        .data(d3.range(1, (cfg.levels + 1)).reverse())
-        .enter().append("text")
-        .attr("class", "axisLabel")
-        .attr("x", 4)
-        .attr("y", d => -d * radius / cfg.levels)
-        .attr("dy", "0.4em")
-        .style("font-size", "10px")
-        .attr("fill", "#737373")
-        .text(d => (maxValue * d / cfg.levels).toFixed(2));
-
-    // Create the straight lines radiating outward from the center
-    const axis = axisGrid.selectAll(".axis")
-        .data(allAxis)
-        .enter()
-        .append("g")
-        .attr("class", "axis");
-
-    // Append the lines
-    axis.append("line")
-        .attr("x1", 0)
-        .attr("y1", 0)
-        .attr("x2", (d, i) => rScale(maxValue * 1.1) * Math.cos(angleSlice * i - Math.PI / 2))
-        .attr("y2", (d, i) => rScale(maxValue * 1.1) * Math.sin(angleSlice * i - Math.PI / 2))
-        .attr("class", "line")
-        .style("stroke", "white")
-        .style("stroke-width", "2px");
-
-    // Append the labels at each axis
-    axis.append("text")
-        .attr("class", "legend")
-        .style("font-size", "11px")
-        .attr("text-anchor", "middle")
-        .attr("dy", "0.35em")
-        .attr("x", (d, i) => rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2))
-        .attr("y", (d, i) => rScale(maxValue * cfg.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2))
-        .text(d => d)
-        .call(wrap, cfg.wrapWidth);
-
-    // The radar line function
-    const radarLine = d3.lineRadial()
-        .curve(cfg.roundStrokes ? d3.curveCardinalClosed : d3.curveLinearClosed)
-        .radius(d => rScale(d.value))
-        .angle((d, i) => i * angleSlice);
-
-    // Create a wrapper for the blobs
-    const blobWrapper = g.selectAll(".radarWrapper")
-        .data(data)
-        .enter().append("g")
-        .attr("class", "radarWrapper");
-
-    // Append the backgrounds
-    blobWrapper
-        .append("path")
-        .attr("class", "radarArea")
-        .attr("d", d => radarLine(d))
-        .style("fill", (d, i) => cfg.color(i))
-        .style("fill-opacity", cfg.opacityArea)
-        .on('mouseover', function(event, d) {
-            // Dim all blobs
-            d3.selectAll(".radarArea")
-                .transition().duration(200)
-                .style("fill-opacity", 0.1);
-            // Bring back the hovered over blob
-            d3.select(this)
-                .transition().duration(200)
-                .style("fill-opacity", 0.7);
-        })
-        .on('mouseout', function() {
-            // Bring back all blobs
-            d3.selectAll(".radarArea")
-                .transition().duration(200)
-                .style("fill-opacity", cfg.opacityArea);
-        });
-
-    // Create the outlines
-    blobWrapper.append("path")
-        .attr("class", "radarStroke")
-        .attr("d", d => radarLine(d))
-        .style("stroke-width", cfg.strokeWidth + "px")
-        .style("stroke", (d, i) => cfg.color(i))
-        .style("fill", "none")
-        .style("filter" , "url(#glow)");
-
-    // Append the circles
-    blobWrapper.selectAll(".radarCircle")
-        .data((d, i) => {
-            // Attach the index to each data point
-            return d.map(point => {
-                return { ...point, groupIndex: i };
-            });
-        })
-        .enter().append("circle")
-        .attr("class", "radarCircle")
-        .attr("r", cfg.dotRadius)
-        .attr("cx", (d, i) => rScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
-        .attr("cy", (d, i) => rScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
-        .style("fill", (d) => cfg.color(d.groupIndex))
-        .style("fill-opacity", 0.8);
-
-    // Helper function to wrap labels
-    function wrap(text, width) {
-        text.each(function() {
-            const text = d3.select(this);
-            const words = text.text().split(/\s+/).reverse();
-            let word;
-            let line = [];
-            let lineNumber = 0;
-            const lineHeight = 1.4; // ems
-            const y = text.attr("y");
-            const x = text.attr("x");
-            const dy = parseFloat(text.attr("dy"));
-            let tspan = text.text(null)
-                .append("tspan")
-                .attr("x", x)
-                .attr("y", y)
-                .attr("dy", dy + "em");
-
-            while (word = words.pop()) {
-                line.push(word);
-                tspan.text(line.join(" "));
-                if (tspan.node().getComputedTextLength() > width) {
-                    line.pop();
-                    tspan.text(line.join(" "));
-                    line = [word];
-                    tspan = text.append("tspan")
-                        .attr("x", x)
-                        .attr("y", y)
-                        .attr("dy", ++lineNumber * lineHeight + dy + "em")
-                        .text(word);
-                }
-            }
-        });
-    }
+  legend.selectAll('text')
+    .data(data)
+    .enter()
+    .append('text')
+    .attr('x', radarConfig.w - 85)
+    .attr('y', function(d, i){ return i * 20 + 9;})
+    .attr('font-size', '11px')
+    .attr('fill', '#737373')
+    .text(function(d) { return d.className; });
 }
 
 // Load the radar chart on window load
