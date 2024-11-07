@@ -1,6 +1,6 @@
 // Paths to the CSV files
-var top5DataFile = "../Datasets/filtered_vaccine_data_top_5_latest.csv";
-var bottom5DataFile = "../Datasets/filtered_vaccine_data_bottom_5_latest.csv";
+var top5DataFile = "../Datasets/log_scaled_vaccine_data_top_5.csv";
+var bottom5DataFile = "../Datasets/log_scaled_vaccine_data_bottom_5.csv";
 
 // Configuration for the radar chart
 var radarConfig = {
@@ -15,12 +15,9 @@ var radarConfig = {
   maxValue: 1.0, // Adjust based on your data's maximum value
   minValue: 0,
   radians: 2 * Math.PI,
-  color: d3.scale.ordinal()
-    .domain(d3.range(10))
-    .range([
-      "#006400", "#228B22", "#32CD32", "#7CFC00", "#ADFF2F", // Shades of green for top 5
-      "#00008B", "#0000CD", "#4169E1", "#1E90FF", "#87CEFA"  // Shades of blue for bottom 5
-    ]),
+  color: function(d, i) {
+    return d.color; // Use the color assigned in the data
+  },
   axisLine: true,
   axisText: true,
   circles: true,
@@ -78,28 +75,49 @@ var RadarChart = {
   chart: function() {
     // default config
     var cfg = Object.create(RadarChart.defaultConfig);
-    function setTooltip(tooltip, msg){
-      if(msg === false || msg == undefined){
+    function setTooltip(tooltip, msg, data) {
+      if(msg === false || msg == undefined) {
         tooltip.classed("visible", 0);
         tooltip.select("rect").classed("visible", 0);
-      }else{
+      } else {
         tooltip.classed("visible", 1);
-
+    
         var container = tooltip.node().parentNode;
         var coords = d3.mouse(container);
-
-        tooltip.select("text").classed('visible', 1).style("fill", cfg.tooltipColor);
-        var padding=5;
-        var bbox = tooltip.select("text").text(msg).node().getBBox();
-
+    
+        // Format tooltip text with multiple lines if data is provided
+        var tooltipText = data ? 
+          "Country: " + msg + "\n" + 
+          "Vaccine: " + data.axis + "\n" +
+          "Value: " + d3.format(".2f")(data.value) :
+          msg;
+    
+        var tooltipLines = tooltipText.split('\n');
+        
+        tooltip.select("text")
+          .classed('visible', 1)
+          .style("fill", cfg.tooltipColor)
+          .selectAll('tspan')
+          .data(tooltipLines)
+          .enter()
+          .append('tspan')
+          .attr('x', 0)
+          .attr('dy', function(d, i) { return i * 1.2 + 'em'; })
+          .text(function(d) { return d; });
+    
+        var bbox = tooltip.select("text").node().getBBox();
+        var padding = 5;
+    
         tooltip.select("rect")
-        .classed('visible', 1).attr("x", 0)
-        .attr("x", bbox.x - padding)
-        .attr("y", bbox.y - padding)
-        .attr("width", bbox.width + (padding*2))
-        .attr("height", bbox.height + (padding*2))
-        .attr("rx","5").attr("ry","5")
-        .style("fill", cfg.backgroundTooltipColor).style("opacity", cfg.backgroundTooltipOpacity);
+          .classed('visible', 1)
+          .attr("x", bbox.x - padding)
+          .attr("y", bbox.y - padding)
+          .attr("width", bbox.width + (padding*2))
+          .attr("height", bbox.height + (padding*2))
+          .attr("rx", "5").attr("ry", "5")
+          .style("fill", cfg.backgroundTooltipColor)
+          .style("opacity", cfg.backgroundTooltipOpacity);
+    
         tooltip.attr("transform", "translate(" + (coords[0]+10) + "," + (coords[1]-10) + ")");
       }
     }
@@ -146,7 +164,7 @@ var RadarChart = {
           return getPosition(i, range, factor, Math.cos);
         }
 
-        // levels && axes
+        // levels & axes
         var levelFactors = d3.range(0, cfg.levels).map(function(level) {
           return radius * ((level + 1) / cfg.levels);
         });
@@ -298,8 +316,8 @@ var RadarChart = {
           d3.select(this).classed(classed);
         })
         // styles should only be transitioned with css
-        .style('stroke', function(d, i) { return cfg.color(i); })
-        .style('fill', function(d, i) { return cfg.color(i); })
+        .style('stroke', function(d, i) { return cfg.color(d, i); })
+        .style('fill', function(d, i) { return cfg.color(d, i); })
         .transition().duration(cfg.transitionDuration)
         // svg attrs with js
         .attr('points',function(d) {
@@ -341,7 +359,8 @@ var RadarChart = {
           .classed({circle: 1, 'd3-enter': 1})
           .on('mouseover', function(dd){
             d3.event.stopPropagation();
-            setTooltip(tooltip, dd[0].axis + ": " + dd[0].value);
+            var countryData = data[dd[1]];
+            setTooltip(tooltip, countryData.className, dd[0]);
           })
           .on('mouseout', function(dd){
             d3.event.stopPropagation();
@@ -360,7 +379,7 @@ var RadarChart = {
             d3.select(this).classed(classed);
           })
           // styles should only be transitioned with css
-          .style('fill', function(d) { return cfg.color(d[1]); })
+          .style('fill', function(d) { return cfg.color(data[d[1]], d[1]); })
           .transition().duration(cfg.transitionDuration)
           // svg attrs with js
           .attr('r', cfg.radius)
@@ -456,28 +475,35 @@ function init() {
 function prepareRadarData(top5Data, bottom5Data) {
   var vaccines = ["Pfizer/BioNTech", "Moderna", "Oxford/AstraZeneca", "Johnson&Johnson", "Sputnik V"];
 
-  // Process each country individually
-  var top5 = top5Data.map(function(country) {
+  // Define color arrays
+  var topColors = ["#006400", "#228B22", "#32CD32", "#7CFC00", "#ADFF2F"]; // Green shades
+  var bottomColors = ["#00008B", "#0000CD", "#4169E1", "#1E90FF", "#87CEFA"]; // Blue shades
+
+  // Process top countries
+  var top5 = top5Data.map(function(country, index) {
     return {
-      className: country.Country, // Use country name as className
+      className: country.country, // Use 'country' from CSV
       axes: vaccines.map(function(vaccine) {
         return {
           axis: vaccine,
           value: parseFloat(country[vaccine]) || 0
         };
-      })
+      }),
+      color: topColors[index % topColors.length] // Assign color from topColors
     };
   });
 
-  var bottom5 = bottom5Data.map(function(country) {
+  // Process bottom countries
+  var bottom5 = bottom5Data.map(function(country, index) {
     return {
-      className: country.Country, // Use country name as className
+      className: country.country, // Use 'country' from CSV
       axes: vaccines.map(function(vaccine) {
         return {
           axis: vaccine,
           value: parseFloat(country[vaccine]) || 0
         };
-      })
+      }),
+      color: bottomColors[index % bottomColors.length] // Assign color from bottomColors
     };
   });
 
@@ -503,7 +529,7 @@ function createLegend(data) {
     .attr('y', function(d, i){ return i * 20;})
     .attr('width', 10)
     .attr('height', 10)
-    .style('fill', function(d, i){ return radarConfig.color(i); });
+    .style('fill', function(d){ return d.color; });
 
   legend.selectAll('text')
     .data(data)
