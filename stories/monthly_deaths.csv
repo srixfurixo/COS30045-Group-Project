@@ -1,0 +1,1733 @@
+Year,Month,Country,Deaths,Expenditure
+2020,1,Australia,0,10.66
+2020,1,Canada,0,13.024
+2020,1,Chile,0,9.697
+2020,1,Colombia,0,8.708
+2020,1,Costa Rica,0,7.825
+2020,1,Czech Republic,0,9.214
+2020,1,Denmark,0,10.719
+2020,1,France,0,12.072
+2020,1,Germany,0,12.69
+2020,1,Greece,0,9.524
+2020,1,Israel,0,7.73
+2020,1,Japan,0,11.209
+2020,1,South Korea,0,8.355
+2020,1,Latvia,0,7.285
+2020,1,Mexico,0,6.054
+2020,1,New Zealand,0,9.732
+2020,1,Switzerland,0,12.004
+2020,1,T�rkiye,0,4.616
+2020,1,United Kingdom,0,11.965
+2020,1,United States of America,6,18.582
+2020,2,Australia,0,10.66
+2020,2,Belgium,0,11.27
+2020,2,Canada,0,13.024
+2020,2,Chile,0,9.697
+2020,2,Colombia,0,8.708
+2020,2,Costa Rica,0,7.825
+2020,2,Czech Republic,0,9.214
+2020,2,Denmark,0,10.719
+2020,2,Finland,0,9.632
+2020,2,France,1,12.072
+2020,2,Germany,1,12.69
+2020,2,Greece,0,9.524
+2020,2,Iceland,0,9.649
+2020,2,Israel,0,7.73
+2020,2,Italy,8,9.625
+2020,2,Japan,1,11.209
+2020,2,South Korea,3,8.355
+2020,2,Latvia,0,7.285
+2020,2,Mexico,0,6.054
+2020,2,New Zealand,0,9.732
+2020,2,Norway,0,11.424
+2020,2,Portugal,0,10.548
+2020,2,Spain,1,10.732
+2020,2,Sweden,0,11.333
+2020,2,Switzerland,0,12.004
+2020,2,T�rkiye,0,4.616
+2020,2,United Kingdom,0,11.965
+2020,2,United States of America,16,18.582
+2020,3,Australia,9,10.66
+2020,3,Austria,32,11.316
+2020,3,Belgium,195,11.27
+2020,3,Canada,11,13.024
+2020,3,Chile,0,9.697
+2020,3,Colombia,0,8.708
+2020,3,Costa Rica,2,7.825
+2020,3,Czech Republic,1,9.214
+2020,3,Denmark,99,10.719
+2020,3,Estonia,0,7.589
+2020,3,Finland,1,9.632
+2020,3,France,713,12.072
+2020,3,Germany,575,12.69
+2020,3,Greece,17,9.524
+2020,3,Hungary,7,7.285
+2020,3,Iceland,1,9.649
+2020,3,Ireland,15,7.063
+2020,3,Israel,1,7.73
+2020,3,Italy,7958,9.625
+2020,3,Japan,39,11.209
+2020,3,South Korea,101,8.355
+2020,3,Latvia,0,7.285
+2020,3,Lithuania,3,7.474
+2020,3,Luxembourg,15,5.765
+2020,3,Mexico,4,6.054
+2020,3,Netherlands,335,11.224
+2020,3,New Zealand,0,9.732
+2020,3,Norway,61,11.424
+2020,3,Poland,7,6.497
+2020,3,Portugal,26,10.548
+2020,3,Slovak Republic,0,7.126
+2020,3,Slovenia,2,9.428
+2020,3,Spain,2913,10.732
+2020,3,Sweden,49,11.333
+2020,3,Switzerland,109,12.004
+2020,3,T�rkiye,21,4.616
+2020,3,United Kingdom,355,11.965
+2020,3,United States of America,695,18.582
+2020,4,Australia,64,10.66
+2020,4,Austria,497,11.316
+2020,4,Belgium,6009,11.27
+2020,4,Canada,1295,13.024
+2020,4,Chile,126,9.697
+2020,4,Colombia,153,8.708
+2020,4,Costa Rica,2,7.825
+2020,4,Czech Republic,188,9.214
+2020,4,Denmark,354,10.719
+2020,4,Estonia,112,7.589
+2020,4,Finland,147,9.632
+2020,4,France,11378,12.072
+2020,4,Germany,6836,12.69
+2020,4,Greece,96,9.524
+2020,4,Hungary,197,7.285
+2020,4,Iceland,8,9.649
+2020,4,Ireland,918,7.063
+2020,4,Israel,165,7.73
+2020,4,Italy,18443,9.625
+2020,4,Japan,121,11.209
+2020,4,South Korea,130,8.355
+2020,4,Latvia,8,7.285
+2020,4,Lithuania,46,7.474
+2020,4,Luxembourg,64,5.765
+2020,4,Mexico,1301,6.054
+2020,4,Netherlands,3908,11.224
+2020,4,New Zealand,11,9.732
+2020,4,Norway,168,11.424
+2020,4,Poland,351,6.497
+2020,4,Portugal,793,10.548
+2020,4,Slovak Republic,11,7.126
+2020,4,Slovenia,81,9.428
+2020,4,Spain,19846,10.732
+2020,4,Sweden,1962,11.333
+2020,4,Switzerland,1219,12.004
+2020,4,T�rkiye,1869,4.616
+2020,4,United Kingdom,62373,11.965
+2020,4,United States of America,46935,18.582
+2020,5,Australia,30,10.66
+2020,5,Austria,176,11.316
+2020,5,Belgium,2727,11.27
+2020,5,Canada,4240,13.024
+2020,5,Chile,295,9.697
+2020,5,Colombia,393,8.708
+2020,5,Costa Rica,4,7.825
+2020,5,Czech Republic,108,9.214
+2020,5,Denmark,122,10.719
+2020,5,Estonia,19,7.589
+2020,5,Finland,144,9.632
+2020,5,France,5386,12.072
+2020,5,Germany,1538,12.69
+2020,5,Greece,53,9.524
+2020,5,Hungary,260,7.285
+2020,5,Iceland,1,9.649
+2020,5,Ireland,635,7.063
+2020,5,Israel,107,7.73
+2020,5,Italy,7104,9.625
+2020,5,Japan,583,11.209
+2020,5,South Korea,28,8.355
+2020,5,Latvia,12,7.285
+2020,5,Lithuania,21,7.474
+2020,5,Luxembourg,4,5.765
+2020,5,Mexico,10121,6.054
+2020,5,Netherlands,1600,11.224
+2020,5,New Zealand,10,9.732
+2020,5,Norway,19,11.424
+2020,5,Poland,566,6.497
+2020,5,Portugal,476,10.548
+2020,5,Slovak Republic,17,7.126
+2020,5,Slovenia,28,9.428
+2020,5,Spain,5618,10.732
+2020,5,Sweden,1978,11.333
+2020,5,Switzerland,373,12.004
+2020,5,T�rkiye,2206,4.616
+2020,5,United Kingdom,72987,11.965
+2020,5,United States of America,49262,18.582
+2020,6,Australia,4,10.66
+2020,6,Austria,62,11.316
+2020,6,Belgium,558,11.27
+2020,6,Canada,2475,13.024
+2020,6,Chile,2680,9.697
+2020,6,Colombia,999,8.708
+2020,6,Costa Rica,4,7.825
+2020,6,Czech Republic,34,9.214
+2020,6,Denmark,32,10.719
+2020,6,Estonia,6,7.589
+2020,6,Finland,21,9.632
+2020,6,France,1638,12.072
+2020,6,Germany,255,12.69
+2020,6,Greece,18,9.524
+2020,6,Hungary,99,7.285
+2020,6,Iceland,0,9.649
+2020,6,Ireland,122,7.063
+2020,6,Israel,32,7.73
+2020,6,Italy,1850,9.625
+2020,6,Japan,181,11.209
+2020,6,South Korea,15,8.355
+2020,6,Latvia,8,7.285
+2020,6,Lithuania,8,7.474
+2020,6,Luxembourg,0,5.765
+2020,6,Mexico,17575,6.054
+2020,6,Netherlands,302,11.224
+2020,6,New Zealand,1,9.732
+2020,6,Norway,3,11.424
+2020,6,Poland,322,6.497
+2020,6,Portugal,218,10.548
+2020,6,Slovak Republic,0,7.126
+2020,6,Slovenia,3,9.428
+2020,6,Spain,1190,10.732
+2020,6,Sweden,1112,11.333
+2020,6,Switzerland,28,12.004
+2020,6,T�rkiye,696,4.616
+2020,6,United Kingdom,23316,11.965
+2020,6,United States of America,22718,18.582
+2020,7,Australia,6,10.66
+2020,7,Austria,50,11.316
+2020,7,Belgium,115,11.27
+2020,7,Canada,702,13.024
+2020,7,Chile,3780,9.697
+2020,7,Colombia,3380,8.708
+2020,7,Costa Rica,14,7.825
+2020,7,Czech Republic,24,9.214
+2020,7,Denmark,11,10.719
+2020,7,Estonia,0,7.589
+2020,7,Finland,2,9.632
+2020,7,France,525,12.072
+2020,7,Germany,113,12.69
+2020,7,Greece,10,9.524
+2020,7,Hungary,32,7.285
+2020,7,Iceland,0,9.649
+2020,7,Ireland,34,7.063
+2020,7,Israel,70,7.73
+2020,7,Italy,685,9.625
+2020,7,Japan,57,11.209
+2020,7,South Korea,12,8.355
+2020,7,Latvia,3,7.285
+2020,7,Lithuania,1,7.474
+2020,7,Luxembourg,4,5.765
+2020,7,Mexico,19900,6.054
+2020,7,Netherlands,55,11.224
+2020,7,New Zealand,0,9.732
+2020,7,Norway,6,11.424
+2020,7,Poland,325,6.497
+2020,7,Portugal,153,10.548
+2020,7,Slovak Republic,0,7.126
+2020,7,Slovenia,0,9.428
+2020,7,Spain,247,10.732
+2020,7,Sweden,520,11.333
+2020,7,Switzerland,8,12.004
+2020,7,T�rkiye,552,4.616
+2020,7,United Kingdom,7353,11.965
+2020,7,United States of America,18041,18.582
+2020,8,Australia,262,10.66
+2020,8,Austria,47,11.316
+2020,8,Belgium,86,11.27
+2020,8,Canada,209,13.024
+2020,8,Chile,3130,9.697
+2020,8,Colombia,7325,8.708
+2020,8,Costa Rica,192,7.825
+2020,8,Czech Republic,38,9.214
+2020,8,Denmark,9,10.719
+2020,8,Estonia,0,7.589
+2020,8,Finland,5,9.632
+2020,8,France,365,12.072
+2020,8,Germany,135,12.69
+2020,8,Greece,20,9.524
+2020,8,Hungary,10,7.285
+2020,8,Iceland,0,9.649
+2020,8,Ireland,13,7.063
+2020,8,Israel,286,7.73
+2020,8,Italy,266,9.625
+2020,8,Japan,58,11.209
+2020,8,South Korea,16,8.355
+2020,8,Latvia,1,7.285
+2020,8,Lithuania,3,7.474
+2020,8,Luxembourg,8,5.765
+2020,8,Mexico,21283,6.054
+2020,8,Netherlands,28,11.224
+2020,8,New Zealand,0,9.732
+2020,8,Norway,3,11.424
+2020,8,Poland,236,6.497
+2020,8,Portugal,98,10.548
+2020,8,Slovak Republic,4,7.126
+2020,8,Slovenia,16,9.428
+2020,8,Spain,309,10.732
+2020,8,Sweden,123,11.333
+2020,8,Switzerland,19,12.004
+2020,8,T�rkiye,485,4.616
+2020,8,United Kingdom,2688,11.965
+2020,8,United States of America,31626,18.582
+2020,9,Australia,407,10.66
+2020,9,Austria,45,11.316
+2020,9,Belgium,157,11.27
+2020,9,Canada,172,13.024
+2020,9,Chile,1540,9.697
+2020,9,Colombia,8638,8.708
+2020,9,Costa Rica,251,7.825
+2020,9,Czech Republic,50,9.214
+2020,9,Denmark,11,10.719
+2020,9,Estonia,1,7.589
+2020,9,Finland,1,9.632
+2020,9,France,474,12.072
+2020,9,Germany,115,12.69
+2020,9,Greece,77,9.524
+2020,9,Hungary,22,7.285
+2020,9,Iceland,0,9.649
+2020,9,Ireland,7,7.063
+2020,9,Israel,371,7.73
+2020,9,Italy,221,9.625
+2020,9,Japan,317,11.209
+2020,9,South Korea,29,8.355
+2020,9,Latvia,3,7.285
+2020,9,Lithuania,5,7.474
+2020,9,Luxembourg,0,5.765
+2020,9,Mexico,15874,6.054
+2020,9,Netherlands,94,11.224
+2020,9,New Zealand,2,9.732
+2020,9,Norway,3,11.424
+2020,9,Poland,313,6.497
+2020,9,Portugal,85,10.548
+2020,9,Slovak Republic,8,7.126
+2020,9,Slovenia,4,9.428
+2020,9,Spain,1416,10.732
+2020,9,Sweden,57,11.333
+2020,9,Switzerland,24,12.004
+2020,9,T�rkiye,791,4.616
+2020,9,United Kingdom,1467,11.965
+2020,9,United States of America,24435,18.582
+2020,10,Australia,124,10.66
+2020,10,Austria,113,11.316
+2020,10,Belgium,165,11.27
+2020,10,Canada,266,13.024
+2020,10,Chile,1368,9.697
+2020,10,Colombia,5509,8.708
+2020,10,Costa Rica,461,7.825
+2020,10,Czech Republic,330,9.214
+2020,10,Denmark,48,10.719
+2020,10,Estonia,3,7.589
+2020,10,Finland,13,9.632
+2020,10,France,1884,12.072
+2020,10,Germany,381,12.69
+2020,10,Greece,123,9.524
+2020,10,Hungary,231,7.285
+2020,10,Iceland,0,9.649
+2020,10,Ireland,45,7.063
+2020,10,Israel,689,7.73
+2020,10,Italy,527,9.625
+2020,10,Japan,240,11.209
+2020,10,South Korea,87,8.355
+2020,10,Latvia,4,7.285
+2020,10,Lithuania,28,7.474
+2020,10,Luxembourg,4,5.765
+2020,10,Mexico,11589,6.054
+2020,10,Netherlands,276,11.224
+2020,10,New Zealand,1,9.732
+2020,10,Norway,11,11.424
+2020,10,Poland,509,6.497
+2020,10,Portugal,175,10.548
+2020,10,Slovak Republic,50,7.126
+2020,10,Slovenia,28,9.428
+2020,10,Spain,3334,10.732
+2020,10,Sweden,53,11.333
+2020,10,Switzerland,59,12.004
+2020,10,T�rkiye,1764,4.616
+2020,10,United Kingdom,2535,11.965
+2020,10,United States of America,17459,18.582
+2020,11,Australia,8,10.66
+2020,11,Austria,523,11.316
+2020,11,Belgium,1943,11.27
+2020,11,Canada,690,13.024
+2020,11,Chile,1288,9.697
+2020,11,Colombia,4738,8.708
+2020,11,Costa Rica,441,7.825
+2020,11,Czech Republic,3055,9.214
+2020,11,Denmark,83,10.719
+2020,11,Estonia,6,7.589
+2020,11,Finland,15,9.632
+2020,11,France,6654,12.072
+2020,11,Germany,3347,12.69
+2020,11,Greece,235,9.524
+2020,11,Hungary,1149,7.285
+2020,11,Iceland,7,9.649
+2020,11,Ireland,126,7.063
+2020,11,Israel,848,7.73
+2020,11,Italy,4315,9.625
+2020,11,Japan,169,11.209
+2020,11,South Korea,45,8.355
+2020,11,Latvia,41,7.285
+2020,11,Lithuania,157,7.474
+2020,11,Luxembourg,38,5.765
+2020,11,Mexico,11620,6.054
+2020,11,Netherlands,1324,11.224
+2020,11,New Zealand,0,9.732
+2020,11,Norway,21,11.424
+2020,11,Poland,3154,6.497
+2020,11,Portugal,577,10.548
+2020,11,Slovak Republic,419,7.126
+2020,11,Slovenia,280,9.428
+2020,11,Spain,5182,10.732
+2020,11,Sweden,163,11.333
+2020,11,Switzerland,480,12.004
+2020,11,T�rkiye,1868,4.616
+2020,11,United Kingdom,11880,11.965
+2020,11,United States of America,23058,18.582
+2020,12,Australia,8,10.66
+2020,12,Austria,6250,11.316
+2020,12,Belgium,7793,11.27
+2020,12,Canada,5572,13.024
+2020,12,Chile,2517,9.697
+2020,12,Colombia,12360,8.708
+2020,12,Costa Rica,822,7.825
+2020,12,Czech Republic,8633,9.214
+2020,12,Denmark,245,10.719
+2020,12,Estonia,176,7.589
+2020,12,Finland,230,9.632
+2020,12,France,37810,12.072
+2020,12,Germany,39447,12.69
+2020,12,Greece,4353,9.524
+2020,12,Hungary,8555,7.285
+2020,12,Iceland,12,9.649
+2020,12,Ireland,413,7.063
+2020,12,Israel,864,7.73
+2020,12,Italy,39538,9.625
+2020,12,Japan,1782,11.209
+2020,12,South Korea,496,8.355
+2020,12,Latvia,648,7.285
+2020,12,Lithuania,2251,7.474
+2020,12,Luxembourg,158,5.765
+2020,12,Mexico,41175,6.054
+2020,12,Netherlands,4283,11.224
+2020,12,New Zealand,0,9.732
+2020,12,Norway,252,11.424
+2020,12,Poland,23396,6.497
+2020,12,Portugal,4624,10.548
+2020,12,Slovak Republic,2901,7.126
+2020,12,Slovenia,2687,9.428
+2020,12,Spain,15195,10.732
+2020,12,Sweden,4068,11.333
+2020,12,Switzerland,5437,12.004
+2020,12,T�rkiye,11043,4.616
+2020,12,United Kingdom,82773,11.965
+2020,12,United States of America,158567,18.582
+2021,1,Australia,1,10.425
+2021,1,Austria,1655,12.152
+2021,1,Belgium,1394,11.044
+2021,1,Canada,4030,12.419
+2021,1,Chile,1615,9.718
+2021,1,Colombia,9789,9.017
+2021,1,Costa Rica,411,7.529
+2021,1,Czech Republic,4413,9.489
+2021,1,Denmark,0,10.747
+2021,1,Estonia,171,7.545
+2021,1,Finland,102,9.835
+2021,1,France,13474,12.292
+2021,1,Germany,18064,12.902
+2021,1,Greece,823,9.185
+2021,1,Hungary,2613,7.382
+2021,1,Iceland,0,9.71
+2021,1,Ireland,1390,6.596
+2021,1,Israel,1332,7.653
+2021,1,Italy,12662,9.346
+2021,1,Japan,2106,11.19
+2021,1,South Korea,458,8.957
+2021,1,Latvia,635,9.11
+2021,1,Lithuania,685,7.76
+2021,1,Luxembourg,42,5.661
+2021,1,Mexico,35749,5.892
+2021,1,Netherlands,2143,11.125
+2021,1,New Zealand,0,10.224
+2021,1,Norway,82,9.814
+2021,1,Poland,8115,6.439
+2021,1,Portugal,5566,11.124
+2021,1,Slovak Republic,2416,7.757
+2021,1,Slovenia,728,9.481
+2021,1,Spain,11128,10.309
+2021,1,Sweden,2144,11.102
+2021,1,Switzerland,1409,12.005
+2021,1,T�rkiye,4570,4.561
+2021,1,United Kingdom,97305,12.019
+2021,1,United States of America,95868,17.299
+2021,2,Australia,1,10.425
+2021,2,Austria,993,12.152
+2021,2,Belgium,956,11.044
+2021,2,Canada,2076,12.419
+2021,2,Chile,2137,9.718
+2021,2,Colombia,6234,9.017
+2021,2,Costa Rica,196,7.529
+2021,2,Czech Republic,4167,9.489
+2021,2,Denmark,0,10.747
+2021,2,Estonia,173,7.545
+2021,2,Finland,83,9.835
+2021,2,France,10692,12.292
+2021,2,Germany,6653,12.902
+2021,2,Greece,727,9.185
+2021,2,Hungary,2314,7.382
+2021,2,Iceland,0,9.71
+2021,2,Ireland,893,6.596
+2021,2,Israel,978,7.653
+2021,2,Italy,8867,9.346
+2021,2,Japan,2206,11.19
+2021,2,South Korea,183,8.957
+2021,2,Latvia,405,9.11
+2021,2,Lithuania,314,7.76
+2021,2,Luxembourg,69,5.661
+2021,2,Mexico,24793,5.892
+2021,2,Netherlands,1485,11.125
+2021,2,New Zealand,1,10.224
+2021,2,Norway,28,9.814
+2021,2,Poland,6628,6.439
+2021,2,Portugal,3555,11.124
+2021,2,Slovak Republic,2622,7.757
+2021,2,Slovenia,317,9.481
+2021,2,Spain,8781,10.309
+2021,2,Sweden,792,11.102
+2021,2,Switzerland,463,12.005
+2021,2,T�rkiye,2638,4.561
+2021,2,United Kingdom,64755,12.019
+2021,2,United States of America,50130,17.299
+2021,3,Australia,1,10.425
+2021,3,Austria,866,12.152
+2021,3,Belgium,708,11.044
+2021,3,Canada,891,12.419
+2021,3,Chile,2177,9.718
+2021,3,Colombia,3127,9.017
+2021,3,Costa Rica,131,7.529
+2021,3,Czech Republic,5593,9.489
+2021,3,Denmark,0,10.747
+2021,3,Estonia,276,7.545
+2021,3,Finland,82,9.835
+2021,3,France,7664,12.292
+2021,3,Germany,4956,12.902
+2021,3,Greece,1459,9.185
+2021,3,Hungary,5608,7.382
+2021,3,Iceland,0,9.71
+2021,3,Ireland,236,6.596
+2021,3,Israel,425,7.653
+2021,3,Italy,10716,9.346
+2021,3,Japan,1171,11.19
+2021,3,South Korea,119,8.957
+2021,3,Latvia,249,9.11
+2021,3,Lithuania,247,7.76
+2021,3,Luxembourg,90,5.661
+2021,3,Mexico,12623,5.892
+2021,3,Netherlands,753,11.125
+2021,3,New Zealand,0,10.224
+2021,3,Norway,71,9.814
+2021,3,Poland,8154,6.439
+2021,3,Portugal,486,11.124
+2021,3,Slovak Republic,2054,7.757
+2021,3,Slovenia,186,9.481
+2021,3,Spain,2769,10.309
+2021,3,Sweden,523,11.102
+2021,3,Switzerland,259,12.005
+2021,3,T�rkiye,2420,4.561
+2021,3,United Kingdom,17289,12.019
+2021,3,United States of America,21853,17.299
+2021,4,Australia,3,10.425
+2021,4,Austria,967,12.152
+2021,4,Belgium,1077,11.044
+2021,4,Canada,1026,12.419
+2021,4,Chile,3089,9.718
+2021,4,Colombia,7801,9.017
+2021,4,Costa Rica,205,7.529
+2021,4,Czech Republic,2823,9.489
+2021,4,Denmark,0,10.747
+2021,4,Estonia,198,7.545
+2021,4,Finland,81,9.835
+2021,4,France,8225,12.292
+2021,4,Germany,6421,12.902
+2021,4,Greece,2112,9.185
+2021,4,Hungary,5610,7.382
+2021,4,Iceland,0,9.71
+2021,4,Ireland,115,6.596
+2021,4,Israel,207,7.653
+2021,4,Italy,10876,9.346
+2021,4,Japan,882,11.19
+2021,4,South Korea,91,8.957
+2021,4,Latvia,247,9.11
+2021,4,Lithuania,290,7.76
+2021,4,Luxembourg,31,5.661
+2021,4,Mexico,7867,5.892
+2021,4,Netherlands,576,11.125
+2021,4,New Zealand,0,10.224
+2021,4,Norway,50,9.814
+2021,4,Poland,13588,6.439
+2021,4,Portugal,122,11.124
+2021,4,Slovak Republic,1057,7.757
+2021,4,Slovenia,206,9.481
+2021,4,Spain,2199,10.309
+2021,4,Sweden,547,11.102
+2021,4,Switzerland,234,12.005
+2021,4,T�rkiye,7088,4.561
+2021,4,United Kingdom,4692,12.019
+2021,4,United States of America,17614,17.299
+2021,5,Australia,0,10.425
+2021,5,Austria,529,12.152
+2021,5,Belgium,778,11.044
+2021,5,Canada,1267,12.419
+2021,5,Chile,2644,9.718
+2021,5,Colombia,13273,9.017
+2021,5,Costa Rica,629,7.529
+2021,5,Czech Republic,879,9.489
+2021,5,Denmark,0,10.747
+2021,5,Estonia,92,7.545
+2021,5,Finland,42,9.835
+2021,5,France,5736,12.292
+2021,5,Germany,3441,12.902
+2021,5,Greece,1709,9.185
+2021,5,Hungary,1762,7.382
+2021,5,Iceland,1,9.71
+2021,5,Ireland,47,6.596
+2021,5,Israel,44,7.653
+2021,5,Italy,5330,9.346
+2021,5,Japan,2399,11.19
+2021,5,South Korea,121,8.957
+2021,5,Latvia,248,9.11
+2021,5,Lithuania,250,7.76
+2021,5,Luxembourg,11,5.661
+2021,5,Mexico,4354,5.892
+2021,5,Netherlands,451,11.125
+2021,5,New Zealand,0,10.224
+2021,5,Norway,14,9.814
+2021,5,Poland,7568,6.439
+2021,5,Portugal,52,11.124
+2021,5,Slovak Republic,395,7.757
+2021,5,Slovenia,131,9.481
+2021,5,Spain,1527,10.309
+2021,5,Sweden,403,11.102
+2021,5,Switzerland,177,12.005
+2021,5,T�rkiye,8060,4.561
+2021,5,United Kingdom,1950,12.019
+2021,5,United States of America,15136,17.299
+2021,6,Australia,0,10.425
+2021,6,Austria,190,12.152
+2021,6,Belgium,273,11.044
+2021,6,Canada,845,12.419
+2021,6,Chile,3006,9.718
+2021,6,Colombia,15027,9.017
+2021,6,Costa Rica,708,7.529
+2021,6,Czech Republic,138,9.489
+2021,6,Denmark,0,10.747
+2021,6,Estonia,28,7.545
+2021,6,Finland,26,9.835
+2021,6,France,2104,12.292
+2021,6,Germany,516,12.902
+2021,6,Greece,754,9.185
+2021,6,Hungary,287,7.382
+2021,6,Iceland,0,9.71
+2021,6,Ireland,24,6.596
+2021,6,Israel,16,7.653
+2021,6,Italy,1528,9.346
+2021,6,Japan,2111,11.19
+2021,6,South Korea,70,8.957
+2021,6,Latvia,147,9.11
+2021,6,Lithuania,103,7.76
+2021,6,Luxembourg,1,5.661
+2021,6,Mexico,2794,5.892
+2021,6,Netherlands,143,11.125
+2021,6,New Zealand,0,10.224
+2021,6,Norway,5,9.814
+2021,6,Poland,1916,6.439
+2021,6,Portugal,51,11.124
+2021,6,Slovak Republic,117,7.757
+2021,6,Slovenia,62,9.481
+2021,6,Spain,675,10.309
+2021,6,Sweden,125,11.102
+2021,6,Switzerland,75,12.005
+2021,6,T�rkiye,3051,4.561
+2021,6,United Kingdom,1269,12.019
+2021,6,United States of America,8968,17.299
+2021,7,Australia,7,10.425
+2021,7,Austria,69,12.152
+2021,7,Belgium,60,11.044
+2021,7,Canada,458,12.419
+2021,7,Chile,3011,9.718
+2021,7,Colombia,16587,9.017
+2021,7,Costa Rica,401,7.529
+2021,7,Czech Republic,24,9.489
+2021,7,Denmark,0,10.747
+2021,7,Estonia,3,7.545
+2021,7,Finland,6,9.835
+2021,7,France,721,12.292
+2021,7,Germany,110,12.902
+2021,7,Greece,289,9.185
+2021,7,Hungary,50,7.382
+2021,7,Iceland,0,9.71
+2021,7,Ireland,17,6.596
+2021,7,Israel,18,7.653
+2021,7,Italy,394,9.346
+2021,7,Japan,625,11.19
+2021,7,South Korea,54,8.957
+2021,7,Latvia,51,9.11
+2021,7,Lithuania,17,7.76
+2021,7,Luxembourg,2,5.661
+2021,7,Mexico,4274,5.892
+2021,7,Netherlands,40,11.125
+2021,7,New Zealand,0,10.224
+2021,7,Norway,5,9.814
+2021,7,Poland,393,6.439
+2021,7,Portugal,151,11.124
+2021,7,Slovak Republic,28,7.757
+2021,7,Slovenia,15,9.481
+2021,7,Spain,453,10.309
+2021,7,Sweden,22,11.102
+2021,7,Switzerland,16,12.005
+2021,7,T�rkiye,1373,4.561
+2021,7,United Kingdom,2205,12.019
+2021,7,United States of America,6837,17.299
+2021,8,Australia,55,10.425
+2021,8,Austria,66,12.152
+2021,8,Belgium,77,11.044
+2021,8,Canada,203,12.419
+2021,8,Chile,1928,9.718
+2021,8,Colombia,7888,9.017
+2021,8,Costa Rica,337,7.529
+2021,8,Czech Republic,16,9.489
+2021,8,Denmark,0,10.747
+2021,8,Estonia,7,7.545
+2021,8,Finland,33,9.835
+2021,8,France,1251,12.292
+2021,8,Germany,345,12.902
+2021,8,Greece,392,9.185
+2021,8,Hungary,18,7.382
+2021,8,Iceland,0,9.71
+2021,8,Ireland,47,6.596
+2021,8,Israel,239,7.653
+2021,8,Italy,555,9.346
+2021,8,Japan,360,11.19
+2021,8,South Korea,109,8.957
+2021,8,Latvia,14,9.11
+2021,8,Lithuania,105,7.76
+2021,8,Luxembourg,6,5.661
+2021,8,Mexico,14432,5.892
+2021,8,Netherlands,157,11.125
+2021,8,New Zealand,0,10.224
+2021,8,Norway,17,9.814
+2021,8,Poland,92,6.439
+2021,8,Portugal,357,11.124
+2021,8,Slovak Republic,16,7.757
+2021,8,Slovenia,3,9.481
+2021,8,Spain,2466,10.309
+2021,8,Sweden,21,11.102
+2021,8,Switzerland,32,12.005
+2021,8,T�rkiye,2410,4.561
+2021,8,United Kingdom,6372,12.019
+2021,8,United States of America,22824,17.299
+2021,9,Australia,150,10.425
+2021,9,Austria,142,12.152
+2021,9,Belgium,161,11.044
+2021,9,Canada,470,12.419
+2021,9,Chile,870,9.718
+2021,9,Colombia,2308,9.017
+2021,9,Costa Rica,543,7.529
+2021,9,Czech Republic,28,9.489
+2021,9,Denmark,0,10.747
+2021,9,Estonia,34,7.545
+2021,9,Finland,39,9.835
+2021,9,France,2870,12.292
+2021,9,Germany,1456,12.902
+2021,9,Greece,973,9.185
+2021,9,Hungary,67,7.382
+2021,9,Iceland,3,9.71
+2021,9,Ireland,140,6.596
+2021,9,Israel,735,7.653
+2021,9,Italy,1509,9.346
+2021,9,Japan,1389,11.19
+2021,9,South Korea,193,8.957
+2021,9,Latvia,65,9.11
+2021,9,Lithuania,288,7.76
+2021,9,Luxembourg,5,5.661
+2021,9,Mexico,20731,5.892
+2021,9,Netherlands,163,11.125
+2021,9,New Zealand,1,10.224
+2021,9,Norway,60,9.814
+2021,9,Poland,124,6.439
+2021,9,Portugal,289,11.124
+2021,9,Slovak Republic,31,7.757
+2021,9,Slovenia,48,9.481
+2021,9,Spain,2358,10.309
+2021,9,Sweden,105,11.102
+2021,9,Switzerland,167,12.005
+2021,9,T�rkiye,6524,4.561
+2021,9,United Kingdom,9609,12.019
+2021,9,United States of America,57411,17.299
+2021,10,Australia,401,10.425
+2021,10,Austria,312,12.152
+2021,10,Belgium,211,11.044
+2021,10,Canada,1006,12.419
+2021,10,Chile,353,9.718
+2021,10,Colombia,1023,9.017
+2021,10,Costa Rica,858,7.529
+2021,10,Czech Republic,70,9.489
+2021,10,Denmark,2,10.747
+2021,10,Estonia,86,7.545
+2021,10,Finland,68,9.835
+2021,10,France,1468,12.292
+2021,10,Germany,1651,12.902
+2021,10,Greece,941,9.185
+2021,10,Hungary,219,7.382
+2021,10,Iceland,0,9.71
+2021,10,Ireland,177,6.596
+2021,10,Israel,519,7.653
+2021,10,Italy,1271,9.346
+2021,10,Japan,1144,11.19
+2021,10,South Korea,223,8.957
+2021,10,Latvia,230,9.11
+2021,10,Lithuania,578,7.76
+2021,10,Luxembourg,7,5.661
+2021,10,Mexico,12618,5.892
+2021,10,Netherlands,117,11.125
+2021,10,New Zealand,1,10.224
+2021,10,Norway,38,9.814
+2021,10,Poland,443,6.439
+2021,10,Portugal,182,11.124
+2021,10,Slovak Republic,267,7.757
+2021,10,Slovenia,185,9.481
+2021,10,Spain,969,10.309
+2021,10,Sweden,182,11.102
+2021,10,Switzerland,156,12.005
+2021,10,T�rkiye,6394,4.561
+2021,10,United Kingdom,11874,12.019
+2021,10,United States of America,53678,17.299
+2021,11,Australia,422,10.425
+2021,11,Austria,567,12.152
+2021,11,Belgium,501,11.044
+2021,11,Canada,943,12.419
+2021,11,Chile,287,9.718
+2021,11,Colombia,904,9.017
+2021,11,Costa Rica,522,7.529
+2021,11,Czech Republic,617,9.489
+2021,11,Denmark,8,10.747
+2021,11,Estonia,140,7.545
+2021,11,Finland,108,9.835
+2021,11,France,851,12.292
+2021,11,Germany,4578,12.902
+2021,11,Greece,1180,9.185
+2021,11,Hungary,1372,7.382
+2021,11,Iceland,1,9.71
+2021,11,Ireland,249,6.596
+2021,11,Israel,196,7.653
+2021,11,Italy,1057,9.346
+2021,11,Japan,369,11.19
+2021,11,South Korea,397,8.957
+2021,11,Latvia,865,9.11
+2021,11,Lithuania,1091,7.76
+2021,11,Luxembourg,21,5.661
+2021,11,Mexico,6173,5.892
+2021,11,Netherlands,447,11.125
+2021,11,New Zealand,4,10.224
+2021,11,Norway,144,9.814
+2021,11,Poland,1893,6.439
+2021,11,Portugal,159,11.124
+2021,11,Slovak Republic,753,7.757
+2021,11,Slovenia,266,9.481
+2021,11,Spain,454,10.309
+2021,11,Sweden,118,11.102
+2021,11,Switzerland,138,12.005
+2021,11,T�rkiye,5946,4.561
+2021,11,United Kingdom,12315,12.019
+2021,11,United States of America,34136,17.299
+2021,12,Australia,517,10.425
+2021,12,Austria,2677,12.152
+2021,12,Belgium,2036,11.044
+2021,12,Canada,1177,12.419
+2021,12,Chile,1299,9.718
+2021,12,Colombia,2486,9.017
+2021,12,Costa Rica,223,7.529
+2021,12,Czech Republic,5258,9.489
+2021,12,Denmark,14,10.747
+2021,12,Estonia,320,7.545
+2021,12,Finland,416,9.835
+2021,12,France,6190,12.292
+2021,12,Germany,17777,12.902
+2021,12,Greece,4647,9.185
+2021,12,Hungary,8155,7.382
+2021,12,Iceland,4,9.71
+2021,12,Ireland,475,6.596
+2021,12,Israel,120,7.653
+2021,12,Italy,5900,9.346
+2021,12,Japan,85,11.19
+2021,12,South Korea,2750,8.957
+2021,12,Latvia,1003,9.11
+2021,12,Lithuania,1618,7.76
+2021,12,Luxembourg,60,5.661
+2021,12,Mexico,7175,5.892
+2021,12,Netherlands,2412,11.125
+2021,12,New Zealand,19,10.224
+2021,12,Norway,374,9.814
+2021,12,Poland,19881,6.439
+2021,12,Portugal,807,11.124
+2021,12,Slovak Republic,3784,7.757
+2021,12,Slovenia,877,9.481
+2021,12,Spain,2976,10.309
+2021,12,Sweden,306,11.102
+2021,12,Switzerland,1081,12.005
+2021,12,T�rkiye,10637,4.561
+2021,12,United Kingdom,22497,12.019
+2021,12,United States of America,73377,17.299
+2022,1,Australia,1989,9.805
+2022,1,Austria,349,11.157
+2022,1,Belgium,671,10.759
+2022,1,Canada,3095,11.234
+2022,1,Chile,513,10.236
+2022,1,Colombia,3618,7.574
+2022,1,Costa Rica,176,7.184
+2022,1,Czech Republic,909,8.763
+2022,1,Denmark,0,9.476
+2022,1,Estonia,93,7.02
+2022,1,Finland,438,9.685
+2022,1,France,6772,11.882
+2022,1,Germany,3547,12.605
+2022,1,Greece,2518,8.5
+2022,1,Hungary,1777,6.713
+2022,1,Iceland,5,9.08
+2022,1,Ireland,298,6.12
+2022,1,Israel,627,7.324
+2022,1,Italy,9500,8.952
+2022,1,Japan,369,11.422
+2022,1,South Korea,1025,9.434
+2022,1,Latvia,338,7.622
+2022,1,Lithuania,304,7.239
+2022,1,Luxembourg,51,5.552
+2022,1,Mexico,8292,5.721
+2022,1,Netherlands,260,10.101
+2022,1,New Zealand,1,11.322
+2022,1,Norway,120,7.943
+2022,1,Poland,7578,6.381
+2022,1,Portugal,911,10.469
+2022,1,Slovak Republic,686,7.606
+2022,1,Slovenia,311,9.691
+2022,1,Spain,5771,9.738
+2022,1,Sweden,846,10.522
+2022,1,Switzerland,408,11.707
+2022,1,T�rkiye,4510,3.703
+2022,1,United Kingdom,23204,11.052
+2022,1,United States of America,76701,16.496
+2022,2,Australia,1583,9.805
+2022,2,Austria,738,11.157
+2022,2,Belgium,1048,10.759
+2022,2,Canada,2875,11.234
+2022,2,Chile,2417,10.236
+2022,2,Colombia,4941,7.574
+2022,2,Costa Rica,466,7.184
+2022,2,Czech Republic,1430,8.763
+2022,2,Denmark,0,9.476
+2022,2,Estonia,195,7.02
+2022,2,Finland,495,9.685
+2022,2,France,7348,11.882
+2022,2,Germany,6640,12.605
+2022,2,Greece,2343,8.5
+2022,2,Hungary,2554,6.713
+2022,2,Iceland,16,9.08
+2022,2,Ireland,220,6.12
+2022,2,Israel,1327,7.324
+2022,2,Italy,8415,8.952
+2022,2,Japan,4506,11.422
+2022,2,South Korea,1303,9.434
+2022,2,Latvia,459,7.622
+2022,2,Lithuania,487,7.239
+2022,2,Luxembourg,51,5.552
+2022,2,Mexico,11165,5.721
+2022,2,Netherlands,316,10.101
+2022,2,New Zealand,4,11.322
+2022,2,Norway,246,7.943
+2022,2,Poland,6138,6.381
+2022,2,Portugal,1156,10.469
+2022,2,Slovak Republic,683,7.606
+2022,2,Slovenia,676,9.691
+2022,2,Spain,4711,9.738
+2022,2,Sweden,1368,10.522
+2022,2,Switzerland,366,11.707
+2022,2,T�rkiye,6934,3.703
+2022,2,United Kingdom,17704,11.052
+2022,2,United States of America,54044,16.496
+2022,3,Australia,579,9.805
+2022,3,Austria,945,11.157
+2022,3,Belgium,546,10.759
+2022,3,Canada,1417,11.234
+2022,3,Chile,14228,10.236
+2022,3,Colombia,1043,7.574
+2022,3,Costa Rica,267,7.184
+2022,3,Czech Republic,877,8.763
+2022,3,Denmark,0,9.476
+2022,3,Estonia,190,7.02
+2022,3,Finland,703,9.685
+2022,3,France,3529,11.882
+2022,3,Germany,7199,12.605
+2022,3,Greece,1525,8.5
+2022,3,Hungary,1282,6.713
+2022,3,Iceland,28,9.08
+2022,3,Ireland,266,6.12
+2022,3,Israel,313,7.324
+2022,3,Italy,4319,8.952
+2022,3,Japan,4497,11.422
+2022,3,South Korea,7128,9.434
+2022,3,Latvia,439,7.622
+2022,3,Lithuania,213,7.239
+2022,3,Luxembourg,49,5.552
+2022,3,Mexico,2020,5.721
+2022,3,Netherlands,352,10.101
+2022,3,New Zealand,175,11.322
+2022,3,Norway,129,7.943
+2022,3,Poland,3512,6.381
+2022,3,Portugal,580,10.469
+2022,3,Slovak Republic,546,7.606
+2022,3,Slovenia,295,9.691
+2022,3,Spain,1656,9.738
+2022,3,Sweden,829,10.522
+2022,3,Switzerland,307,11.707
+2022,3,T�rkiye,3861,3.703
+2022,3,United Kingdom,13888,11.052
+2022,3,United States of America,16110,16.496
+2022,4,Australia,963,9.805
+2022,4,Austria,792,11.157
+2022,4,Belgium,619,10.759
+2022,4,Canada,1342,11.234
+2022,4,Chile,1077,10.236
+2022,4,Colombia,221,7.574
+2022,4,Costa Rica,117,7.184
+2022,4,Czech Republic,497,8.763
+2022,4,Denmark,0,9.476
+2022,4,Estonia,86,7.02
+2022,4,Finland,859,9.685
+2022,4,France,3387,11.882
+2022,4,Germany,4621,12.605
+2022,4,Greece,1610,8.5
+2022,4,Hungary,732,6.713
+2022,4,Iceland,23,9.08
+2022,4,Ireland,340,6.12
+2022,4,Israel,217,7.324
+2022,4,Italy,4372,8.952
+2022,4,Japan,1541,11.422
+2022,4,South Korea,7057,9.434
+2022,4,Latvia,236,7.622
+2022,4,Lithuania,61,7.239
+2022,4,Luxembourg,43,5.552
+2022,4,Mexico,411,5.721
+2022,4,Netherlands,218,10.101
+2022,4,New Zealand,413,11.322
+2022,4,Norway,24,7.943
+2022,4,Poland,1120,6.381
+2022,4,Portugal,575,10.469
+2022,4,Slovak Republic,182,7.606
+2022,4,Slovenia,222,9.691
+2022,4,Spain,1453,9.738
+2022,4,Sweden,383,10.522
+2022,4,Switzerland,182,11.707
+2022,4,T�rkiye,994,3.703
+2022,4,United Kingdom,18136,11.052
+2022,4,United States of America,6226,16.496
+2022,5,Australia,1266,9.805
+2022,5,Austria,249,11.157
+2022,5,Belgium,311,10.759
+2022,5,Canada,1911,11.234
+2022,5,Chile,419,10.236
+2022,5,Colombia,68,7.574
+2022,5,Costa Rica,89,7.184
+2022,5,Czech Republic,166,8.763
+2022,5,Denmark,0,9.476
+2022,5,Estonia,25,7.02
+2022,5,Finland,504,9.685
+2022,5,France,2732,11.882
+2022,5,Germany,1967,12.605
+2022,5,Greece,743,8.5
+2022,5,Hungary,369,6.713
+2022,5,Iceland,1,9.08
+2022,5,Ireland,134,6.12
+2022,5,Israel,109,7.324
+2022,5,Italy,3574,8.952
+2022,5,Japan,999,11.422
+2022,5,South Korea,1744,9.434
+2022,5,Latvia,69,7.622
+2022,5,Lithuania,14,7.239
+2022,5,Luxembourg,25,5.552
+2022,5,Mexico,157,5.721
+2022,5,Netherlands,72,10.101
+2022,5,New Zealand,373,11.322
+2022,5,Norway,30,7.943
+2022,5,Poland,321,6.381
+2022,5,Portugal,674,10.469
+2022,5,Slovak Republic,55,7.606
+2022,5,Slovenia,131,9.691
+2022,5,Spain,1995,9.738
+2022,5,Sweden,186,10.522
+2022,5,Switzerland,58,11.707
+2022,5,T�rkiye,251,3.703
+2022,5,United Kingdom,13996,11.052
+2022,5,United States of America,6284,16.496
+2022,6,Australia,1394,9.805
+2022,6,Austria,109,11.157
+2022,6,Belgium,162,10.759
+2022,6,Canada,353,11.234
+2022,6,Chile,432,10.236
+2022,6,Colombia,85,7.574
+2022,6,Costa Rica,61,7.184
+2022,6,Czech Republic,31,8.763
+2022,6,Denmark,0,9.476
+2022,6,Estonia,22,7.02
+2022,6,Finland,275,9.685
+2022,6,France,1206,11.882
+2022,6,Germany,1123,12.605
+2022,6,Greece,365,8.5
+2022,6,Hungary,82,6.713
+2022,6,Iceland,2,9.08
+2022,6,Ireland,77,6.12
+2022,6,Israel,56,7.324
+2022,6,Italy,1750,8.952
+2022,6,Japan,738,11.422
+2022,6,South Korea,476,9.434
+2022,6,Latvia,45,7.622
+2022,6,Lithuania,8,7.239
+2022,6,Luxembourg,14,5.552
+2022,6,Mexico,186,5.721
+2022,6,Netherlands,39,10.101
+2022,6,New Zealand,333,11.322
+2022,6,Norway,39,7.943
+2022,6,Poland,120,6.381
+2022,6,Portugal,1057,10.469
+2022,6,Slovak Republic,14,7.606
+2022,6,Slovenia,40,9.691
+2022,6,Spain,1820,9.738
+2022,6,Sweden,99,10.522
+2022,6,Switzerland,26,11.707
+2022,6,T�rkiye,86,3.703
+2022,6,United Kingdom,5296,11.052
+2022,6,United States of America,8297,16.496
+2022,7,Australia,1519,9.805
+2022,7,Austria,216,11.157
+2022,7,Belgium,225,10.759
+2022,7,Canada,609,11.234
+2022,7,Chile,813,10.236
+2022,7,Colombia,447,7.574
+2022,7,Costa Rica,120,7.184
+2022,7,Czech Republic,58,8.763
+2022,7,Denmark,0,9.476
+2022,7,Estonia,23,7.02
+2022,7,Finland,248,9.685
+2022,7,France,1633,11.882
+2022,7,Germany,2838,12.605
+2022,7,Greece,628,8.5
+2022,7,Hungary,127,6.713
+2022,7,Iceland,4,9.08
+2022,7,Ireland,155,6.12
+2022,7,Israel,337,7.324
+2022,7,Italy,2851,8.952
+2022,7,Japan,565,11.422
+2022,7,South Korea,302,9.434
+2022,7,Latvia,41,7.622
+2022,7,Lithuania,10,7.239
+2022,7,Luxembourg,17,5.552
+2022,7,Mexico,1178,5.721
+2022,7,Netherlands,99,10.101
+2022,7,New Zealand,453,11.322
+2022,7,Norway,8,7.943
+2022,7,Poland,77,6.381
+2022,7,Portugal,549,10.469
+2022,7,Slovak Republic,24,7.606
+2022,7,Slovenia,59,9.691
+2022,7,Spain,3125,9.738
+2022,7,Sweden,200,10.522
+2022,7,Switzerland,101,11.707
+2022,7,T�rkiye,167,3.703
+2022,7,United Kingdom,7940,11.052
+2022,7,United States of America,10293,16.496
+2022,8,Australia,2354,9.805
+2022,8,Austria,338,11.157
+2022,8,Belgium,307,10.759
+2022,8,Canada,1142,11.234
+2022,8,Chile,922,10.236
+2022,8,Colombia,922,7.574
+2022,8,Costa Rica,147,7.184
+2022,8,Czech Republic,321,8.763
+2022,8,Denmark,0,9.476
+2022,8,Estonia,30,7.02
+2022,8,Finland,397,9.685
+2022,8,France,2450,11.882
+2022,8,Germany,3581,12.605
+2022,8,Greece,1360,8.5
+2022,8,Hungary,406,6.713
+2022,8,Ireland,146,6.12
+2022,8,Israel,303,7.324
+2022,8,Italy,4566,8.952
+2022,8,Japan,3761,11.422
+2022,8,South Korea,945,9.434
+2022,8,Latvia,60,7.622
+2022,8,Lithuania,27,7.239
+2022,8,Luxembourg,9,5.552
+2022,8,Mexico,2264,5.721
+2022,8,Netherlands,123,10.101
+2022,8,New Zealand,292,11.322
+2022,8,Norway,0,7.943
+2022,8,Poland,325,6.381
+2022,8,Portugal,280,10.469
+2022,8,Slovak Republic,60,7.606
+2022,8,Slovenia,201,9.691
+2022,8,Spain,2841,9.738
+2022,8,Sweden,442,10.522
+2022,8,Switzerland,119,11.707
+2022,8,T�rkiye,1216,3.703
+2022,8,United Kingdom,13056,11.052
+2022,8,United States of America,13315,16.496
+2022,9,Australia,1158,9.805
+2022,9,Austria,200,11.157
+2022,9,Belgium,180,10.759
+2022,9,Canada,1114,11.234
+2022,9,Chile,788,10.236
+2022,9,Colombia,421,7.574
+2022,9,Costa Rica,113,7.184
+2022,9,Czech Republic,243,8.763
+2022,9,Denmark,0,9.476
+2022,9,Estonia,19,7.02
+2022,9,Finland,368,9.685
+2022,9,France,1358,11.882
+2022,9,Germany,1658,12.605
+2022,9,Greece,809,8.5
+2022,9,Hungary,288,6.713
+2022,9,Ireland,71,6.12
+2022,9,Israel,126,7.324
+2022,9,Italy,2181,8.952
+2022,9,Japan,7423,11.422
+2022,9,South Korea,1823,9.434
+2022,9,Latvia,68,7.622
+2022,9,Lithuania,27,7.239
+2022,9,Luxembourg,4,5.552
+2022,9,Mexico,799,5.721
+2022,9,Netherlands,60,10.101
+2022,9,New Zealand,0,11.322
+2022,9,Norway,0,7.943
+2022,9,Poland,479,6.381
+2022,9,Portugal,172,10.469
+2022,9,Slovak Republic,49,7.606
+2022,9,Slovenia,126,9.691
+2022,9,Spain,1067,9.738
+2022,9,Sweden,404,10.522
+2022,9,Switzerland,46,11.707
+2022,9,T�rkiye,664,3.703
+2022,9,United Kingdom,7564,11.052
+2022,9,United States of America,11969,16.496
+2022,10,Australia,546,9.805
+2022,10,Austria,218,11.157
+2022,10,Belgium,139,10.759
+2022,10,Canada,892,11.234
+2022,10,Chile,557,10.236
+2022,10,Colombia,99,7.574
+2022,10,Costa Rica,61,7.184
+2022,10,Czech Republic,353,8.763
+2022,10,Denmark,0,9.476
+2022,10,Estonia,52,7.02
+2022,10,Finland,384,9.685
+2022,10,France,980,11.882
+2022,10,Germany,3038,12.605
+2022,10,Greece,425,8.5
+2022,10,Hungary,345,6.713
+2022,10,Ireland,82,6.12
+2022,10,Israel,54,7.324
+2022,10,Italy,1410,8.952
+2022,10,Japan,2717,11.422
+2022,10,South Korea,1175,9.434
+2022,10,Latvia,115,7.622
+2022,10,Lithuania,26,7.239
+2022,10,Luxembourg,6,5.552
+2022,10,Mexico,249,5.721
+2022,10,Netherlands,88,10.101
+2022,10,New Zealand,0,11.322
+2022,10,Norway,0,7.943
+2022,10,Poland,505,6.381
+2022,10,Portugal,175,10.469
+2022,10,Slovak Republic,61,7.606
+2022,10,Slovenia,140,9.691
+2022,10,Spain,548,9.738
+2022,10,Sweden,385,10.522
+2022,10,Switzerland,49,11.707
+2022,10,T�rkiye,173,3.703
+2022,10,United Kingdom,5656,11.052
+2022,10,United States of America,9647,16.496
+2022,11,Australia,373,9.805
+2022,11,Austria,294,11.157
+2022,11,Belgium,211,10.759
+2022,11,Canada,1422,11.234
+2022,11,Chile,483,10.236
+2022,11,Colombia,43,7.574
+2022,11,Costa Rica,35,7.184
+2022,11,Czech Republic,372,8.763
+2022,11,Denmark,238,9.476
+2022,11,Estonia,44,7.02
+2022,11,Finland,769,9.685
+2022,11,France,1892,11.882
+2022,11,Germany,4784,12.605
+2022,11,Greece,587,8.5
+2022,11,Hungary,380,6.713
+2022,11,Ireland,117,6.12
+2022,11,Israel,66,7.324
+2022,11,Italy,2492,8.952
+2022,11,Japan,1628,11.422
+2022,11,South Korea,712,9.434
+2022,11,Latvia,98,7.622
+2022,11,Lithuania,40,7.239
+2022,11,Luxembourg,15,5.552
+2022,11,Mexico,96,5.721
+2022,11,Netherlands,146,10.101
+2022,11,New Zealand,24,11.322
+2022,11,Poland,414,6.381
+2022,11,Portugal,207,10.469
+2022,11,Slovak Republic,72,7.606
+2022,11,Slovenia,165,9.691
+2022,11,Spain,634,9.738
+2022,11,Sweden,343,10.522
+2022,11,Switzerland,103,11.707
+2022,11,T�rkiye,122,3.703
+2022,11,United Kingdom,11152,11.052
+2022,11,United States of America,8841,16.496
+2022,12,Australia,2706,9.805
+2022,12,Austria,454,11.157
+2022,12,Belgium,405,10.759
+2022,12,Canada,2575,11.234
+2022,12,Chile,1383,10.236
+2022,12,Colombia,329,7.574
+2022,12,Costa Rica,76,7.184
+2022,12,Czech Republic,424,8.763
+2022,12,Denmark,541,9.476
+2022,12,Estonia,116,7.02
+2022,12,Finland,1338,9.685
+2022,12,France,4759,11.882
+2022,12,Germany,6991,12.605
+2022,12,Greece,1209,8.5
+2022,12,Hungary,447,6.713
+2022,12,Iceland,69,9.08
+2022,12,Ireland,305,6.12
+2022,12,Israel,270,7.324
+2022,12,Italy,6319,8.952
+2022,12,Japan,10582,11.422
+2022,12,South Korea,2881,9.434
+2022,12,Latvia,203,7.622
+2022,12,Lithuania,33,7.239
+2022,12,Luxembourg,37,5.552
+2022,12,Mexico,686,5.721
+2022,12,Netherlands,121,10.101
+2022,12,New Zealand,212,11.322
+2022,12,Poland,364,6.381
+2022,12,Portugal,485,10.469
+2022,12,Slovak Republic,66,7.606
+2022,12,Slovenia,352,9.691
+2022,12,Spain,1526,9.738
+2022,12,Sweden,1559,10.522
+2022,12,Switzerland,156,11.707
+2022,12,T�rkiye,35,3.703
+2022,12,United Kingdom,12624,11.052
+2022,12,United States of America,22791,16.496
+2023,1,Australia,0,
+2023,1,Austria,211,10.954
+2023,1,Belgium,184,
+2023,1,Canada,1170,11.224
+2023,1,Chile,592,10.002
+2023,1,Colombia,307,7.692
+2023,1,Costa Rica,73,
+2023,1,Czech Republic,143,8.54
+2023,1,Denmark,175,9.441
+2023,1,Estonia,41,7.559
+2023,1,Finland,396,
+2023,1,France,2031,
+2023,1,Germany,2015,11.799
+2023,1,Greece,737,
+2023,1,Hungary,87,6.362
+2023,1,Iceland,0,8.992
+2023,1,Ireland,171,6.565
+2023,1,Israel,132,
+2023,1,Italy,1981,8.447
+2023,1,Japan,775,
+2023,1,South Korea,195,9.88
+2023,1,Latvia,88,
+2023,1,Lithuania,42,7.3
+2023,1,Luxembourg,19,5.783
+2023,1,Mexico,1093,
+2023,1,New Zealand,0,
+2023,1,Poland,209,
+2023,1,Portugal,216,10.003
+2023,1,Slovak Republic,29,
+2023,1,Slovenia,205,
+2023,1,Spain,713,
+2023,1,Sweden,1053,10.911
+2023,1,Switzerland,47,
+2023,1,T�rkiye,0,
+2023,1,United Kingdom,13784,10.884
+2023,1,United States of America,13741,
+2023,2,Australia,1436,
+2023,2,Austria,178,10.954
+2023,2,Belgium,184,
+2023,2,Canada,858,11.224
+2023,2,Chile,394,10.002
+2023,2,Colombia,129,7.692
+2023,2,Costa Rica,72,
+2023,2,Czech Republic,132,8.54
+2023,2,Denmark,99,9.441
+2023,2,Estonia,28,7.559
+2023,2,Finland,140,
+2023,2,France,787,
+2023,2,Germany,1999,11.799
+2023,2,Greece,428,
+2023,2,Hungary,34,6.362
+2023,2,Ireland,65,6.565
+2023,2,Israel,92,
+2023,2,Italy,1124,8.447
+2023,2,Japan,13772,
+2023,2,South Korea,1465,9.88
+2023,2,Latvia,48,
+2023,2,Lithuania,16,7.3
+2023,2,Luxembourg,10,5.783
+2023,2,Mexico,629,
+2023,2,New Zealand,211,
+2023,2,Poland,153,
+2023,2,Portugal,189,10.003
+2023,2,Slovak Republic,35,
+2023,2,Slovenia,72,
+2023,2,Spain,395,
+2023,2,Sweden,263,10.911
+2023,2,Switzerland,22,
+2023,2,T�rkiye,0,
+2023,2,United Kingdom,7968,10.884
+2023,2,United States of America,9258,
+2023,3,Australia,337,
+2023,3,Austria,230,10.954
+2023,3,Belgium,195,
+2023,3,Canada,658,11.224
+2023,3,Chile,324,10.002
+2023,3,Colombia,50,7.692
+2023,3,Costa Rica,79,
+2023,3,Czech Republic,192,8.54
+2023,3,Denmark,116,9.441
+2023,3,Estonia,25,7.559
+2023,3,Finland,127,
+2023,3,France,613,
+2023,3,Germany,2278,11.799
+2023,3,Greece,315,
+2023,3,Hungary,49,6.362
+2023,3,Ireland,56,6.565
+2023,3,Israel,102,
+2023,3,Italy,804,8.447
+2023,3,Japan,1479,
+2023,3,South Korea,262,9.88
+2023,3,Latvia,55,
+2023,3,Lithuania,15,7.3
+2023,3,Luxembourg,10,5.783
+2023,3,Mexico,390,
+2023,3,New Zealand,120,
+2023,3,Poland,377,
+2023,3,Portugal,193,10.003
+2023,3,Slovak Republic,32,
+2023,3,Slovenia,79,
+2023,3,Spain,397,
+2023,3,Sweden,186,10.911
+2023,3,Switzerland,25,
+2023,3,T�rkiye,0,
+2023,3,United Kingdom,9972,10.884
+2023,3,United States of America,7282,
+2023,4,Australia,503,
+2023,4,Austria,145,10.954
+2023,4,Belgium,110,
+2023,4,Canada,543,11.224
+2023,4,Chile,-3159,10.002
+2023,4,Colombia,41,7.692
+2023,4,Costa Rica,30,
+2023,4,Czech Republic,117,8.54
+2023,4,Denmark,172,9.441
+2023,4,Estonia,35,7.559
+2023,4,Finland,276,
+2023,4,France,847,
+2023,4,Germany,1244,11.799
+2023,4,Greece,192,
+2023,4,Hungary,40,6.362
+2023,4,Ireland,66,6.565
+2023,4,Israel,87,
+2023,4,Italy,710,8.447
+2023,4,Japan,629,
+2023,4,South Korea,204,9.88
+2023,4,Latvia,58,
+2023,4,Lithuania,10,7.3
+2023,4,Mexico,322,
+2023,4,New Zealand,54,
+2023,4,Poland,284,
+2023,4,Portugal,149,10.003
+2023,4,Slovak Republic,20,
+2023,4,Slovenia,92,
+2023,4,Spain,362,
+2023,4,Sweden,223,10.911
+2023,4,Switzerland,26,
+2023,4,T�rkiye,0,
+2023,4,United Kingdom,9948,10.884
+2023,4,United States of America,5232,
+2023,5,Australia,671,
+2023,5,Austria,71,10.954
+2023,5,Belgium,52,
+2023,5,Canada,411,11.224
+2023,5,Chile,135,10.002
+2023,5,Colombia,21,7.692
+2023,5,Costa Rica,27,
+2023,5,Czech Republic,41,8.54
+2023,5,Denmark,128,9.441
+2023,5,Estonia,16,7.559
+2023,5,Finland,380,
+2023,5,France,785,
+2023,5,Germany,523,11.799
+2023,5,Greece,228,
+2023,5,Hungary,21,6.362
+2023,5,Ireland,86,6.565
+2023,5,Israel,54,
+2023,5,Italy,707,8.447
+2023,5,Japan,318,
+2023,5,South Korea,260,9.88
+2023,5,Latvia,37,
+2023,5,Lithuania,8,7.3
+2023,5,Mexico,164,
+2023,5,New Zealand,177,
+2023,5,Poland,76,
+2023,5,Portugal,150,10.003
+2023,5,Slovak Republic,7,
+2023,5,Slovenia,65,
+2023,5,Spain,428,
+2023,5,Sweden,281,10.911
+2023,5,Switzerland,27,
+2023,5,T�rkiye,0,
+2023,5,United Kingdom,6440,10.884
+2023,5,United States of America,3571,
+2023,6,Australia,854,
+2023,6,Austria,31,10.954
+2023,6,Belgium,20,
+2023,6,Canada,0,11.224
+2023,6,Chile,61,10.002
+2023,6,Colombia,0,7.692
+2023,6,Costa Rica,1,
+2023,6,Czech Republic,11,8.54
+2023,6,Denmark,40,9.441
+2023,6,Estonia,6,7.559
+2023,6,Finland,225,
+2023,6,France,434,
+2023,6,Germany,189,11.799
+2023,6,Greece,153,
+2023,6,Hungary,6,6.362
+2023,6,Ireland,52,6.565
+2023,6,Israel,30,
+2023,6,Italy,361,8.447
+2023,6,Japan,0,
+2023,6,South Korea,273,9.88
+2023,6,Latvia,22,
+2023,6,Lithuania,7,7.3
+2023,6,Mexico,161,
+2023,6,New Zealand,184,
+2023,6,Poland,27,
+2023,6,Portugal,167,10.003
+2023,6,Slovak Republic,1,
+2023,6,Slovenia,28,
+2023,6,Spain,351,
+2023,6,Sweden,158,10.911
+2023,6,Switzerland,7,
+2023,6,T�rkiye,0,
+2023,6,United Kingdom,3580,10.884
+2023,6,United States of America,2675,
+2023,7,Australia,-17,
+2023,7,Austria,5,10.954
+2023,7,Belgium,3,
+2023,7,Canada,0,11.224
+2023,7,Chile,26,10.002
+2023,7,Colombia,0,7.692
+2023,7,Costa Rica,0,
+2023,7,Czech Republic,3,8.54
+2023,7,Denmark,12,9.441
+2023,7,Estonia,2,7.559
+2023,7,Finland,123,
+2023,7,France,68,
+2023,7,Germany,23,11.799
+2023,7,Greece,71,
+2023,7,Hungary,3,6.362
+2023,7,Ireland,26,6.565
+2023,7,Israel,19,
+2023,7,Italy,157,8.447
+2023,7,Japan,0,
+2023,7,South Korea,199,9.88
+2023,7,Latvia,6,
+2023,7,Lithuania,0,7.3
+2023,7,Mexico,112,
+2023,7,New Zealand,95,
+2023,7,Poland,8,
+2023,7,Portugal,106,10.003
+2023,7,Slovak Republic,1,
+2023,7,Slovenia,17,
+2023,7,Spain,53,
+2023,7,Sweden,87,10.911
+2023,7,Switzerland,2,
+2023,7,T�rkiye,0,
+2023,7,United Kingdom,2024,10.884
+2023,7,United States of America,2115,
+2023,8,Australia,212,
+2023,8,Canada,21,11.224
+2023,8,Chile,23,10.002
+2023,8,Colombia,0,7.692
+2023,8,Costa Rica,1,
+2023,8,Czech Republic,1,8.54
+2023,8,Denmark,18,9.441
+2023,8,Estonia,2,7.559
+2023,8,Finland,58,
+2023,8,Greece,91,
+2023,8,Hungary,3,6.362
+2023,8,Ireland,40,6.565
+2023,8,Israel,41,
+2023,8,Italy,129,8.447
+2023,8,Japan,0,
+2023,8,South Korea,252,9.88
+2023,8,Latvia,5,
+2023,8,Lithuania,1,7.3
+2023,8,Mexico,119,
+2023,8,New Zealand,77,
+2023,8,Poland,3,
+2023,8,Portugal,146,10.003
+2023,8,Slovak Republic,0,
+2023,8,Slovenia,5,
+2023,8,Sweden,54,10.911
+2023,8,Switzerland,7,
+2023,8,T�rkiye,0,
+2023,8,United Kingdom,1468,10.884
+2023,8,United States of America,2502,
+2023,9,Australia,188,
+2023,9,Canada,155,11.224
+2023,9,Chile,27,10.002
+2023,9,Colombia,0,7.692
+2023,9,Costa Rica,0,
+2023,9,Czech Republic,13,8.54
+2023,9,Denmark,47,9.441
+2023,9,Estonia,0,7.559
+2023,9,Finland,62,
+2023,9,Greece,158,
+2023,9,Hungary,4,6.362
+2023,9,Ireland,70,6.565
+2023,9,Israel,44,
+2023,9,Italy,323,8.447
+2023,9,Japan,0,
+2023,9,South Korea,523,9.88
+2023,9,Latvia,2,
+2023,9,Lithuania,4,7.3
+2023,9,Mexico,178,
+2023,9,New Zealand,45,
+2023,9,Poland,7,
+2023,9,Portugal,236,10.003
+2023,9,Slovak Republic,0,
+2023,9,Slovenia,8,
+2023,9,Sweden,89,10.911
+2023,9,Switzerland,6,
+2023,9,T�rkiye,0,
+2023,9,United Kingdom,3328,10.884
+2023,9,United States of America,4470,
+2023,10,Australia,186,
+2023,10,Canada,299,11.224
+2023,10,Chile,76,10.002
+2023,10,Colombia,0,7.692
+2023,10,Costa Rica,0,
+2023,10,Czech Republic,40,8.54
+2023,10,Denmark,59,9.441
+2023,10,Estonia,1,7.559
+2023,10,Finland,48,
+2023,10,Greece,200,
+2023,10,Hungary,13,6.362
+2023,10,Ireland,49,6.565
+2023,10,Israel,29,
+2023,10,Italy,604,8.447
+2023,10,Japan,0,
+2023,10,South Korea,0,9.88
+2023,10,Latvia,14,
+2023,10,Lithuania,5,7.3
+2023,10,Mexico,145,
+2023,10,New Zealand,67,
+2023,10,Poland,13,
+2023,10,Portugal,207,10.003
+2023,10,Slovak Republic,6,
+2023,10,Slovenia,28,
+2023,10,Sweden,138,10.911
+2023,10,Switzerland,14,
+2023,10,T�rkiye,0,
+2023,10,United Kingdom,4672,10.884
+2023,10,United States of America,5636,
+2023,11,Australia,220,
+2023,11,Canada,343,11.224
+2023,11,Chile,179,10.002
+2023,11,Colombia,0,7.692
+2023,11,Costa Rica,0,
+2023,11,Czech Republic,90,8.54
+2023,11,Denmark,140,9.441
+2023,11,Estonia,10,7.559
+2023,11,Greece,245,
+2023,11,Hungary,29,6.362
+2023,11,Ireland,47,6.565
+2023,11,Israel,10,
+2023,11,Italy,663,8.447
+2023,11,Japan,0,
+2023,11,South Korea,0,9.88
+2023,11,Latvia,26,
+2023,11,Lithuania,10,7.3
+2023,11,Mexico,66,
+2023,11,New Zealand,84,
+2023,11,Poland,40,
+2023,11,Portugal,141,10.003
+2023,11,Slovak Republic,9,
+2023,11,Slovenia,85,
+2023,11,Sweden,291,10.911
+2023,11,Switzerland,19,
+2023,11,T�rkiye,0,
+2023,11,United Kingdom,5952,10.884
+2023,11,United States of America,5177,
+2023,12,Australia,711,
+2023,12,Canada,521,11.224
+2023,12,Chile,354,10.002
+2023,12,Colombia,0,7.692
+2023,12,Costa Rica,0,
+2023,12,Czech Republic,90,8.54
+2023,12,Denmark,73,9.441
+2023,12,Estonia,8,7.559
+2023,12,Greece,128,
+2023,12,Hungary,24,6.362
+2023,12,Ireland,10,6.565
+2023,12,Israel,0,
+2023,12,Italy,385,8.447
+2023,12,Japan,0,
+2023,12,South Korea,0,9.88
+2023,12,Latvia,46,
+2023,12,Lithuania,10,7.3
+2023,12,Mexico,51,
+2023,12,New Zealand,178,
+2023,12,Poland,114,
+2023,12,Portugal,60,10.003
+2023,12,Slovak Republic,6,
+2023,12,Slovenia,50,
+2023,12,Sweden,328,10.911
+2023,12,Switzerland,88,
+2023,12,T�rkiye,0,
+2023,12,United Kingdom,8500,10.884
+2023,12,United States of America,13109,
+2024,1,Australia,54,
+2024,1,Canada,16,
+2024,1,Chile,16,
+2024,1,Colombia,0,
+2024,1,Costa Rica,0,
+2024,1,Israel,0,
+2024,1,Japan,0,
+2024,1,South Korea,0,
+2024,1,Mexico,0,
+2024,1,New Zealand,22,
+2024,1,Switzerland,0,
+2024,1,T�rkiye,0,
+2024,1,United States of America,3861,
