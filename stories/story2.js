@@ -29,7 +29,8 @@ function init() {
 function parseData(data) {
     const dataByCountryDate = {};
     data.forEach(d => {
-        const date = new Date(d.Year, d.Month - 1); 
+        // Set the day to the 1st of the month
+        const date = new Date(d.Year, d.Month - 1, 1); 
         const country = d.Country;
         const deaths = +d.Deaths;
         const expenditure = +d.Expenditure;
