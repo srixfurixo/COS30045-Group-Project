@@ -12,15 +12,15 @@ d3.csv(dataFile).then(function(data) {
     });
 
     // Set the dimensions and margins of the graph
-    const margin = {top: 80, right: 200, bottom: 70, left: 70},
+    const margin = {top: 80, right: 200, bottom: 50, left: 70},
         width = 900 - margin.left - margin.right,
-        height = 600 - margin.top - margin.bottom;
+        height = 700 - margin.top - margin.bottom;
 
     // Append the svg object to the div called 'chart'
     const svg = d3.select("#chart")
       .append("svg")
         .attr("width", width + margin.left + margin.right + 100)
-        .attr("height", height + margin.top + margin.bottom + 100)
+        .attr("height", height + margin.top + margin.bottom + 5)
       .append("g")
         .attr("transform",
               "translate(" + margin.left + "," + margin.top + ")");
@@ -87,12 +87,12 @@ d3.csv(dataFile).then(function(data) {
         .style("opacity", 1)
         .html("<b>Country:</b> " + d.Country + "<br><b>Year:</b> " + d.Year + "<br><b>Population:</b> " + d3.format(",")(d.Population) + "<br><b>Cumulative Vaccinations:</b> " + d3.format(",")(d.Cumulative_Vaccinations))
         .style("left", (event.pageX + 15) + "px")
-        .style("top", (event.pageY - 28) + "px");
+        .style("top", (event.pageY - 200) + "px");
     };
     const moveTooltip = function(event, d) {
       tooltip
         .style("left", (event.pageX + 15) + "px")
-        .style("top", (event.pageY - 28) + "px");
+        .style("top", (event.pageY - 200) + "px");
     };
     const hideTooltip = function(event, d) {
       tooltip
@@ -133,7 +133,7 @@ d3.csv(dataFile).then(function(data) {
       .data(allCountries)
       .enter()
       .append("rect")
-        .attr("x", width + 20)
+        .attr("x", width + 40)
         .attr("y", function(d,i){ return i*(size+5); })
         .attr("width", size)
         .attr("height", size)
@@ -143,7 +143,7 @@ d3.csv(dataFile).then(function(data) {
       .data(allCountries)
       .enter()
       .append("text")
-        .attr("x", width + 35)
+        .attr("x", width + 55)
         .attr("y", function(d,i){ return i*(size+5) + (size/2); })
         .style("fill", function(d){ return myColor(d); })
         .text(function(d){ return d; })
