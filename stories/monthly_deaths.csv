@@ -16,7 +16,7 @@ Year,Month,Country,Deaths,Expenditure
 2020,1,Mexico,0,6.054
 2020,1,New Zealand,0,9.732
 2020,1,Switzerland,0,12.004
-2020,1,T�rkiye,0,4.616
+2020,1,Turkiye,0,4.616
 2020,1,United Kingdom,0,11.965
 2020,1,United States of America,6,18.582
 2020,2,Australia,0,10.66
@@ -44,7 +44,7 @@ Year,Month,Country,Deaths,Expenditure
 2020,2,Spain,1,10.732
 2020,2,Sweden,0,11.333
 2020,2,Switzerland,0,12.004
-2020,2,T�rkiye,0,4.616
+2020,2,Turkiye,0,4.616
 2020,2,United Kingdom,0,11.965
 2020,2,United States of America,16,18.582
 2020,3,Australia,9,10.66
@@ -82,7 +82,7 @@ Year,Month,Country,Deaths,Expenditure
 2020,3,Spain,2913,10.732
 2020,3,Sweden,49,11.333
 2020,3,Switzerland,109,12.004
-2020,3,T�rkiye,21,4.616
+2020,3,Turkiye,21,4.616
 2020,3,United Kingdom,355,11.965
 2020,3,United States of America,695,18.582
 2020,4,Australia,64,10.66
@@ -120,7 +120,7 @@ Year,Month,Country,Deaths,Expenditure
 2020,4,Spain,19846,10.732
 2020,4,Sweden,1962,11.333
 2020,4,Switzerland,1219,12.004
-2020,4,T�rkiye,1869,4.616
+2020,4,Turkiye,1869,4.616
 2020,4,United Kingdom,62373,11.965
 2020,4,United States of America,46935,18.582
 2020,5,Australia,30,10.66
@@ -158,7 +158,7 @@ Year,Month,Country,Deaths,Expenditure
 2020,5,Spain,5618,10.732
 2020,5,Sweden,1978,11.333
 2020,5,Switzerland,373,12.004
-2020,5,T�rkiye,2206,4.616
+2020,5,Turkiye,2206,4.616
 2020,5,United Kingdom,72987,11.965
 2020,5,United States of America,49262,18.582
 2020,6,Australia,4,10.66
@@ -196,7 +196,7 @@ Year,Month,Country,Deaths,Expenditure
 2020,6,Spain,1190,10.732
 2020,6,Sweden,1112,11.333
 2020,6,Switzerland,28,12.004
-2020,6,T�rkiye,696,4.616
+2020,6,Turkiye,696,4.616
 2020,6,United Kingdom,23316,11.965
 2020,6,United States of America,22718,18.582
 2020,7,Australia,6,10.66
@@ -234,7 +234,7 @@ Year,Month,Country,Deaths,Expenditure
 2020,7,Spain,247,10.732
 2020,7,Sweden,520,11.333
 2020,7,Switzerland,8,12.004
-2020,7,T�rkiye,552,4.616
+2020,7,Turkiye,552,4.616
 2020,7,United Kingdom,7353,11.965
 2020,7,United States of America,18041,18.582
 2020,8,Australia,262,10.66
@@ -272,7 +272,7 @@ Year,Month,Country,Deaths,Expenditure
 2020,8,Spain,309,10.732
 2020,8,Sweden,123,11.333
 2020,8,Switzerland,19,12.004
-2020,8,T�rkiye,485,4.616
+2020,8,Turkiye,485,4.616
 2020,8,United Kingdom,2688,11.965
 2020,8,United States of America,31626,18.582
 2020,9,Australia,407,10.66
@@ -310,7 +310,7 @@ Year,Month,Country,Deaths,Expenditure
 2020,9,Spain,1416,10.732
 2020,9,Sweden,57,11.333
 2020,9,Switzerland,24,12.004
-2020,9,T�rkiye,791,4.616
+2020,9,Turkiye,791,4.616
 2020,9,United Kingdom,1467,11.965
 2020,9,United States of America,24435,18.582
 2020,10,Australia,124,10.66
@@ -348,7 +348,7 @@ Year,Month,Country,Deaths,Expenditure
 2020,10,Spain,3334,10.732
 2020,10,Sweden,53,11.333
 2020,10,Switzerland,59,12.004
-2020,10,T�rkiye,1764,4.616
+2020,10,Turkiye,1764,4.616
 2020,10,United Kingdom,2535,11.965
 2020,10,United States of America,17459,18.582
 2020,11,Australia,8,10.66
@@ -386,7 +386,7 @@ Year,Month,Country,Deaths,Expenditure
 2020,11,Spain,5182,10.732
 2020,11,Sweden,163,11.333
 2020,11,Switzerland,480,12.004
-2020,11,T�rkiye,1868,4.616
+2020,11,Turkiye,1868,4.616
 2020,11,United Kingdom,11880,11.965
 2020,11,United States of America,23058,18.582
 2020,12,Australia,8,10.66
@@ -424,7 +424,7 @@ Year,Month,Country,Deaths,Expenditure
 2020,12,Spain,15195,10.732
 2020,12,Sweden,4068,11.333
 2020,12,Switzerland,5437,12.004
-2020,12,T�rkiye,11043,4.616
+2020,12,Turkiye,11043,4.616
 2020,12,United Kingdom,82773,11.965
 2020,12,United States of America,158567,18.582
 2021,1,Australia,1,10.425
@@ -462,7 +462,7 @@ Year,Month,Country,Deaths,Expenditure
 2021,1,Spain,11128,10.309
 2021,1,Sweden,2144,11.102
 2021,1,Switzerland,1409,12.005
-2021,1,T�rkiye,4570,4.561
+2021,1,Turkiye,4570,4.561
 2021,1,United Kingdom,97305,12.019
 2021,1,United States of America,95868,17.299
 2021,2,Australia,1,10.425
@@ -500,7 +500,7 @@ Year,Month,Country,Deaths,Expenditure
 2021,2,Spain,8781,10.309
 2021,2,Sweden,792,11.102
 2021,2,Switzerland,463,12.005
-2021,2,T�rkiye,2638,4.561
+2021,2,Turkiye,2638,4.561
 2021,2,United Kingdom,64755,12.019
 2021,2,United States of America,50130,17.299
 2021,3,Australia,1,10.425
@@ -538,7 +538,7 @@ Year,Month,Country,Deaths,Expenditure
 2021,3,Spain,2769,10.309
 2021,3,Sweden,523,11.102
 2021,3,Switzerland,259,12.005
-2021,3,T�rkiye,2420,4.561
+2021,3,Turkiye,2420,4.561
 2021,3,United Kingdom,17289,12.019
 2021,3,United States of America,21853,17.299
 2021,4,Australia,3,10.425
@@ -576,7 +576,7 @@ Year,Month,Country,Deaths,Expenditure
 2021,4,Spain,2199,10.309
 2021,4,Sweden,547,11.102
 2021,4,Switzerland,234,12.005
-2021,4,T�rkiye,7088,4.561
+2021,4,Turkiye,7088,4.561
 2021,4,United Kingdom,4692,12.019
 2021,4,United States of America,17614,17.299
 2021,5,Australia,0,10.425
@@ -614,7 +614,7 @@ Year,Month,Country,Deaths,Expenditure
 2021,5,Spain,1527,10.309
 2021,5,Sweden,403,11.102
 2021,5,Switzerland,177,12.005
-2021,5,T�rkiye,8060,4.561
+2021,5,Turkiye,8060,4.561
 2021,5,United Kingdom,1950,12.019
 2021,5,United States of America,15136,17.299
 2021,6,Australia,0,10.425
@@ -652,7 +652,7 @@ Year,Month,Country,Deaths,Expenditure
 2021,6,Spain,675,10.309
 2021,6,Sweden,125,11.102
 2021,6,Switzerland,75,12.005
-2021,6,T�rkiye,3051,4.561
+2021,6,Turkiye,3051,4.561
 2021,6,United Kingdom,1269,12.019
 2021,6,United States of America,8968,17.299
 2021,7,Australia,7,10.425
@@ -690,7 +690,7 @@ Year,Month,Country,Deaths,Expenditure
 2021,7,Spain,453,10.309
 2021,7,Sweden,22,11.102
 2021,7,Switzerland,16,12.005
-2021,7,T�rkiye,1373,4.561
+2021,7,Turkiye,1373,4.561
 2021,7,United Kingdom,2205,12.019
 2021,7,United States of America,6837,17.299
 2021,8,Australia,55,10.425
@@ -728,7 +728,7 @@ Year,Month,Country,Deaths,Expenditure
 2021,8,Spain,2466,10.309
 2021,8,Sweden,21,11.102
 2021,8,Switzerland,32,12.005
-2021,8,T�rkiye,2410,4.561
+2021,8,Turkiye,2410,4.561
 2021,8,United Kingdom,6372,12.019
 2021,8,United States of America,22824,17.299
 2021,9,Australia,150,10.425
@@ -766,7 +766,7 @@ Year,Month,Country,Deaths,Expenditure
 2021,9,Spain,2358,10.309
 2021,9,Sweden,105,11.102
 2021,9,Switzerland,167,12.005
-2021,9,T�rkiye,6524,4.561
+2021,9,Turkiye,6524,4.561
 2021,9,United Kingdom,9609,12.019
 2021,9,United States of America,57411,17.299
 2021,10,Australia,401,10.425
@@ -804,7 +804,7 @@ Year,Month,Country,Deaths,Expenditure
 2021,10,Spain,969,10.309
 2021,10,Sweden,182,11.102
 2021,10,Switzerland,156,12.005
-2021,10,T�rkiye,6394,4.561
+2021,10,Turkiye,6394,4.561
 2021,10,United Kingdom,11874,12.019
 2021,10,United States of America,53678,17.299
 2021,11,Australia,422,10.425
@@ -842,7 +842,7 @@ Year,Month,Country,Deaths,Expenditure
 2021,11,Spain,454,10.309
 2021,11,Sweden,118,11.102
 2021,11,Switzerland,138,12.005
-2021,11,T�rkiye,5946,4.561
+2021,11,Turkiye,5946,4.561
 2021,11,United Kingdom,12315,12.019
 2021,11,United States of America,34136,17.299
 2021,12,Australia,517,10.425
@@ -880,7 +880,7 @@ Year,Month,Country,Deaths,Expenditure
 2021,12,Spain,2976,10.309
 2021,12,Sweden,306,11.102
 2021,12,Switzerland,1081,12.005
-2021,12,T�rkiye,10637,4.561
+2021,12,Turkiye,10637,4.561
 2021,12,United Kingdom,22497,12.019
 2021,12,United States of America,73377,17.299
 2022,1,Australia,1989,9.805
@@ -918,7 +918,7 @@ Year,Month,Country,Deaths,Expenditure
 2022,1,Spain,5771,9.738
 2022,1,Sweden,846,10.522
 2022,1,Switzerland,408,11.707
-2022,1,T�rkiye,4510,3.703
+2022,1,Turkiye,4510,3.703
 2022,1,United Kingdom,23204,11.052
 2022,1,United States of America,76701,16.496
 2022,2,Australia,1583,9.805
@@ -956,7 +956,7 @@ Year,Month,Country,Deaths,Expenditure
 2022,2,Spain,4711,9.738
 2022,2,Sweden,1368,10.522
 2022,2,Switzerland,366,11.707
-2022,2,T�rkiye,6934,3.703
+2022,2,Turkiye,6934,3.703
 2022,2,United Kingdom,17704,11.052
 2022,2,United States of America,54044,16.496
 2022,3,Australia,579,9.805
@@ -994,7 +994,7 @@ Year,Month,Country,Deaths,Expenditure
 2022,3,Spain,1656,9.738
 2022,3,Sweden,829,10.522
 2022,3,Switzerland,307,11.707
-2022,3,T�rkiye,3861,3.703
+2022,3,Turkiye,3861,3.703
 2022,3,United Kingdom,13888,11.052
 2022,3,United States of America,16110,16.496
 2022,4,Australia,963,9.805
@@ -1032,7 +1032,7 @@ Year,Month,Country,Deaths,Expenditure
 2022,4,Spain,1453,9.738
 2022,4,Sweden,383,10.522
 2022,4,Switzerland,182,11.707
-2022,4,T�rkiye,994,3.703
+2022,4,Turkiye,994,3.703
 2022,4,United Kingdom,18136,11.052
 2022,4,United States of America,6226,16.496
 2022,5,Australia,1266,9.805
@@ -1070,7 +1070,7 @@ Year,Month,Country,Deaths,Expenditure
 2022,5,Spain,1995,9.738
 2022,5,Sweden,186,10.522
 2022,5,Switzerland,58,11.707
-2022,5,T�rkiye,251,3.703
+2022,5,Turkiye,251,3.703
 2022,5,United Kingdom,13996,11.052
 2022,5,United States of America,6284,16.496
 2022,6,Australia,1394,9.805
@@ -1108,7 +1108,7 @@ Year,Month,Country,Deaths,Expenditure
 2022,6,Spain,1820,9.738
 2022,6,Sweden,99,10.522
 2022,6,Switzerland,26,11.707
-2022,6,T�rkiye,86,3.703
+2022,6,Turkiye,86,3.703
 2022,6,United Kingdom,5296,11.052
 2022,6,United States of America,8297,16.496
 2022,7,Australia,1519,9.805
@@ -1146,7 +1146,7 @@ Year,Month,Country,Deaths,Expenditure
 2022,7,Spain,3125,9.738
 2022,7,Sweden,200,10.522
 2022,7,Switzerland,101,11.707
-2022,7,T�rkiye,167,3.703
+2022,7,Turkiye,167,3.703
 2022,7,United Kingdom,7940,11.052
 2022,7,United States of America,10293,16.496
 2022,8,Australia,2354,9.805
@@ -1183,7 +1183,7 @@ Year,Month,Country,Deaths,Expenditure
 2022,8,Spain,2841,9.738
 2022,8,Sweden,442,10.522
 2022,8,Switzerland,119,11.707
-2022,8,T�rkiye,1216,3.703
+2022,8,Turkiye,1216,3.703
 2022,8,United Kingdom,13056,11.052
 2022,8,United States of America,13315,16.496
 2022,9,Australia,1158,9.805
@@ -1220,7 +1220,7 @@ Year,Month,Country,Deaths,Expenditure
 2022,9,Spain,1067,9.738
 2022,9,Sweden,404,10.522
 2022,9,Switzerland,46,11.707
-2022,9,T�rkiye,664,3.703
+2022,9,Turkiye,664,3.703
 2022,9,United Kingdom,7564,11.052
 2022,9,United States of America,11969,16.496
 2022,10,Australia,546,9.805
@@ -1257,7 +1257,7 @@ Year,Month,Country,Deaths,Expenditure
 2022,10,Spain,548,9.738
 2022,10,Sweden,385,10.522
 2022,10,Switzerland,49,11.707
-2022,10,T�rkiye,173,3.703
+2022,10,Turkiye,173,3.703
 2022,10,United Kingdom,5656,11.052
 2022,10,United States of America,9647,16.496
 2022,11,Australia,373,9.805
@@ -1293,7 +1293,7 @@ Year,Month,Country,Deaths,Expenditure
 2022,11,Spain,634,9.738
 2022,11,Sweden,343,10.522
 2022,11,Switzerland,103,11.707
-2022,11,T�rkiye,122,3.703
+2022,11,Turkiye,122,3.703
 2022,11,United Kingdom,11152,11.052
 2022,11,United States of America,8841,16.496
 2022,12,Australia,2706,9.805
@@ -1330,7 +1330,7 @@ Year,Month,Country,Deaths,Expenditure
 2022,12,Spain,1526,9.738
 2022,12,Sweden,1559,10.522
 2022,12,Switzerland,156,11.707
-2022,12,T�rkiye,35,3.703
+2022,12,Turkiye,35,3.703
 2022,12,United Kingdom,12624,11.052
 2022,12,United States of America,22791,16.496
 2023,1,Australia,0,
@@ -1366,7 +1366,7 @@ Year,Month,Country,Deaths,Expenditure
 2023,1,Spain,713,
 2023,1,Sweden,1053,10.911
 2023,1,Switzerland,47,
-2023,1,T�rkiye,0,
+2023,1,Turkiye,0,
 2023,1,United Kingdom,13784,10.884
 2023,1,United States of America,13741,
 2023,2,Australia,1436,
@@ -1401,7 +1401,7 @@ Year,Month,Country,Deaths,Expenditure
 2023,2,Spain,395,
 2023,2,Sweden,263,10.911
 2023,2,Switzerland,22,
-2023,2,T�rkiye,0,
+2023,2,Turkiye,0,
 2023,2,United Kingdom,7968,10.884
 2023,2,United States of America,9258,
 2023,3,Australia,337,
@@ -1436,7 +1436,7 @@ Year,Month,Country,Deaths,Expenditure
 2023,3,Spain,397,
 2023,3,Sweden,186,10.911
 2023,3,Switzerland,25,
-2023,3,T�rkiye,0,
+2023,3,Turkiye,0,
 2023,3,United Kingdom,9972,10.884
 2023,3,United States of America,7282,
 2023,4,Australia,503,
@@ -1470,7 +1470,7 @@ Year,Month,Country,Deaths,Expenditure
 2023,4,Spain,362,
 2023,4,Sweden,223,10.911
 2023,4,Switzerland,26,
-2023,4,T�rkiye,0,
+2023,4,Turkiye,0,
 2023,4,United Kingdom,9948,10.884
 2023,4,United States of America,5232,
 2023,5,Australia,671,
@@ -1504,7 +1504,7 @@ Year,Month,Country,Deaths,Expenditure
 2023,5,Spain,428,
 2023,5,Sweden,281,10.911
 2023,5,Switzerland,27,
-2023,5,T�rkiye,0,
+2023,5,Turkiye,0,
 2023,5,United Kingdom,6440,10.884
 2023,5,United States of America,3571,
 2023,6,Australia,854,
@@ -1538,7 +1538,7 @@ Year,Month,Country,Deaths,Expenditure
 2023,6,Spain,351,
 2023,6,Sweden,158,10.911
 2023,6,Switzerland,7,
-2023,6,T�rkiye,0,
+2023,6,Turkiye,0,
 2023,6,United Kingdom,3580,10.884
 2023,6,United States of America,2675,
 2023,7,Australia,-17,
@@ -1572,7 +1572,7 @@ Year,Month,Country,Deaths,Expenditure
 2023,7,Spain,53,
 2023,7,Sweden,87,10.911
 2023,7,Switzerland,2,
-2023,7,T�rkiye,0,
+2023,7,Turkiye,0,
 2023,7,United Kingdom,2024,10.884
 2023,7,United States of America,2115,
 2023,8,Australia,212,
@@ -1601,7 +1601,7 @@ Year,Month,Country,Deaths,Expenditure
 2023,8,Slovenia,5,
 2023,8,Sweden,54,10.911
 2023,8,Switzerland,7,
-2023,8,T�rkiye,0,
+2023,8,Turkiye,0,
 2023,8,United Kingdom,1468,10.884
 2023,8,United States of America,2502,
 2023,9,Australia,188,
@@ -1630,7 +1630,7 @@ Year,Month,Country,Deaths,Expenditure
 2023,9,Slovenia,8,
 2023,9,Sweden,89,10.911
 2023,9,Switzerland,6,
-2023,9,T�rkiye,0,
+2023,9,Turkiye,0,
 2023,9,United Kingdom,3328,10.884
 2023,9,United States of America,4470,
 2023,10,Australia,186,
@@ -1659,7 +1659,7 @@ Year,Month,Country,Deaths,Expenditure
 2023,10,Slovenia,28,
 2023,10,Sweden,138,10.911
 2023,10,Switzerland,14,
-2023,10,T�rkiye,0,
+2023,10,Turkiye,0,
 2023,10,United Kingdom,4672,10.884
 2023,10,United States of America,5636,
 2023,11,Australia,220,
@@ -1687,7 +1687,7 @@ Year,Month,Country,Deaths,Expenditure
 2023,11,Slovenia,85,
 2023,11,Sweden,291,10.911
 2023,11,Switzerland,19,
-2023,11,T�rkiye,0,
+2023,11,Turkiye,0,
 2023,11,United Kingdom,5952,10.884
 2023,11,United States of America,5177,
 2023,12,Australia,711,
@@ -1715,7 +1715,7 @@ Year,Month,Country,Deaths,Expenditure
 2023,12,Slovenia,50,
 2023,12,Sweden,328,10.911
 2023,12,Switzerland,88,
-2023,12,T�rkiye,0,
+2023,12,Turkiye,0,
 2023,12,United Kingdom,8500,10.884
 2023,12,United States of America,13109,
 2024,1,Australia,54,
@@ -1729,5 +1729,5 @@ Year,Month,Country,Deaths,Expenditure
 2024,1,Mexico,0,
 2024,1,New Zealand,22,
 2024,1,Switzerland,0,
-2024,1,T�rkiye,0,
+2024,1,Turkiye,0,
 2024,1,United States of America,3861,

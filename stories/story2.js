@@ -4,7 +4,7 @@ function init() {
     const height = 400;
 
     var container = d3.select("#chart");
-    
+
     // Create the SVG once during initialization
     if (container.select("svg").empty()) {
         container.append("svg")
@@ -12,256 +12,158 @@ function init() {
             .attr("height", height);
     }
 
-    // Create sliders
-    createSliders();
-
-    // Load and process the GeoJSON data
-    d3.json("https://raw.githubusercontent.com/srixfurixo/COS30045-Group-Project/refs/heads/main/stories/custom.geo.json?token=GHSAT0AAAAAACWB3W43CXUOG7E4QFNU2D5UZZMMW2A")
-        .then(function(json) {
-            if (!json) {
-                throw new Error("No GeoJSON data received");
-            }
-            window.geoJsonData = json;
-            updateVisualization(window.geoJsonData, width, height);
-        })
-        .catch(function(error) {
-            console.error("Error loading GeoJSON:", error);
-            container.html("Error loading map data: " + error.message);
-        });
-}
-
-function createSliders() {
-    // Create slider container if it doesn't exist
-    let sliderContainer = d3.select("#slider-container");
-    if (sliderContainer.empty()) {
-        sliderContainer = d3.select("#content")
-            .insert("div", "#chart")  // Insert before the chart
-            .attr("id", "slider-container");
-    }
-
-    // Year Slider
-    const yearContainer = sliderContainer.append("div")
-        .attr("class", "slider-container");
-    
-    yearContainer.append("label")
-        .attr("for", "year-slider")
-        .text("Year: ");
-    
-    const yearSlider = yearContainer.append("input")
-        .attr("type", "range")
-        .attr("id", "year-slider")
-        .attr("min", 2020)
-        .attr("max", 2024)
-        .attr("value", 2020)
-        .attr("step", 1);
-    
-    yearContainer.append("span")
-        .attr("id", "selected-year")
-        .text("2020");
-
-    // Month Slider
-    const monthContainer = sliderContainer.append("div")
-        .attr("class", "slider-container");
-    
-    monthContainer.append("label")
-        .attr("for", "month-slider")
-        .text("Month: ");
-    
-    const monthSlider = monthContainer.append("input")
-        .attr("type", "range")
-        .attr("id", "month-slider")
-        .attr("min", 1)
-        .attr("max", 12)
-        .attr("value", 1)
-        .attr("step", 1);
-    
-    monthContainer.append("span")
-        .attr("id", "selected-month")
-        .text("January");
-
-    // Add event listeners
-    yearSlider.on("input", function() {
-        d3.select("#selected-year").text(this.value);
-        if (window.geoJsonData) {
-            updateVisualization(window.geoJsonData, 960, 500);
-        }
-    });
-
-    monthSlider.on("input", function() {
-        const monthNames = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
-        d3.select("#selected-month").text(monthNames[this.value - 1]);
-        if (window.geoJsonData) {
-            updateVisualization(window.geoJsonData, 960, 500);
-        }
-    });
-}
-
-function updateVisualization(json, w, h) {
-    const year = d3.select("#year-slider").property("value");
-    const month = d3.select("#month-slider").property("value");
-
+    // Load and process the data
     d3.csv("monthly_deaths.csv")
         .then(function(data) {
             if (!data) {
                 throw new Error("No CSV data received");
             }
-
-            var deathsByCountry = {};
-            var expenditureByCountry = {};
-
-            data.forEach(function(d) {
-                if (d.Year == year && +d.Month == month) {
-                    deathsByCountry[d.Country] = +d.Deaths || 0;
-                    expenditureByCountry[d.Country] = +d.Expenditure || 0;
-                }
-            });
-
-            // Select the existing SVG
-            var svg = d3.select("#chart svg");
-            
-            // Clear existing paths and elements within the SVG
-            svg.selectAll("*").remove();
-
-            // Setup projection
-            var projection = d3.geoEquirectangular()
-                .scale(w / 6.28)
-                .center([0, 0])
-                .translate([w / 2, h / 2]);
-
-            var path = d3.geoPath().projection(projection);
-
-            // Create color scale
-            const deathsExtent = d3.extent(Object.values(deathsByCountry));
-            const color = d3.scaleLinear()
-                .domain([0, Math.max(1, deathsExtent[1] * 0.5), deathsExtent[1]])
-                .range(["#ffffff", "#ff9933", "#cc0000"]);
-
-            // Remove any existing tooltips
-            d3.selectAll(".tooltip").remove();
-
-            // Create new tooltip
-            const tooltip = d3.select("body")
-                .append("div")
-                .attr("class", "tooltip")
-                .style("opacity", 0)
-                .style("position", "absolute")
-                .style("pointer-events", "none");
-
-            // Draw the map
-            svg.selectAll("path")
-                .data(json.features)
-                .join("path")
-                .attr("d", path)
-                .style("fill", d => {
-                    const deaths = deathsByCountry[d.properties.name] || 0;
-                    return deaths > 0 ? color(deaths) : "#f0f0f0";
-                })
-                .style("stroke", "darkgrey")
-                .style("stroke-width", "0.5px")
-                .on("mouseover", function(event, d) {
-                    d3.select(this)
-                        .style("stroke-width", "2px")
-                        .style("stroke", "#333");
-
-                    const country = d.properties.name;
-                    const deaths = deathsByCountry[country] || 0;
-                    const expenditure = expenditureByCountry[country] || 0;
-
-                    tooltip.transition()
-                        .duration(200)
-                        .style("opacity", .9);
-                    tooltip.html(
-                        `<strong>${country}</strong><br/>` +
-                        `Deaths: ${deaths.toLocaleString()}<br/>` +
-                        `Expenditure: $${expenditure.toLocaleString()}`
-                    )
-                    .style("left", (event.pageX + 5) + "px")
-                    .style("top", (event.pageY - 28) + "px");
-                })
-                .on("mouseout", function() {
-                    d3.select(this)
-                        .style("stroke-width", "0.5px")
-                        .style("stroke", "darkgrey");
-
-                    tooltip.transition()
-                        .duration(500)
-                        .style("opacity", 0);
-                });
-
-            // Add legend
-            addLegend(color, deathsExtent);
+            updateVisualization(data, width, height); 
         })
         .catch(function(error) {
             console.error("Error loading CSV:", error);
-            d3.select("#chart").html("Error loading data: " + error.message);
+            container.html("Error loading data: " + error.message);
         });
 }
 
-function addLegend() {
+function parseData(data) {
+    const dataByCountryDate = {};
+    data.forEach(d => {
+        const date = new Date(d.Year, d.Month - 1); 
+        const country = d.Country;
+        const deaths = +d.Deaths;
+        const expenditure = +d.Expenditure;
 
-    // Remove existing legend
-    d3.select(".legend").remove();
-
-    const legendWidth = 400;
-    const legendHeight = 10;
-
-    const legendSvg = d3.select("#content")
-        .append("svg")
-        .attr("class", "legend")
-        .attr("width", legendWidth)
-        .attr("height", 50)
-        .style("position", "absolute")
-        .style("bottom", "20px")  // Changed from top to bottom
-        .style("right", "20px"); 
-
-    const gradient = legendSvg.append("defs")
-        .append("linearGradient")
-        .attr("id", "legend-gradient")
-        .attr("x1", "0%")
-        .attr("y1", "0%")
-        .attr("x2", "100%")
-        .attr("y2", "0%");
-
-    // Define the color stops for the gradient with fixed positions
-    gradient.append("stop")
-        .attr("offset", "0%")
-        .attr("stop-color", "white"); 
-
-    gradient.append("stop")
-        .attr("offset", "33%") // Adjust this value for color distribution
-        .attr("stop-color", "lightyellow");
-
-    gradient.append("stop")
-        .attr("offset", "66%") // Adjust this value for color distribution
-        .attr("stop-color", "orange");
-
-    gradient.append("stop")
-        .attr("offset", "100%")
-        .attr("stop-color", "red");
-
-    legendSvg.append("rect")
-        .attr("width", legendWidth)
-        .attr("height", legendHeight)
-        .style("fill", "url(#legend-gradient)")
-        .attr("transform", "translate(0,20)");
-
-    // Create a scale for the axis (you might need to adjust the domain)
-    const scale = d3.scaleLinear()
-        .domain([0, 60000]) // Adjust domain as needed
-        .range([10, legendWidth - 10]);
-
-    const axis = d3.axisBottom(scale)
-        .ticks(5)
-        .tickFormat(d3.format(".0f"))
-        .tickSizeOuter(0);
-
-    legendSvg.append("g")
-        .attr("transform", "translate(0,30)")
-        .call(axis);
+        if (!dataByCountryDate[country]) {
+            dataByCountryDate[country] = [];
+        }
+        dataByCountryDate[country].push({ date, deaths, expenditure });
+    });
+    return dataByCountryDate;
 }
+
+function updateVisualization(data, w, h) {
+    const parsedData = parseData(data);
+
+    // Countries to display
+    const countries = ["Canada", "Turkiye"];
+
+    // Filter data for selected countries
+    const filteredData = {};
+    countries.forEach(country => {
+        filteredData[country] = parsedData[country];
+    });
+
+    // Select the existing SVG
+    var svg = d3.select("#chart svg");
+
+    // Clear existing paths and elements within the SVG
+    svg.selectAll("*").remove();
+
+    // Normalize data for each country
+    const normalizedData = {};
+    countries.forEach(country => {
+        const maxDeaths = d3.max(filteredData[country], d => d.deaths);
+        const maxExpenditure = d3.max(filteredData[country], d => d.expenditure);
+        normalizedData[country] = filteredData[country].map(d => ({
+            date: d.date,
+            deaths: maxDeaths > 0 ? d.deaths / maxDeaths : 0,
+            expenditure: maxExpenditure > 0 ? d.expenditure / maxExpenditure : 0
+        }));
+    });
+
+    // Combine normalized deaths and expenditure
+    const combinedData = {};
+    countries.forEach(country => {
+        combinedData[country] = normalizedData[country].map(d => ({
+            date: d.date,
+            combined: (d.deaths + d.expenditure) / 2
+        }));
+    });
+
+    // Set up scales
+    const x = d3.scaleTime()
+        .domain([
+            d3.min(countries, country => d3.min(combinedData[country], d => d.date)),
+            d3.max(countries, country => d3.max(combinedData[country], d => d.date))
+        ])
+        .range([40, w - 30]);
+
+    const y = d3.scaleLinear()
+        .domain([0, 1])
+        .range([h - 30, 20]);
+
+    // Create area generators for each country
+    const areaGenerators = {};
+    countries.forEach(country => {
+        areaGenerators[country] = d3.area()
+            .x(d => x(d.date))
+            .y0(y(0))
+            .y1(d => y(d.combined));
+    });
+
+    // Create tooltip
+    const tooltip = d3.select("body")
+        .append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0)
+        .style("position", "absolute")
+        .style("pointer-events", "none");
+
+    // Append paths for each country's area with tooltip functionality
+    countries.forEach((country, i) => {
+        svg.append("path")
+            .attr("fill", d3.schemeCategory10[i])
+            .attr("d", areaGenerators[country](combinedData[country]))
+            .on("mouseover", function(event, d) {
+                // Get the date corresponding to the mouse position
+                const date = x.invert(event.offsetX);
+
+                // Find the closest data point to the mouse position
+                const closestDataPoint = combinedData[country].reduce((a, b) => {
+                    return Math.abs(a.date - date) < Math.abs(b.date - date) ? a : b;
+                });
+
+                // Display the tooltip with raw data
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltip.html(
+                        `<strong>${country}</strong><br/>` +
+                        `Date: ${closestDataPoint.date.toLocaleDateString()}<br/>` +
+                        `Deaths: ${filteredData[country].find(item => item.date.getTime() === closestDataPoint.date.getTime()).deaths}<br/>` + 
+                        `Expenditure: ${filteredData[country].find(item => item.date.getTime() === closestDataPoint.date.getTime()).expenditure}` 
+                    )
+                    .style("left", (event.pageX + 5) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function() {
+                // Hide the tooltip
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
+    });
+
+    // Add the x-axis.
+    svg.append("g")
+        .attr("transform", `translate(0,${h - 30})`)
+        .call(d3.axisBottom(x).ticks(w / 80).tickSizeOuter(0));
+
+    // Add the y-axis, remove the domain line, and add a label.
+    svg.append("g")
+        .attr("transform", `translate(40,0)`)
+        .call(d3.axisLeft(y).ticks(h / 40))
+        .call(g => g.select(".domain").remove())
+        .call(g => g.append("text")
+            .attr("x", -40)
+            .attr("y", 10)
+            .attr("fill", "currentColor")
+            .attr("text-anchor", "start")
+            .text("↑ Combined Metric (Normalized)"));
+}
+
+// ... (your addLegend function - adjust as needed)
 
 // Initialize on window load
 window.addEventListener('load', init);
