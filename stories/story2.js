@@ -16,7 +16,7 @@ function init() {
     createSliders();
 
     // Load and process the GeoJSON data
-    d3.json("custom.geo.json")
+    d3.json("https://raw.githubusercontent.com/srixfurixo/COS30045-Group-Project/refs/heads/main/stories/custom.geo.json?token=GHSAT0AAAAAACWB3W43CXUOG7E4QFNU2D5UZZMMW2A")
         .then(function(json) {
             if (!json) {
                 throw new Error("No GeoJSON data received");
