@@ -114,7 +114,7 @@ function updateVisualization(data, w, h) {
     // Append paths for each country's area with tooltip functionality
     countries.forEach((country, i) => {
         svg.append("path")
-            .attr("fill", d3.schemeCategory10[i])
+            .attr("fill", i === 0 ? "blue" : "red") // Set color based on index
             .attr("d", areaGenerators[country](combinedData[country]))
             .on("mouseover", function(event, d) {
                 // Get the date corresponding to the mouse position
