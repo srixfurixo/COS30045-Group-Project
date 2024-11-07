@@ -141,3 +141,51 @@ article p {
   bottom: 20px;
   left: 20px;
 }
+
+/* Basic Styling */
+.slider-container {
+  margin-bottom: 10px; /* Space between sliders */
+}
+
+.slider-container label {
+  display: inline-block;
+  width: 60px; /* Adjust as needed */
+  text-align: right;
+  margin-right: 5px;
+}
+
+.slider-container input[type=range] {
+  width: 200px; /* Adjust as needed */
+  margin-right: 10px;
+}
+
+/* Appearance */
+.slider-container input[type=range] {
+  -webkit-appearance: none; /* Override default appearance */
+  appearance: none;
+  height: 6px; /* Adjust slider height */
+  background: #d3d3d3; /* Slider track color */
+  outline: none;
+  border-radius: 5px; /* Rounded corners */
+}
+
+.slider-container input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px; /* Adjust thumb size */
+  height: 15px;
+  border-radius: 50%; /* Circular thumb */
+  background: #084594; /* Thumb color */
+  cursor: pointer;
+}
+
+/* Hover Effect */
+.slider-container input[type=range]:hover {
+  opacity: 0.8;
+}
+
+/* Focus State */
+.slider-container input[type=range]:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 2px #2171b5; /* Add a focus ring */
+}
