@@ -5,9 +5,9 @@ var bottom5DataFile = "../Datasets/log_scaled_vaccine_data_bottom_5.csv";
 // Configuration for the radar chart
 var radarConfig = {
   containerClass: 'radar-chart',
-  w: 600,
-  h: 600,
-  factor: 0.95,
+  w: 700,
+  h: 400,
+  factor: 0.85,
   factorLegend: 1,
   levels: 5,
   levelTick: true,
@@ -42,8 +42,8 @@ var radarConfig = {
 var RadarChart = {
   defaultConfig: {
     containerClass: 'radar-chart',
-    w: 600,
-    h: 600,
+    w: 400,
+    h: 400,
     factor: 0.95,
     factorLegend: 1,
     levels: 3,
@@ -519,7 +519,7 @@ function createLegend(data) {
     .attr("class", "legend")
     .attr("height", 200)
     .attr("width", 200)
-    .attr('transform', 'translate(20,20)');
+    .attr('transform', 'translate(20,70)');
 
   legend.selectAll('rect')
     .data(data)
