@@ -29,8 +29,8 @@ function init() {
 function parseData(data) {
     const dataByCountryDate = {};
     data.forEach(d => {
-        // Set the day to the 1st of the month
-        const date = new Date(d.Year, d.Month - 1, 1); 
+        // Create the date using just the year and month
+        const date = new Date(d.Year, d.Month - 1);
         const country = d.Country;
         const deaths = +d.Deaths;
         const expenditure = +d.Expenditure;
@@ -131,7 +131,7 @@ function updateVisualization(data, w, h) {
                     .style("opacity", .9);
                 tooltip.html(
                         `<strong>${country}</strong><br/>` +
-                        `Date: ${closestDataPoint.date.toLocaleDateString()}<br/>` +
+                        `Date: ${closestDataPoint.date.toLocaleDateString('default', { year: 'numeric', month: 'long' })}<br/>` + // Use toLocaleDateString with specific options
                         `Deaths: ${filteredData[country].find(item => item.date.getTime() === closestDataPoint.date.getTime()).deaths}<br/>` + 
                         `Expenditure: ${filteredData[country].find(item => item.date.getTime() === closestDataPoint.date.getTime()).expenditure}` 
                     )
