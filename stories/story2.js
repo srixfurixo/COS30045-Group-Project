@@ -12,22 +12,7 @@ function init() {
             .attr("height", height);
     }
 
-    // Load and process the GeoJSON data
-    d3.json("custom.geo.json")
-        .then(function (json) {
-            if (!json) {
-                throw new Error("No GeoJSON data received");
-            }
-            window.geoJsonData = json;
-            updateVisualization(window.geoJsonData, width, height);
-        })
-        .catch(function (error) {
-            console.error("Error loading GeoJSON:", error);
-            container.html("Error loading map data: " + error.message);
-        });
-}
-
-function updateVisualization(json, w, h) {
+    // Load and process the CSV data directly
     d3.csv("monthly_deaths.csv")
         .then(function (data) {
             if (!data) {
@@ -52,11 +37,11 @@ function updateVisualization(json, w, h) {
                     .property("selected", d => d === "Australia");
 
                 dropdown.on("change", function () {
-                    updateMapAndChart(data, json, w, h);
+                    updateChart(data, width, height);
                 });
             }
 
-            updateMapAndChart(data, json, w, h);
+            updateChart(data, width, height);
         })
         .catch(function (error) {
             console.error("Error loading CSV:", error);
@@ -64,14 +49,11 @@ function updateVisualization(json, w, h) {
         });
 }
 
-function updateMapAndChart(data, json, w, h) {
+function updateChart(data, w, h) {
     const selectedCountry = d3.select("#country-select").property("value");
 
     // Filter data for selected country
     const filteredData = data.filter(d => d.Country === selectedCountry);
-
-    // Update the map (using the first data point for now)
-    updateMap(json, filteredData.length > 0 ? [filteredData[0]] : [], w, h); // Pass an empty array if no data
 
     // Prepare data for the area chart
     const groupedData = groupDataByYearAndMonth(filteredData);
@@ -98,46 +80,18 @@ function groupDataByYearAndMonth(data) {
     return Object.values(grouped);
 }
 
-function updateMap(json, data, w, h) {
-    const svg = d3.select("#chart svg");
-    svg.selectAll("*").remove(); // Clear existing SVG elements
-
-    const projection = d3.geoMercator()
-        .fitSize([w, h], json);
-    const path = d3.geoPath().projection(projection);
-
-    // Create a color scale
-    const colorScale = d3.scaleSequential(d3.interpolateBlues)
-        .domain([0, d3.max(data, d => d.Deaths)]); // Adjust domain as needed
-
-    // Draw the map features
-    svg.selectAll("path")
-        .data(json.features)
-        .enter()
-        .append("path")
-        .attr("d", path)
-        .attr("fill", d => {
-            const countryData = data.find(item => item.Country === d.properties.ADMIN);
-            return countryData ? colorScale(countryData.Deaths) : "lightgray";
-        })
-        .append("title") // Add tooltip
-        .text(d => {
-            const countryData = data.find(item => item.Country === d.properties.ADMIN);
-            return countryData ? `${d.properties.ADMIN}: ${countryData.Deaths} deaths` : d.properties.ADMIN;
-        });
-}
-
 function updateAreaChart(data, w, h) {
     const svg = d3.select("#chart svg");
     svg.selectAll("*").remove(); // Clear existing SVG elements
 
-    const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+    const margin = { top: 40, right: 80, bottom: 60, left: 80 }; // Increased margins
     const width = w - margin.left - margin.right;
     const height = h - margin.top - margin.bottom;
 
     const xScale = d3.scaleTime()
-        .domain(d3.extent(data, d => new Date(d.Year, d.Month - 1)))
+        .domain(d3.extent(data, d => new Date(d.Year, 0))) // Set month to 0 (January)
         .range([0, width]);
+
     const yScale = d3.scaleLinear()
         .domain([0, d3.max(data, d => d.Deaths)])
         .range([height, 0]);
@@ -167,19 +121,19 @@ function updateAreaChart(data, w, h) {
             if (i > 0 && i < d.length) {
                 const d0 = d[i - 1];
                 const d1 = d[i];
-                const selectedData = x0 - d0.date > d1.date - x0 ? d1 : d0;
+                const selectedData = x0 - new Date(d0.Year, d0.Month - 1) > new Date(d1.Year, d1.Month - 1) - x0 ? d1 : d0;
 
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);
                 tooltip.html(`
-                    <strong>Year:</strong> ${selectedData.Year}<br>
-                    <strong>Month:</strong> ${getMonthName(selectedData.Month)}<br> 
-                    <strong>Deaths:</strong> ${selectedData.Deaths}<br>
-                    <strong>Expenditure:</strong> ${selectedData.Expenditure}
-                `)
-                    .style("left", (event.pageX + 5) + "px")
-                    .style("top", (event.pageY - 28) + "px");
+                        <strong>Year:</strong> ${selectedData.Year}<br>
+                        <strong>Month:</strong> ${getMonthName(selectedData.Month)}<br> 
+                        <strong>Deaths:</strong> ${selectedData.Deaths}<br>
+                        <strong>Expenditure:</strong> ${selectedData.Expenditure}
+                    `)
+                    .style("left", (event.pageX + 2) + "px") // Changed from +5 to +2
+                    .style("top", (event.pageY - 10) + "px");
             }
         })
         .on("mouseout", function (d) {
@@ -190,15 +144,36 @@ function updateAreaChart(data, w, h) {
 
     g.append("g")
         .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(xScale));
+        .call(d3.axisBottom(xScale)
+            .ticks(d3.timeYear.every(1)) // Show ticks for every year
+            .tickFormat(d3.timeFormat("%Y")) // Format tick labels as year only
+        );
 
     g.append("g")
         .call(d3.axisLeft(yScale));
+
+    // Add axis labels
+    g.append("text")
+        .attr("class", "axis-label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left + 15)
+        .attr("x", 0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Deaths");
+
+    g.append("text")
+        .attr("class", "axis-label")
+        .attr("transform",
+            "translate(" + (width / 2) + " ," +
+            (height + margin.top - 5) + ")")
+        .style("text-anchor", "middle")
+        .text("Year");
 }
 
 function getMonthName(monthNumber) {
     const monthNames = ["January", "February", "March", "April", "May", "June",
-                        "July", "August", "September", "October", "November", "December"];
+        "July", "August", "September", "October", "November", "December"];
     return monthNames[monthNumber - 1];
 }
 
