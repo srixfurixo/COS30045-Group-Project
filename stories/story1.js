@@ -1,103 +1,161 @@
 function init() {
-    // Set fixed dimensions for the SVG
-    const width = 960;
-    const height = 400;
+        // Set fixed dimensions for the SVG
+        const width = 960;
+        const height = 400;
 
-    var container = d3.select("#chart");
+        var container = d3.select("#chart");
 
-    // Create the SVG once during initialization
-    if (container.select("svg").empty()) {
-        container.append("svg")
-            .attr("width", width)
-            .attr("height", height);
+        // Create the SVG once during initialization
+        if (container.select("svg").empty()) {
+            container.append("svg")
+                .attr("width", width)
+                .attr("height", height);
+        }
+
+        // Create sliders
+        createSliders();
+
+        // Create the Simulate Button
+        createSimulateButton();
+
+        // Load and process the GeoJSON data
+        d3.json("custom.geo.json")
+            .then(function(json) {
+                if (!json) {
+                    throw new Error("No GeoJSON data received");
+                }
+                window.geoJsonData = json;
+                updateVisualization(window.geoJsonData, width, height);
+            })
+            .catch(function(error) {
+                console.error("Error loading GeoJSON:", error);
+                container.html("Error loading map data: " + error.message);
+            });
     }
 
-    // Create sliders
-    createSliders();
+    function createSliders() {
+        // Create slider container if it doesn't exist
+        let sliderContainer = d3.select("#slider-container");
+        if (sliderContainer.empty()) {
+            sliderContainer = d3.select("#content")
+                .insert("div", "#chart")  // Insert before the chart
+                .attr("id", "slider-container");
+        }
 
-    // Load and process the GeoJSON data
-    d3.json("custom.geo.json")
-        .then(function(json) {
-            if (!json) {
-                throw new Error("No GeoJSON data received");
+        // Year Slider
+        const yearContainer = sliderContainer.append("div")
+            .attr("class", "slider-container");
+
+        yearContainer.append("label")
+            .attr("for", "year-slider")
+            .text("Year: ");
+
+        const yearSlider = yearContainer.append("input")
+            .attr("type", "range")
+            .attr("id", "year-slider")
+            .attr("min", 2020)
+            .attr("max", 2024)
+            .attr("value", 2020)
+            .attr("step", 1);
+
+        yearContainer.append("span")
+            .attr("id", "selected-year")
+            .text("2020");
+
+        // Month Slider
+        const monthContainer = sliderContainer.append("div")
+            .attr("class", "slider-container");
+
+        monthContainer.append("label")
+            .attr("for", "month-slider")
+            .text("Month: ");
+
+        const monthSlider = monthContainer.append("input")
+            .attr("type", "range")
+            .attr("id", "month-slider")
+            .attr("min", 1)
+            .attr("max", 12)
+            .attr("value", 1)
+            .attr("step", 1);
+
+        monthContainer.append("span")
+            .attr("id", "selected-month")
+            .text("January");
+
+        // Add event listeners
+        yearSlider.on("input", function() {
+            d3.select("#selected-year").text(this.value);
+            if (window.geoJsonData) {
+                updateVisualization(window.geoJsonData, 960, 500);
             }
-            window.geoJsonData = json;
-            updateVisualization(window.geoJsonData, width, height);
-        })
-        .catch(function(error) {
-            console.error("Error loading GeoJSON:", error);
-            container.html("Error loading map data: " + error.message);
         });
-}
 
-function createSliders() {
-    // Create slider container if it doesn't exist
-    let sliderContainer = d3.select("#slider-container");
-    if (sliderContainer.empty()) {
-        sliderContainer = d3.select("#content")
-            .insert("div", "#chart")  // Insert before the chart
-            .attr("id", "slider-container");
+        monthSlider.on("input", function() {
+            const monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            d3.select("#selected-month").text(monthNames[this.value - 1]);
+            if (window.geoJsonData) {
+                updateVisualization(window.geoJsonData, 960, 500);
+            }
+        });
     }
 
-    // Year Slider
-    const yearContainer = sliderContainer.append("div")
-        .attr("class", "slider-container");
+    // Add Simulate Button Functionality
+    function createSimulateButton() {
+        const buttonContainer = d3.select("#slider-container")
+            .append("div")
+            .attr("class", "simulate-button-container");
 
-    yearContainer.append("label")
-        .attr("for", "year-slider")
-        .text("Year: ");
+        buttonContainer.append("button")
+            .attr("id", "simulate-button")
+            .text("Simulate")
+            .on("click", simulate);
+    }
 
-    const yearSlider = yearContainer.append("input")
-        .attr("type", "range")
-        .attr("id", "year-slider")
-        .attr("min", 2020)
-        .attr("max", 2024)
-        .attr("value", 2020)
-        .attr("step", 1);
+    // Simulate Function (Automatically iterate over years and months)
+    function simulate() {
+        const yearSlider = d3.select("#year-slider").node();
+        const monthSlider = d3.select("#month-slider").node();
 
-    yearContainer.append("span")
-        .attr("id", "selected-year")
-        .text("2020");
+        let currentYear = parseInt(yearSlider.value);
+        let currentMonth = parseInt(monthSlider.value);
 
-    // Month Slider
-    const monthContainer = sliderContainer.append("div")
-        .attr("class", "slider-container");
+        const yearRange = parseInt(yearSlider.max);
+        const monthRange = parseInt(monthSlider.max);
 
-    monthContainer.append("label")
-        .attr("for", "month-slider")
-        .text("Month: ");
+        const simulateInterval = setInterval(function() {
+            // Update the sliders
+            yearSlider.value = currentYear;
+            monthSlider.value = currentMonth;
 
-    const monthSlider = monthContainer.append("input")
-        .attr("type", "range")
-        .attr("id", "month-slider")
-        .attr("min", 1)
-        .attr("max", 12)
-        .attr("value", 1)
-        .attr("step", 1);
+            // Update the displayed year and month
+            d3.select("#selected-year").text(currentYear);
+            const monthNames = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            d3.select("#selected-month").text(monthNames[currentMonth - 1]);
 
-    monthContainer.append("span")
-        .attr("id", "selected-month")
-        .text("January");
+            // Update the map visualization for the current year and month
+            if (window.geoJsonData) {
+                updateVisualization(window.geoJsonData, 960, 500);
+            }
 
-    // Add event listeners
-    yearSlider.on("input", function() {
-        d3.select("#selected-year").text(this.value);
-        if (window.geoJsonData) {
-            updateVisualization(window.geoJsonData, 960, 500);
-        }
-    });
-
-    monthSlider.on("input", function() {
-        const monthNames = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
-        d3.select("#selected-month").text(monthNames[this.value - 1]);
-        if (window.geoJsonData) {
-            updateVisualization(window.geoJsonData, 960, 500);
-        }
-    });
-}
+            // Increment month
+            if (currentMonth < monthRange) {
+                currentMonth++;
+            } else {
+                currentMonth = 1;
+                if (currentYear < yearRange) {
+                    currentYear++;
+                } else {
+                    clearInterval(simulateInterval);  // Stop simulation after max year and month
+                }
+            }
+        }, 450);  // Adjust the speed of simulation (ms)
+    }
 
 function parseData(data) {
     const dataByCountryDate = {};
@@ -114,6 +172,7 @@ function parseData(data) {
     });
     return dataByCountryDate;
 }
+
 
 function updateVisualization(json, w, h) {
     const year = +d3.select("#year-slider").property("value");
@@ -266,14 +325,14 @@ function updateVisualization(json, w, h) {
         });
 }
 
-// Updated legend function to work with threshold scale
 function addLegend(color) {
     // Remove existing legend
     d3.select(".legend").remove();
 
-    const legendWidth = 400;
-    const legendHeight = 50;
-    const legendMargin = { top: 10, right: 20, bottom: 20, left: 20 };
+    // Reduce legend width and height
+    const legendWidth = 300;
+    const legendHeight = 30;
+    const legendMargin = { top: 10, right: 20, bottom: 30, left: 20 }; // Reduced bottom margin
 
     const legendSvg = d3.select("#content")
         .append("svg")
@@ -282,17 +341,40 @@ function addLegend(color) {
         .attr("height", legendHeight + legendMargin.top + legendMargin.bottom)
         .style("position", "absolute")
         .style("bottom", "20px")
-        .style("right", "20px");
+        .style("right", "20px")
+        .append("g")
+        .attr("transform", "translate(" + legendMargin.left + "," + legendMargin.top + ")");
 
+    // Create the color scale domain
     const thresholds = color.domain();
     const legendScale = d3.scaleLinear()
         .domain([0, 1000000])
         .range([0, legendWidth]);
 
-    const legendAxis = d3.axisBottom(legendScale)
-        .tickValues([0, ...thresholds])
-        .tickFormat(d3.format(","));
-}
+    // Create the color rectangles
+    legendSvg.selectAll("rect")
+        .data(thresholds)
+        .join("rect")
+        .attr("x", (d, i) => legendScale(d))
+        .attr("y", 0)
+        .attr("width", (d, i) => {
+            if (i < thresholds.length - 1) {
+                return legendScale(thresholds[i + 1]) - legendScale(d);
+            }
+            return legendWidth - legendScale(d); // Last segment
+        })
+        .attr("height", legendHeight)
+        .style("fill", d => color(d));
 
+    // Add the axis at the bottom of the legend with smaller tick values
+    const legendAxis = d3.axisBottom(legendScale)
+        .tickValues([0, ...thresholds]) // Add ticks for the thresholds
+        .ticks(5) // Reduce the number of ticks
+        .tickFormat(d3.format(",.0f")); // Format numbers with no decimal places
+
+    legendSvg.append("g")
+        .attr("transform", "translate(0," + legendHeight + ")")
+        .call(legendAxis);
+}
 // Initialize on window load
 window.addEventListener('load', init);
