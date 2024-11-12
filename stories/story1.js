@@ -159,10 +159,7 @@ function updateVisualization(json, w, h) {
             // Fixed thresholds for color scale (adjusted for COVID-19 death counts)
             const color = d3.scaleThreshold()
                 .domain([40000, 80000, 120000, 160000, 200000, 600000, 1000000])
-                .range([
-                    "#f7fbff", "#deebf7", "#c6dbef", "#9ecae1", 
-                    "#6baed6", "#4292c6", "#2171b5", "#084594"
-                ]);
+                .range([ "#f7fbff", "#deebf7", "#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#084594"]);
 
             // Remove any existing tooltips
             d3.selectAll(".tooltip").remove();
@@ -191,6 +188,13 @@ function updateVisualization(json, w, h) {
                 .style("stroke", "darkgrey")
                 .style("stroke-width", "0.5px")
                 .on("mouseover", function(event, d) {
+                    // Get mouse position relative to the map container
+                    const mouseX = event.offsetX;
+                    const mouseY = event.offsetY;
+
+                    // Calculate the transform-origin based on the mouse position
+                    const transformOrigin = mouseX + "px " + mouseY + "px";
+
                     d3.selectAll("path")
                         .style("filter", "blur(2px)") // Blur all paths
                         .style("opacity", 0.6); // Reduce opacity of all paths
@@ -200,9 +204,10 @@ function updateVisualization(json, w, h) {
                         .style("opacity", 1) // Restore full opacity
                         .style("stroke-width", "3px") // Increase stroke width
                         .style("stroke", "#333")
-                        .style("transform", "scale(1.1)") // Enlarge the hovered country
-                        .style("transform-origin", "center");
-
+                        .style("transform", "scale(0.9)") // Adjust the scale
+                        .style("transform-origin", transformOrigin) // Dynamically set the transform-origin to the mouse position
+                        .style("transition", "transform 0.3s ease"); // Smooth transition
+                    
                     const country = d.properties.name;
                     const deaths = accumulatedDeaths[country] || 0;
 
@@ -240,6 +245,7 @@ function updateVisualization(json, w, h) {
             d3.select("#chart").html("Error loading data: " + error.message);
         });
 }
+
 
 
 // Updated legend function to work with threshold scale
