@@ -158,24 +158,10 @@ function updateVisualization(json, w, h) {
 
             // Fixed thresholds for color scale (adjusted for COVID-19 death counts)
             const color = d3.scaleThreshold()
-                .domain([
-                    40000,      // Very low
-                    80000,     // Low
-                    120000,    // Medium-low
-                    160000,    // Medium
-                    200000,   // Medium-high
-                    600000,   // High
-                    1000000   // Very high
-                ])
+                .domain([40000, 80000, 120000, 160000, 200000, 600000, 1000000])
                 .range([
-                    "#f7fbff",  // Lowest
-                    "#deebf7",
-                    "#c6dbef",
-                    "#9ecae1",
-                    "#6baed6",
-                    "#4292c6",
-                    "#2171b5",
-                    "#084594"   // Highest
+                    "#f7fbff", "#deebf7", "#c6dbef", "#9ecae1", 
+                    "#6baed6", "#4292c6", "#2171b5", "#084594"
                 ]);
 
             // Remove any existing tooltips
@@ -205,9 +191,17 @@ function updateVisualization(json, w, h) {
                 .style("stroke", "darkgrey")
                 .style("stroke-width", "0.5px")
                 .on("mouseover", function(event, d) {
+                    d3.selectAll("path")
+                        .style("filter", "blur(2px)") // Blur all paths
+                        .style("opacity", 0.6); // Reduce opacity of all paths
+                    
                     d3.select(this)
-                        .style("stroke-width", "2px")
-                        .style("stroke", "#333");
+                        .style("filter", "none") // Remove blur on hovered path
+                        .style("opacity", 1) // Restore full opacity
+                        .style("stroke-width", "3px") // Increase stroke width
+                        .style("stroke", "#333")
+                        .style("transform", "scale(1.1)") // Enlarge the hovered country
+                        .style("transform-origin", "center");
 
                     const country = d.properties.name;
                     const deaths = accumulatedDeaths[country] || 0;
@@ -219,13 +213,19 @@ function updateVisualization(json, w, h) {
                         `<strong>${country}</strong><br/>` +
                         `Accumulated Deaths: ${deaths.toLocaleString()}`
                     )
-                        .style("left", (event.pageX + 5) + "px")
-                        .style("top", (event.pageY - 28) + "px");
+                        .style("left", (event.pageX + 20) + "px") // Move tooltip further from pointer
+                        .style("top", (event.pageY - 50) + "px"); // Adjust vertical position too
                 })
                 .on("mouseout", function() {
+                    d3.selectAll("path")
+                        .style("filter", "none") // Remove blur on all paths
+                        .style("opacity", 1); // Restore full opacity on all paths
+                    
                     d3.select(this)
                         .style("stroke-width", "0.5px")
-                        .style("stroke", "darkgrey");
+                        .style("stroke", "darkgrey")
+                        .style("transform", "scale(1)") // Reset the scale
+                        .style("transform-origin", "center");
 
                     tooltip.transition()
                         .duration(500)
@@ -240,6 +240,7 @@ function updateVisualization(json, w, h) {
             d3.select("#chart").html("Error loading data: " + error.message);
         });
 }
+
 
 // Updated legend function to work with threshold scale
 function addLegend(color) {
