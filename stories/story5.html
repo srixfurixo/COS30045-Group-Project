@@ -11,6 +11,25 @@
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <!-- Then load your custom script -->
   <script src="story5.js" defer></script>
+  <style>
+    .timeline-slider {
+        width: 80%;
+        margin: 20px auto;
+    }
+    .slider-container {
+        text-align: center;
+        padding: 20px;
+    }
+    #play-button {
+        padding: 5px 10px;
+        margin: 10px;
+        cursor: pointer;
+    }
+    #year-display {
+        font-size: 1.2em;
+        margin: 10px;
+    }
+  </style>
 </head>
 <body>
   <header class="logo-header bg-primary">
@@ -40,6 +59,17 @@
       </ul>
     </div>
   </nav>
+
+  <div id="controls" class="p-4">
+    <div class="slider-container">
+      <button id="play-button">Play</button>
+      <span id="year-display">2021</span>
+      <input type="range" min="2020" max="2023" value="2021" class="timeline-slider" id="year-slider">
+    </div>
+    <div id="country-menu">
+      <!-- Checkboxes populated by the script -->
+    </div>
+  </div>
 
   <div id="content">
     <h1 class="title">Population vs. Cumulative Vaccinations</h1>
