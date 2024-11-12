@@ -17,9 +17,27 @@ function init() {
 
     // Create the SVG once during initialization
     if (container.select("svg").empty()) {
-        container.append("svg")
+        // Create main SVG
+        const svg = container.append("svg")
             .attr("width", width)
             .attr("height", height);
+
+        // Add zoom behavior
+        const zoom = d3.zoom()
+            .scaleExtent([1, 8])
+            .on("zoom", zoomed);
+
+        // Create a group for the map that will be transformed
+        const g = svg.append("g")
+            .attr("class", "map-group");
+
+        // Apply zoom behavior to SVG
+        svg.call(zoom);
+
+        // Zoom function
+        function zoomed(event) {
+            g.attr("transform", event.transform);
+        }
     }
 
     // Create sliders
@@ -228,11 +246,12 @@ function updateVisualization(json, w, h) {
                 accumulatedDeaths[country] = cumulativeDeaths;
             }
 
-            // Select the existing SVG
+            // Select the existing SVG and map group
             var svg = d3.select("#chart svg");
+            var g = svg.select(".map-group");
 
-            // Clear existing paths and elements within the SVG
-            svg.selectAll("*").remove();
+            // Clear existing paths and elements within the group
+            g.selectAll("*").remove();
 
             // Setup projection
             var projection = d3.geoEquirectangular()
@@ -262,8 +281,8 @@ function updateVisualization(json, w, h) {
                 .style("border", "1px solid #ccc")
                 .style("border-radius", "5px");
 
-            // Draw the map
-            svg.selectAll("path")
+            // Draw the map inside the group
+            g.selectAll("path")
                 .data(json.features)
                 .join("path")
                 .attr("d", path)
@@ -362,14 +381,11 @@ function addLegend(color) {
     const legendMargin = { top: 10, right: 40, bottom: 40, left: 20 }; // Increased right margin for better label spacing
 
     // Create the SVG element for the legend and append a group element
-    const legendSvg = d3.select("#content") // Place the legend within the content div
+    const legendSvg = d3.select("#legend-container") // Place the legend within the legend-container div
         .append("svg")
         .attr("class", "legend")
         .attr("width", legendWidth + legendMargin.left + legendMargin.right) // Adjust width to account for right margin
         .attr("height", legendHeight + legendMargin.top + legendMargin.bottom) // Adjust height to account for bottom margin
-        .style("position", "absolute") // Use absolute positioning
-        .style("bottom", "80px") // Position above the bottom (adjust as needed)
-        .style("right", "0px")  // Adjust the right positioning as required
         .append("g")
         .attr("transform", "translate(" + legendMargin.left + "," + legendMargin.top + ")");
 
