@@ -15,6 +15,8 @@
 
   <!-- Your custom JS script -->
   <script src="story4.js" defer></script>
+
+
 </head>
 
 <body>
@@ -55,15 +57,25 @@
 
   <!-- Dropdown for country selection -->
   <div id="dropdownContainer" class="container mt-4">
-    <!-- Country Dropdown -->
+    <!-- Country and Year Dropdowns -->
     <div class="row">
-      <div class="col-md-4 offset-md-4">
+      <div class="col-md-4">
         <label for="countrySelector" class="form-label">Select Country:</label>
         <select id="countrySelector" class="form-select" aria-label="Select Country">
           <!-- Country options will be populated dynamically by JS -->
         </select>
       </div>
+
+      <div class="col-md-4">
+        <label for="yearSelector" class="form-label">Select Year:</label>
+        <select id="yearSelector" class="form-select" aria-label="Select Year">
+          <!-- Year options will be populated dynamically by JS -->
+        </select>
+      </div>
     </div>
+
+    <div>
+      <button id="addHospitalButton">Show Hospital Admissions</button>
   </div>
 
   <!-- SVG container for D3 chart -->
@@ -72,16 +84,14 @@
   <section class="p-4"> 
     <article class="bg-light rounded shadow-sm p-3 mb-4">
       <h2>Introduction</h2>
-      <p>The COVID-19 pandemic struck the world unexpectedly, leaving many countries unprepared for the overwhelming influx of patients requiring critical care. This exposed significant vulnerabilities in global healthcare systems, particularly regarding ICU bed capacity. This analysis focuses on comparing the total number of ICU beds to COVID-19 mortality rates across different countries to examine how ICU availability might influence patient outcomes in times of crisis.
-      </p>
+      <p>The COVID-19 pandemic struck the world unexpectedly, leaving many countries unprepared for the overwhelming influx of patients requiring critical care. This exposed significant vulnerabilities in global healthcare systems, particularly regarding ICU bed capacity. This analysis focuses on comparing the total number of ICU beds to COVID-19 mortality rates across different countries to examine how ICU availability might influence patient outcomes in times of crisis.</p>
     </article>
   </section>
 
   <section class="p-4"> 
     <article class="bg-light rounded shadow-sm p-3 mb-4">
       <h2>Analysis</h2>
-      <p>This data comparison reveals interesting patterns in how ICU bed availability relates to COVID-19 mortality rates. Countries with higher ICU bed counts generally experienced lower mortality rates, suggesting that access to critical care resources may play a role in reducing fatalities. However, some countries with limited ICU beds managed lower mortality rates due to other factors like effective early interventions and robust healthcare protocols. Conversely, certain well-equipped nations saw higher mortality rates, possibly reflecting the challenges of unprecedented patient loads and resource allocation.
-      </p>
+      <p>This data comparison reveals interesting patterns in how ICU bed availability relates to COVID-19 mortality rates. Countries with higher ICU bed counts generally experienced lower mortality rates, suggesting that access to critical care resources may play a role in reducing fatalities. However, some countries with limited ICU beds managed lower mortality rates due to other factors like effective early interventions and robust healthcare protocols. Conversely, certain well-equipped nations saw higher mortality rates, possibly reflecting the challenges of unprecedented patient loads and resource allocation.</p>
     </article>
   </section>
 
