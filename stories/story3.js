@@ -443,6 +443,16 @@ var RadarChart = {
 
 // Initialization function
 function init() {
+  // Add loading overlay
+  const loadingOverlay = document.createElement('div');
+  loadingOverlay.className = 'loading-overlay';
+  loadingOverlay.innerHTML = '<div class="loading-spinner"></div>';
+  document.body.appendChild(loadingOverlay);
+
+  // Add fade-in class to chart container
+  const chartContainer = document.querySelector('#radarChart');
+  chartContainer.classList.add('fade-in');
+
   d3.csv(top5DataFile, function(errorTop5, top5Data) {
     if (errorTop5) {
       console.error("Error loading top 5 data:", errorTop5);
@@ -478,6 +488,12 @@ function init() {
 
         // Add event listeners
         setupEventListeners();
+
+        // After all data is loaded and visualization is ready
+        loadingOverlay.classList.add('hidden');
+        setTimeout(() => {
+          chartContainer.classList.add('visible');
+        }, 100);
       });
     });
   });

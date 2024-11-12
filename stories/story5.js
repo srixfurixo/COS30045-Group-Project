@@ -1,6 +1,15 @@
 // story5.js
 
+const loadingOverlay = document.createElement('div');
+loadingOverlay.className = 'loading-overlay';
+loadingOverlay.innerHTML = '<div class="loading-spinner"></div>';
+document.body.appendChild(loadingOverlay);
+
 const dataFile = "../Datasets/story5.csv"; 
+
+// Add fade-in class to chart container
+const chartContainer = document.querySelector('#chart');
+chartContainer.classList.add('fade-in');
 
 // Load the CSV data and create the bubble chart
 d3.csv(dataFile).then(function(data) {
@@ -159,6 +168,13 @@ d3.csv(dataFile).then(function(data) {
       .style("text-decoration", "underline")
       .text("Countries");
 
+    // After data is loaded and visualization is ready
+    loadingOverlay.classList.add('hidden');
+    setTimeout(() => {
+        chartContainer.classList.add('visible');
+    }, 100);
+
 }).catch(function(error){
     console.error("Error loading or processing the CSV file:", error);
+    loadingOverlay.classList.add('hidden');
 });

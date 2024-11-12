@@ -1,6 +1,16 @@
 const dataFile = "../Datasets/total_icu_beds.csv";
 
 function init() {
+    // Add loading overlay
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.className = 'loading-overlay';
+    loadingOverlay.innerHTML = '<div class="loading-spinner"></div>';
+    document.body.appendChild(loadingOverlay);
+
+    // Add fade-in class to chart container
+    const chartContainer = document.querySelector('#chartContainer');
+    chartContainer.classList.add('fade-in');
+
     const w = 500;  // Width of the chart
     const h = 400;   // Height of the chart
     const margin = { top: 1, right: 80, bottom: 80, left: 80 };
@@ -189,8 +199,15 @@ function init() {
                 .duration(750)
                 .attr("d", lineICU);
         }
+
+        // After data is loaded and visualization is ready
+        loadingOverlay.classList.add('hidden');
+        setTimeout(() => {
+            chartContainer.classList.add('visible');
+        }, 100);
     }).catch(error => {
         console.error("Error loading or processing the CSV file: ", error);
+        loadingOverlay.classList.add('hidden');
     });
 }
 window.onload = init;

@@ -1,4 +1,14 @@
 function init() {
+    // Add loading overlay
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.className = 'loading-overlay';
+    loadingOverlay.innerHTML = '<div class="loading-spinner"></div>';
+    document.body.appendChild(loadingOverlay);
+
+    // Add fade-in class to chart container
+    const chartContainer = document.querySelector('#chart');
+    chartContainer.classList.add('fade-in');
+
     // Set fixed dimensions for the SVG
     const width = 960;
     const height = 400;
@@ -42,10 +52,16 @@ function init() {
             }
 
             updateChart(data, width, height);
+            // Hide loading overlay and show visualization
+            loadingOverlay.classList.add('hidden');
+            setTimeout(() => {
+                chartContainer.classList.add('visible');
+            }, 100);
         })
         .catch(function (error) {
             console.error("Error loading CSV:", error);
             d3.select("#chart").html("Error loading data: " + error.message);
+            loadingOverlay.classList.add('hidden');
         });
 }
 

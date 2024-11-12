@@ -1,161 +1,184 @@
 function init() {
-        // Set fixed dimensions for the SVG
-        const width = 960;
-        const height = 400;
+    // Add loading overlay
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.className = 'loading-overlay';
+    loadingOverlay.innerHTML = '<div class="loading-spinner"></div>';
+    document.body.appendChild(loadingOverlay);
 
-        var container = d3.select("#chart");
+    // Add fade-in class to chart container
+    const chartContainer = document.querySelector('#chart');
+    chartContainer.classList.add('fade-in');
 
-        // Create the SVG once during initialization
-        if (container.select("svg").empty()) {
-            container.append("svg")
-                .attr("width", width)
-                .attr("height", height);
+    // Set fixed dimensions for the SVG
+    const width = 960;
+    const height = 400;
+
+    var container = d3.select("#chart");
+
+    // Create the SVG once during initialization
+    if (container.select("svg").empty()) {
+        container.append("svg")
+            .attr("width", width)
+            .attr("height", height);
+    }
+
+    // Create sliders
+    createSliders();
+
+    // Create the Simulate Button
+    createSimulateButton();
+
+    // After data is loaded and visualization is ready
+    function finishLoading() {
+        // Hide loading overlay
+        loadingOverlay.classList.add('hidden');
+        
+        // Show the visualization with fade-in
+        setTimeout(() => {
+            chartContainer.classList.add('visible');
+        }, 100);
+    }
+
+    // Load and process the GeoJSON data
+    d3.json("custom.geo.json")
+        .then(function(json) {
+            if (!json) {
+                throw new Error("No GeoJSON data received");
+            }
+            window.geoJsonData = json;
+            updateVisualization(window.geoJsonData, width, height);
+            finishLoading(); // Add this line to trigger fade-in
+        })
+        .catch(function(error) {
+            console.error("Error loading GeoJSON:", error);
+            container.html("Error loading map data: " + error.message);
+            finishLoading(); // Still need to hide loading overlay on error
+        });
+}
+
+function createSliders() {
+    // Create slider container if it doesn't exist
+    let sliderContainer = d3.select("#slider-container");
+    if (sliderContainer.empty()) {
+        sliderContainer = d3.select("#content")
+            .insert("div", "#chart")  // Insert before the chart
+            .attr("id", "slider-container");
+    }
+
+    // Year Slider
+    const yearContainer = sliderContainer.append("div")
+        .attr("class", "slider-container");
+
+    yearContainer.append("label")
+        .attr("for", "year-slider")
+        .text("Year: ");
+
+    const yearSlider = yearContainer.append("input")
+        .attr("type", "range")
+        .attr("id", "year-slider")
+        .attr("min", 2020)
+        .attr("max", 2024)
+        .attr("value", 2020)
+        .attr("step", 1);
+
+    yearContainer.append("span")
+        .attr("id", "selected-year")
+        .text("2020");
+
+    // Month Slider
+    const monthContainer = sliderContainer.append("div")
+        .attr("class", "slider-container");
+
+    monthContainer.append("label")
+        .attr("for", "month-slider")
+        .text("Month: ");
+
+    const monthSlider = monthContainer.append("input")
+        .attr("type", "range")
+        .attr("id", "month-slider")
+        .attr("min", 1)
+        .attr("max", 12)
+        .attr("value", 1)
+        .attr("step", 1);
+
+    monthContainer.append("span")
+        .attr("id", "selected-month")
+        .text("January");
+
+    // Add event listeners
+    yearSlider.on("input", function() {
+        d3.select("#selected-year").text(this.value);
+        if (window.geoJsonData) {
+            updateVisualization(window.geoJsonData, 960, 500);
+        }
+    });
+
+    monthSlider.on("input", function() {
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        d3.select("#selected-month").text(monthNames[this.value - 1]);
+        if (window.geoJsonData) {
+            updateVisualization(window.geoJsonData, 960, 500);
+        }
+    });
+}
+
+// Add Simulate Button Functionality
+function createSimulateButton() {
+    const buttonContainer = d3.select("#slider-container")
+        .append("div")
+        .attr("class", "simulate-button-container");
+
+    buttonContainer.append("button")
+        .attr("id", "simulate-button")
+        .text("Simulate")
+        .on("click", simulate);
+}
+
+// Simulate Function (Automatically iterate over years and months)
+function simulate() {
+    const yearSlider = d3.select("#year-slider").node();
+    const monthSlider = d3.select("#month-slider").node();
+
+    let currentYear = parseInt(yearSlider.value);
+    let currentMonth = parseInt(monthSlider.value);
+
+    const yearRange = parseInt(yearSlider.max);
+    const monthRange = parseInt(monthSlider.max);
+
+    const simulateInterval = setInterval(function() {
+        // Update the sliders
+        yearSlider.value = currentYear;
+        monthSlider.value = currentMonth;
+
+        // Update the displayed year and month
+        d3.select("#selected-year").text(currentYear);
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        d3.select("#selected-month").text(monthNames[currentMonth - 1]);
+
+        // Update the map visualization for the current year and month
+        if (window.geoJsonData) {
+            updateVisualization(window.geoJsonData, 960, 500);
         }
 
-        // Create sliders
-        createSliders();
-
-        // Create the Simulate Button
-        createSimulateButton();
-
-        // Load and process the GeoJSON data
-        d3.json("custom.geo.json")
-            .then(function(json) {
-                if (!json) {
-                    throw new Error("No GeoJSON data received");
-                }
-                window.geoJsonData = json;
-                updateVisualization(window.geoJsonData, width, height);
-            })
-            .catch(function(error) {
-                console.error("Error loading GeoJSON:", error);
-                container.html("Error loading map data: " + error.message);
-            });
-    }
-
-    function createSliders() {
-        // Create slider container if it doesn't exist
-        let sliderContainer = d3.select("#slider-container");
-        if (sliderContainer.empty()) {
-            sliderContainer = d3.select("#content")
-                .insert("div", "#chart")  // Insert before the chart
-                .attr("id", "slider-container");
-        }
-
-        // Year Slider
-        const yearContainer = sliderContainer.append("div")
-            .attr("class", "slider-container");
-
-        yearContainer.append("label")
-            .attr("for", "year-slider")
-            .text("Year: ");
-
-        const yearSlider = yearContainer.append("input")
-            .attr("type", "range")
-            .attr("id", "year-slider")
-            .attr("min", 2020)
-            .attr("max", 2024)
-            .attr("value", 2020)
-            .attr("step", 1);
-
-        yearContainer.append("span")
-            .attr("id", "selected-year")
-            .text("2020");
-
-        // Month Slider
-        const monthContainer = sliderContainer.append("div")
-            .attr("class", "slider-container");
-
-        monthContainer.append("label")
-            .attr("for", "month-slider")
-            .text("Month: ");
-
-        const monthSlider = monthContainer.append("input")
-            .attr("type", "range")
-            .attr("id", "month-slider")
-            .attr("min", 1)
-            .attr("max", 12)
-            .attr("value", 1)
-            .attr("step", 1);
-
-        monthContainer.append("span")
-            .attr("id", "selected-month")
-            .text("January");
-
-        // Add event listeners
-        yearSlider.on("input", function() {
-            d3.select("#selected-year").text(this.value);
-            if (window.geoJsonData) {
-                updateVisualization(window.geoJsonData, 960, 500);
-            }
-        });
-
-        monthSlider.on("input", function() {
-            const monthNames = [
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-            ];
-            d3.select("#selected-month").text(monthNames[this.value - 1]);
-            if (window.geoJsonData) {
-                updateVisualization(window.geoJsonData, 960, 500);
-            }
-        });
-    }
-
-    // Add Simulate Button Functionality
-    function createSimulateButton() {
-        const buttonContainer = d3.select("#slider-container")
-            .append("div")
-            .attr("class", "simulate-button-container");
-
-        buttonContainer.append("button")
-            .attr("id", "simulate-button")
-            .text("Simulate")
-            .on("click", simulate);
-    }
-
-    // Simulate Function (Automatically iterate over years and months)
-    function simulate() {
-        const yearSlider = d3.select("#year-slider").node();
-        const monthSlider = d3.select("#month-slider").node();
-
-        let currentYear = parseInt(yearSlider.value);
-        let currentMonth = parseInt(monthSlider.value);
-
-        const yearRange = parseInt(yearSlider.max);
-        const monthRange = parseInt(monthSlider.max);
-
-        const simulateInterval = setInterval(function() {
-            // Update the sliders
-            yearSlider.value = currentYear;
-            monthSlider.value = currentMonth;
-
-            // Update the displayed year and month
-            d3.select("#selected-year").text(currentYear);
-            const monthNames = [
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-            ];
-            d3.select("#selected-month").text(monthNames[currentMonth - 1]);
-
-            // Update the map visualization for the current year and month
-            if (window.geoJsonData) {
-                updateVisualization(window.geoJsonData, 960, 500);
-            }
-
-            // Increment month
-            if (currentMonth < monthRange) {
-                currentMonth++;
+        // Increment month
+        if (currentMonth < monthRange) {
+            currentMonth++;
+        } else {
+            currentMonth = 1;
+            if (currentYear < yearRange) {
+                currentYear++;
             } else {
-                currentMonth = 1;
-                if (currentYear < yearRange) {
-                    currentYear++;
-                } else {
-                    clearInterval(simulateInterval);  // Stop simulation after max year and month
-                }
+                clearInterval(simulateInterval);  // Stop simulation after max year and month
             }
-        }, 450);  // Adjust the speed of simulation (ms)
-    }
+        }
+    }, 450);  // Adjust the speed of simulation (ms)
+}
 
 function parseData(data) {
     const dataByCountryDate = {};
@@ -172,7 +195,6 @@ function parseData(data) {
     });
     return dataByCountryDate;
 }
-
 
 function updateVisualization(json, w, h) {
     const year = +d3.select("#year-slider").property("value");
