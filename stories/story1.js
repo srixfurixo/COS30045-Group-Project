@@ -156,10 +156,10 @@ function updateVisualization(json, w, h) {
 
             var path = d3.geoPath().projection(projection);
 
-            // Fixed thresholds for color scale (adjusted for COVID-19 death counts)
+            // Adjusted thresholds and range for the color scale
             const color = d3.scaleThreshold()
-                .domain([40000, 80000, 120000, 160000, 200000, 600000, 1000000])
-                .range([ "#f7fbff", "#deebf7", "#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#084594"]);
+                .domain([100, 500, 1000, 5000, 10000, 50000, 100000, 200000, 500000, 1000000])
+                .range([ "#f7fbff", "#deebf7", "#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#084594", "#08306b", "#031c4a"]);
 
             // Remove any existing tooltips
             d3.selectAll(".tooltip").remove();
@@ -195,19 +195,21 @@ function updateVisualization(json, w, h) {
                     // Calculate the transform-origin based on the mouse position
                     const transformOrigin = mouseX + "px " + mouseY + "px";
 
+                    // Apply blur effect and opacity change to all paths except the hovered one
                     d3.selectAll("path")
                         .style("filter", "blur(2px)") // Blur all paths
                         .style("opacity", 0.6); // Reduce opacity of all paths
                     
                     d3.select(this)
                         .style("filter", "none") // Remove blur on hovered path
-                        .style("opacity", 1) // Restore full opacity
+                        .style("opacity", 1) // Restore full opacity on hovered path
                         .style("stroke-width", "3px") // Increase stroke width
                         .style("stroke", "#333")
-                        .style("transform", "scale(0.9)") // Adjust the scale
+                        .style("transform", "scale(1.1)") // Slightly increase scale to highlight
                         .style("transform-origin", transformOrigin) // Dynamically set the transform-origin to the mouse position
-                        .style("transition", "transform 0.3s ease"); // Smooth transition
-                    
+                        .style("transition", "transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease"); // Smooth transition for all effects
+
+                    // Display country data in the tooltip
                     const country = d.properties.name;
                     const deaths = accumulatedDeaths[country] || 0;
 
@@ -217,27 +219,45 @@ function updateVisualization(json, w, h) {
                     tooltip.html(
                         `<strong>${country}</strong><br/>` +
                         `Accumulated Deaths: ${deaths.toLocaleString()}`
-                    )
-                        .style("left", (event.pageX + 20) + "px") // Move tooltip further from pointer
-                        .style("top", (event.pageY - 50) + "px"); // Adjust vertical position too
+                    );
+
+                    // Adjust tooltip position dynamically to avoid overlap
+                    let tooltipX = event.pageX + 20; // Move tooltip further from pointer
+                    let tooltipY = event.pageY - 50; // Adjust vertical position
+
+                    // Check if tooltip is too close to the right edge
+                    if (tooltipX + tooltip.node().getBoundingClientRect().width > window.innerWidth) {
+                        tooltipX = window.innerWidth - tooltip.node().getBoundingClientRect().width - 20;
+                    }
+
+                    // Check if tooltip is too close to the bottom edge
+                    if (tooltipY + tooltip.node().getBoundingClientRect().height > window.innerHeight) {
+                        tooltipY = window.innerHeight - tooltip.node().getBoundingClientRect().height - 20;
+                    }
+
+                    tooltip.style("left", tooltipX + "px")
+                        .style("top", tooltipY + "px"); // Adjust position dynamically
                 })
                 .on("mouseout", function() {
+                    // Remove blur and opacity changes from all paths
                     d3.selectAll("path")
-                        .style("filter", "none") // Remove blur on all paths
+                        .style("filter", "none") // Remove blur from all paths
                         .style("opacity", 1); // Restore full opacity on all paths
                     
+                    // Reset the hovered country styling
                     d3.select(this)
                         .style("stroke-width", "0.5px")
                         .style("stroke", "darkgrey")
                         .style("transform", "scale(1)") // Reset the scale
                         .style("transform-origin", "center");
 
+                    // Hide tooltip
                     tooltip.transition()
                         .duration(500)
                         .style("opacity", 0);
                 });
 
-            // Add legend with fixed thresholds
+            // Add legend with adjusted thresholds
             addLegend(color);
         })
         .catch(function(error) {
@@ -245,8 +265,6 @@ function updateVisualization(json, w, h) {
             d3.select("#chart").html("Error loading data: " + error.message);
         });
 }
-
-
 
 // Updated legend function to work with threshold scale
 function addLegend(color) {
