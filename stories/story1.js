@@ -178,6 +178,11 @@ function simulate() {
             }
         }
     }, 450);  // Adjust the speed of simulation (ms)
+
+    //Legend Container
+
+
+
 }
 
 function parseData(data) {
@@ -348,55 +353,64 @@ function updateVisualization(json, w, h) {
 }
 
 function addLegend(color) {
-    // Remove existing legend
+    // Remove any existing legend
     d3.select(".legend").remove();
 
-    // Reduce legend width and height
-    const legendWidth = 300;
-    const legendHeight = 30;
-    const legendMargin = { top: 10, right: 20, bottom: 30, left: 20 }; // Reduced bottom margin
+    // Define the dimensions and margins for the legend
+    const legendWidth = 300;  // Width of the legend
+    const legendHeight = 30;  // Height of the legend
+    const legendMargin = { top: 10, right: 40, bottom: 40, left: 20 }; // Increased right margin for better label spacing
 
-    const legendSvg = d3.select("#content")
+    // Create the SVG element for the legend and append a group element
+    const legendSvg = d3.select("#content") // Place the legend within the content div
         .append("svg")
         .attr("class", "legend")
-        .attr("width", legendWidth + legendMargin.left + legendMargin.right)
-        .attr("height", legendHeight + legendMargin.top + legendMargin.bottom)
-        .style("position", "absolute")
-        .style("bottom", "20px")
-        .style("right", "20px")
+        .attr("width", legendWidth + legendMargin.left + legendMargin.right) // Adjust width to account for right margin
+        .attr("height", legendHeight + legendMargin.top + legendMargin.bottom) // Adjust height to account for bottom margin
+        .style("position", "absolute") // Use absolute positioning
+        .style("bottom", "80px") // Position above the bottom (adjust as needed)
+        .style("right", "0px")  // Adjust the right positioning as required
         .append("g")
         .attr("transform", "translate(" + legendMargin.left + "," + legendMargin.top + ")");
 
-    // Create the color scale domain
-    const thresholds = color.domain();
+    // Define the color scale domain (ensure you have the domain set for your color scale)
+    const thresholds = color.domain(); 
+
+    // Create a linear scale for positioning the rectangles
     const legendScale = d3.scaleLinear()
-        .domain([0, 1000000])
+        .domain([thresholds[0], thresholds[thresholds.length - 1]]) // Start from the first to the last threshold
         .range([0, legendWidth]);
 
-    // Create the color rectangles
+    // Create the color rectangles based on thresholds
     legendSvg.selectAll("rect")
         .data(thresholds)
         .join("rect")
-        .attr("x", (d, i) => legendScale(d))
+        .attr("x", d => legendScale(d))
         .attr("y", 0)
         .attr("width", (d, i) => {
             if (i < thresholds.length - 1) {
-                return legendScale(thresholds[i + 1]) - legendScale(d);
+                return legendScale(thresholds[i + 1]) - legendScale(d); // Width between two thresholds
             }
-            return legendWidth - legendScale(d); // Last segment
+            return legendWidth - legendScale(d); // Last rectangle stretches to the edge
         })
         .attr("height", legendHeight)
-        .style("fill", d => color(d));
+        .style("fill", d => color(d)); // Apply the color scale to each segment
 
-    // Add the axis at the bottom of the legend with smaller tick values
+    // Create the axis at the bottom of the legend
     const legendAxis = d3.axisBottom(legendScale)
-        .tickValues([0, ...thresholds]) // Add ticks for the thresholds
-        .ticks(5) // Reduce the number of ticks
-        .tickFormat(d3.format(",.0f")); // Format numbers with no decimal places
+        .ticks(5) // Adjust the number of ticks
+        .tickFormat(d3.format(",.0f")); // Format the tick labels
 
+    // Append the axis to the bottom of the legend
     legendSvg.append("g")
         .attr("transform", "translate(0," + legendHeight + ")")
-        .call(legendAxis);
+        .call(legendAxis)
+        .selectAll("text")  // Style the text to ensure all labels fit
+        .style("text-anchor", "middle")
+        .style("font-size", "12px")  // Adjust font size if necessary
+        .style("padding-right", "10px"); // Optionally add right padding to labels
 }
+
+
 // Initialize on window load
 window.addEventListener('load', init);
