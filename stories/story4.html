@@ -72,11 +72,17 @@
           <!-- Year options will be populated dynamically by JS -->
         </select>
       </div>
+
+      <div class="col-md-4">
+        <label for="admissionTypeSelector" class="form-label">Select Admission Type:</label>
+        <select id="admissionTypeSelector" class="form-select" aria-label="Select Admission Type">
+          <option value="icu">ICU Admissions</option>
+          <option value="hospital">Hospital Admissions</option>
+        </select>
+      </div>
     </div>
 
-    <div>
-      <button id="addHospitalButton">Show Hospital Admissions</button>
-  </div>
+
 
   <!-- SVG container for D3 chart -->
   <div id="chartContainer" class="container mt-4"></div>

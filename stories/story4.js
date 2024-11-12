@@ -20,8 +20,8 @@ function init() {
         .attr("transform", `translate(${margin.left}, ${margin.top})`)
         .style("opacity", 0);  // Initially hidden for fade-in
 
-    let currentCountry, currentYear;
-    let currentData;
+    let currentCountry, currentYear, currentAdmissionType;
+    currentAdmissionType = "icu"; // Default to ICU admissions
 
     // Default year set to 2020
     currentYear = 2020;
@@ -86,6 +86,7 @@ function init() {
         svg.append("text")
             .attr("transform", `translate(${w + 50}, ${h / 2}) rotate(-90)`)
             .style("text-anchor", "middle")
+            .attr("class", "y-axis-right-label")
             .text("Weekly ICU Admissions");
 
         const lineMortality = d3.line()
@@ -116,11 +117,28 @@ function init() {
         const tooltip = d3.select("body").append("div")
             .attr("class", "tooltip")
             .style("position", "absolute")
-            .style("visibility", "hidden")
-            .style("background-color", "lightgray")
-            .style("padding", "5px")
-            .style("border-radius", "5px")
-            .style("font-size", "12px");
+            .style("background", "rgba(255, 255, 255, 0.9)")
+            .style("padding", "10px")
+            .style("border", "1px solid #ddd")
+            .style("border-radius", "4px")
+            .style("pointer-events", "none")
+            .style("opacity", 0);
+
+        // Add vertical line for tooltip
+        const verticalLine = svg.append("line")
+            .attr("class", "vertical-line")
+            .style("stroke", "gray")
+            .style("stroke-width", "1px")
+            .style("stroke-dasharray", "5,5")
+            .style("opacity", 0);
+
+        // Add overlay for mouse tracking
+        const overlay = svg.append("rect")
+            .attr("class", "overlay")
+            .attr("width", w)
+            .attr("height", h)
+            .style("fill", "none")
+            .style("pointer-events", "all");
 
         pathMortality.on("mouseover", function(event, d) {
             tooltip.style("visibility", "visible")
@@ -140,6 +158,12 @@ function init() {
                 .style("left", (event.pageX + 5) + "px");
         }).on("mouseout", function() {
             tooltip.style("visibility", "hidden");
+        });
+
+        // Add admission type selector handler
+        d3.select("#admissionTypeSelector").on("change", function() {
+            currentAdmissionType = this.value;
+            updateChart();
         });
 
         // Fade in chart container
@@ -177,20 +201,75 @@ function init() {
             });
         }
 
+        function mousemove(event) {
+            const [mouseX] = d3.pointer(event);
+            const x0 = x.invert(mouseX);
+            const bisect = d3.bisector(d => d.Date).left;
+            const index = bisect(currentData, x0, 1);
+            const d0 = currentData[index - 1];
+            const d1 = currentData[index];
+            const d = x0 - d0.Date > d1.Date - x0 ? d1 : d0;
+
+            verticalLine
+                .attr("x1", x(d.Date))
+                .attr("x2", x(d.Date))
+                .attr("y1", 0)
+                .attr("y2", h)
+                .style("opacity", 1);
+
+            tooltip
+                .style("opacity", 1)
+                .html(`Date: ${d3.timeFormat("%Y-%m-%d")(d.Date)}<br/>
+                      Mortality: ${d.Mortality}<br/>
+                      ${currentAdmissionType === "icu" ? "ICU" : "Hospital"} Admissions: ${
+                        currentAdmissionType === "icu" ? d["Weekly new ICU admissions"] : d["Weekly new hospital admissions"]
+                      }`)
+                .style("left", (event.pageX + 15) + "px")
+                .style("top", (event.pageY - 28) + "px");
+        }
+
+        function mouseout() {
+            verticalLine.style("opacity", 0);
+            tooltip.style("opacity", 0);
+        }
+
         function updateChart() {
             currentData = data.filter(d => d.Country === currentCountry && d.Year === currentYear);
 
             x.domain(d3.extent(currentData, d => d.Date));
             yLeft.domain([0, d3.max(currentData, d => d.Mortality)]);
-            yRight.domain([0, d3.max(currentData, d => d["Weekly new ICU admissions"])]);
+            yRight.domain([0, d3.max(currentData, d => 
+                currentAdmissionType === "icu" ? d["Weekly new ICU admissions"] : d["Weekly new hospital admissions"]
+            )]);
 
+            // Update axes
             svg.select(".x-axis").transition().duration(750).call(xAxis);
             svg.select(".y-axis-left").transition().duration(750).call(d3.axisLeft(yLeft));
             svg.select(".y-axis-right").transition().duration(750).call(d3.axisRight(yRight));
 
-            pathMortality.datum(currentData).transition().duration(750).attr("d", lineMortality);
-            pathICU.datum(currentData).transition().duration(750).attr("d", lineICUAdmissions);
+            // Update right y-axis label
+            svg.select(".y-axis-right-label")
+                .text(currentAdmissionType === "icu" ? "Weekly ICU Admissions" : "Weekly Hospital Admissions");
+
+            // Update lines
+            pathMortality.datum(currentData).transition().duration(750)
+                .attr("d", lineMortality);
+
+            pathICU.datum(currentData).transition().duration(750)
+                .attr("d", d3.line()
+                    .x(d => x(d.Date))
+                    .y(d => yRight(currentAdmissionType === "icu" ? 
+                        d["Weekly new ICU admissions"] : d["Weekly new hospital admissions"])));
         }
+
+        // Add mouse event listeners
+        overlay
+            .on("mouseover", () => {
+                verticalLine.style("opacity", 1);
+                tooltip.style("opacity", 1);
+            })
+            .on("mouseout", mouseout)
+            .on("mousemove", mousemove);
 
         loadingOverlay.classList.add('hidden');
         setTimeout(() => {
