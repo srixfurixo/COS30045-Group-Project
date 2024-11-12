@@ -1,71 +1,73 @@
-const dataFile = "../Datasets/total_icu_beds.csv";
-
 function init() {
-    // Add loading overlay
     const loadingOverlay = document.createElement('div');
     loadingOverlay.className = 'loading-overlay';
     loadingOverlay.innerHTML = '<div class="loading-spinner"></div>';
     document.body.appendChild(loadingOverlay);
 
-    // Add fade-in class to chart container
     const chartContainer = document.querySelector('#chartContainer');
     chartContainer.classList.add('fade-in');
 
-    const w = 500;  // Width of the chart
-    const h = 400;   // Height of the chart
-    const margin = { top: 1, right: 80, bottom: 80, left: 80 };
+    const w = 800;  // Increased Chart width
+    const h = 500;  // Increased Chart height
+    const margin = { top: 20, right: 100, bottom: 100, left: 100 };  // Increased margins
 
-
-    // Create SVG container
     const svg = d3.select("#chartContainer").append("svg")
         .attr("width", w + margin.left + margin.right)
         .attr("height", h + margin.top + margin.bottom)
         .append("g")
-        .attr("transform", `translate(${margin.left}, ${margin.top})`);
+        .attr("transform", `translate(${margin.left}, ${margin.top})`)
+        .style("opacity", 0);  // Initially hidden for fade-in
 
-    // Variables to store current selections
-    let currentCountry;
+    let currentCountry, currentYear;
     let currentData;
 
-    // Load CSV data
+    // Default year set to 2020
+    currentYear = 2020;
+
+    // Tooltip CSS injected into the head of the document
+    const style = document.createElement("style");
+    style.innerHTML = `
+        .tooltip {
+            position: absolute;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+    `;
+    document.head.appendChild(style);
+
     d3.csv(dataFile).then(function(data) {
-        // Convert the columns to appropriate data types
         data.forEach(d => {
-            d.Deaths = +d.Deaths;  // Convert to number
-            d["Total ICU Beds"] = +d["Total ICU Beds"]; // Convert to number
-            d.Year = +d.Year;  // Convert to number
-            d.Month = +d.Month; // Convert to number
+            const dateParts = d.Date.split('/');
+            d.Deaths = +d.Mortality;  // Assuming Mortality is the correct column
+            d["Weekly new ICU admissions"] = +d["Weekly new ICU admissions"];  // ICU admissions column
+            d.Mortality = +d.Mortality; // Mortality column
+            d.Year = +dateParts[2];  // Year is now extracted from the date string
+            d.Date = new Date(d.Year, dateParts[0] - 1, dateParts[1]);  // Ensure proper date parsing
         });
 
-        // Combine Year and Month into a Date object
-        data.forEach(d => {
-            d.Date = new Date(d.Year, d.Month - 1); // Months are zero-based
-        });
-
-        // Log data after conversion
-        console.log("Processed Data: ", data);
-
-        // Set default selections
         currentCountry = data[0].Country;
-        currentData = data.filter(d => d.Country === currentCountry);
+        currentData = data.filter(d => d.Country === currentCountry && d.Year === currentYear);
 
-        // Populate dropdowns with unique countries
         populateDropdowns(data);
+        populateYearDropdown(data);
 
-        // Set up scales for axes
         const x = d3.scaleTime()
             .range([0, w])
             .domain(d3.extent(currentData, d => d.Date));
 
         const yLeft = d3.scaleLinear()
             .range([h, 0])
-            .domain([0, d3.max(currentData, d => d.Deaths)]);
+            .domain([0, d3.max(currentData, d => d.Mortality)]);  // Mortality on left y-axis
 
         const yRight = d3.scaleLinear()
             .range([h, 0])
-            .domain([0, d3.max(currentData, d => d["Total ICU Beds"])]);
+            .domain([0, d3.max(currentData, d => d["Weekly new ICU admissions"])]);  // ICU admissions on right y-axis
 
-        // Create X-axis (Date)
         const xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat("%Y-%m"));
         svg.append("g")
             .attr("class", "x-axis")
@@ -75,12 +77,10 @@ function init() {
             .attr("transform", "rotate(-45)")
             .style("text-anchor", "end");
 
-        // Create Y-axis for Deaths (Left)
         const yAxisLeft = svg.append("g")
             .attr("class", "y-axis-left")
             .call(d3.axisLeft(yLeft));
 
-        // Create Y-axis for Total ICU Beds (Right)
         const yAxisRight = svg.append("g")
             .attr("class", "y-axis-right")
             .attr("transform", `translate(${w}, 0)`)
@@ -88,63 +88,49 @@ function init() {
 
         // Add axis labels
         svg.append("text")
-            .attr("transform", `translate(${w / 2}, ${h + margin.bottom - 20})`)
+            .attr("transform", `translate(${w / 2}, ${h + margin.bottom - 10})`)
             .style("text-anchor", "middle")
-            .style("font-size", "14px")
-            .style("fill", "black")
             .text("Date");
 
         svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("x", -h / 2)
-            .attr("y", -margin.left + 40)
+            .attr("transform", `translate(-50, ${h / 2}) rotate(-90)`)
             .style("text-anchor", "middle")
-            .style("font-size", "14px")
-            .style("fill", "steelblue")
-            .text("Deaths");
+            .text("Mortality");
 
         svg.append("text")
-            .attr("transform", "rotate(-90)")
-            .attr("x", -h / 2)
-            .attr("y", w + margin.right - 20)
+            .attr("transform", `translate(${w + 50}, ${h / 2}) rotate(-90)`)
             .style("text-anchor", "middle")
-            .style("font-size", "14px")
-            .style("fill", "red")
-            .text("Total ICU Beds");
+            .text("Weekly ICU Admissions");
 
-        // Line generator function for Deaths
-        const lineDeaths = d3.line()
+        const lineMortality = d3.line()
             .x(d => x(d.Date))
-            .y(d => yLeft(d.Deaths));
+            .y(d => yLeft(d.Mortality));
 
-        // Line generator function for Total ICU Beds
-        const lineICU = d3.line()
+        const lineICUAdmissions = d3.line()
             .x(d => x(d.Date))
-            .y(d => yRight(d["Total ICU Beds"]));
+            .y(d => yRight(d["Weekly new ICU admissions"]));
 
-        // Draw the line for Deaths
-        const pathDeaths = svg.append("path")
+        const pathMortality = svg.append("path")
             .datum(currentData)
-            .attr("class", "line-deaths")
-            .attr("d", lineDeaths)
+            .attr("class", "line-mortality")
+            .attr("d", lineMortality)
             .style("fill", "none")
             .style("stroke", "steelblue")
             .style("stroke-width", 2);
 
-        // Draw the line for Total ICU Beds
         const pathICU = svg.append("path")
             .datum(currentData)
             .attr("class", "line-icu")
-            .attr("d", lineICU)
+            .attr("d", lineICUAdmissions)
             .style("fill", "none")
             .style("stroke", "red")
             .style("stroke-width", 2);
 
-        // Function to populate dropdowns with unique countries
+        // Fade in chart container
+        svg.transition().duration(1000).style("opacity", 1);
+
         function populateDropdowns(data) {
             const countries = Array.from(new Set(data.map(d => d.Country))).sort();
-
-            // Populate Country dropdown
             const countrySelector = d3.select("#countrySelector");
             countrySelector.selectAll("option")
                 .data(countries)
@@ -152,62 +138,78 @@ function init() {
                 .append("option")
                 .attr("value", d => d)
                 .text(d => d);
-
-            // Set default selection
             countrySelector.property("value", currentCountry);
-
-            // Update chart when dropdown selection changes
             countrySelector.on("change", function() {
                 currentCountry = this.value;
                 updateChart();
             });
         }
 
-        // Function to update the chart based on country selection
-        function updateChart() {
-            currentData = data.filter(d => d.Country === currentCountry);
-
-            // Update scales
-            x.domain(d3.extent(currentData, d => d.Date));
-            yLeft.domain([0, d3.max(currentData, d => d.Deaths)]);
-            yRight.domain([0, d3.max(currentData, d => d["Total ICU Beds"])]);
-
-            // Update axes
-            svg.select(".x-axis")
-                .transition()
-                .duration(750)
-                .call(xAxis);
-
-            svg.select(".y-axis-left")
-                .transition()
-                .duration(750)
-                .call(d3.axisLeft(yLeft));
-
-            svg.select(".y-axis-right")
-                .transition()
-                .duration(750)
-                .call(d3.axisRight(yRight));
-
-            // Update lines
-            pathDeaths.datum(currentData)
-                .transition()
-                .duration(750)
-                .attr("d", lineDeaths);
-
-            pathICU.datum(currentData)
-                .transition()
-                .duration(750)
-                .attr("d", lineICU);
+        function populateYearDropdown(data) {
+            const years = Array.from(new Set(data.map(d => d.Year))).sort();
+            const yearSelector = d3.select("#yearSelector");
+            yearSelector.selectAll("option")
+                .data(years)
+                .enter()
+                .append("option")
+                .attr("value", d => d)
+                .text(d => d);
+            yearSelector.property("value", currentYear);  // Default year set to 2020
+            yearSelector.on("change", function() {
+                currentYear = +this.value;
+                updateChart();
+            });
         }
 
-        // After data is loaded and visualization is ready
-        loadingOverlay.classList.add('hidden');
-        setTimeout(() => {
-            chartContainer.classList.add('visible');
-        }, 100);
-    }).catch(error => {
-        console.error("Error loading or processing the CSV file: ", error);
-        loadingOverlay.classList.add('hidden');
+        function updateChart() {
+            currentData = data.filter(d => d.Country === currentCountry && d.Year === currentYear);
+
+            x.domain(d3.extent(currentData, d => d.Date));
+            yLeft.domain([0, d3.max(currentData, d => d.Mortality)]);
+            yRight.domain([0, d3.max(currentData, d => d["Weekly new ICU admissions"])]);
+
+            svg.select(".x-axis").transition().duration(750).call(xAxis);
+            svg.select(".y-axis-left").transition().duration(750).call(d3.axisLeft(yLeft));
+            svg.select(".y-axis-right").transition().duration(750).call(d3.axisRight(yRight));
+
+            pathMortality.datum(currentData).transition().duration(750).attr("d", lineMortality);
+            pathICU.datum(currentData).transition().duration(750).attr("d", lineICUAdmissions);
+
+            // Remove any existing tooltip
+            d3.selectAll(".tooltip").remove();
+
+            // Create a new tooltip
+            const tooltip = d3.select("body")
+                .append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0)
+                .style("position", "absolute")
+                .style("pointer-events", "none");
+
+            // Add mouseover and mouseout for the mortality path
+            pathMortality.on("mouseover", function(event, d) {
+                tooltip.transition().duration(200).style("opacity", 0.9); // Make tooltip visible
+                tooltip.html("Date: " + d3.timeFormat("%Y-%m-%d")(d.Date) + "<br>Mortality: " + d.Mortality)
+                    .style("left", (event.pageX + 5) + "px") // Position tooltip horizontally
+                    .style("top", (event.pageY - 28) + "px"); // Position tooltip vertically
+            })
+            .on("mouseout", function() {
+                tooltip.transition().duration(200).style("opacity", 0); // Fade out tooltip
+            });
+
+            // Add mouseover and mouseout for the ICU admissions path
+            pathICU.on("mouseover", function(event, d) {
+                tooltip.transition().duration(200).style("opacity", 0.9); // Make tooltip visible
+                tooltip.html("Date: " + d3.timeFormat("%Y-%m-%d")(d.Date) + "<br>ICU Admissions: " + d["Weekly new ICU admissions"])
+                    .style("left", (event.pageX + 5) + "px") // Position tooltip horizontally
+                    .style("top", (event.pageY - 28) + "px"); // Position tooltip vertically
+            })
+            .on("mouseout", function() {
+                tooltip.transition().duration(200).style("opacity", 0); // Fade out tooltip
+            });
+        }
     });
 }
+
+// Ensure the init function is called when the window has fully loaded
 window.onload = init;
