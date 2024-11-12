@@ -1,3 +1,5 @@
+const dataFile = "../AdnanDataProcessing/weekly_combined_admissions_mortality.csv";
+
 function init() {
     const loadingOverlay = document.createElement('div');
     loadingOverlay.className = 'loading-overlay';
@@ -23,22 +25,6 @@ function init() {
 
     // Default year set to 2020
     currentYear = 2020;
-
-    // Tooltip CSS injected into the head of the document
-    const style = document.createElement("style");
-    style.innerHTML = `
-        .tooltip {
-            position: absolute;
-            background: white;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-    `;
-    document.head.appendChild(style);
 
     d3.csv(dataFile).then(function(data) {
         data.forEach(d => {
@@ -126,6 +112,36 @@ function init() {
             .style("stroke", "red")
             .style("stroke-width", 2);
 
+        // Tooltip logic
+        const tooltip = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("position", "absolute")
+            .style("visibility", "hidden")
+            .style("background-color", "lightgray")
+            .style("padding", "5px")
+            .style("border-radius", "5px")
+            .style("font-size", "12px");
+
+        pathMortality.on("mouseover", function(event, d) {
+            tooltip.style("visibility", "visible")
+                .html("Mortality: " + d.Mortality);
+        }).on("mousemove", function(event) {
+            tooltip.style("top", (event.pageY + 5) + "px")
+                .style("left", (event.pageX + 5) + "px");
+        }).on("mouseout", function() {
+            tooltip.style("visibility", "hidden");
+        });
+
+        pathICU.on("mouseover", function(event, d) {
+            tooltip.style("visibility", "visible")
+                .html("ICU Admissions: " + d["Weekly new ICU admissions"]);
+        }).on("mousemove", function(event) {
+            tooltip.style("top", (event.pageY + 5) + "px")
+                .style("left", (event.pageX + 5) + "px");
+        }).on("mouseout", function() {
+            tooltip.style("visibility", "hidden");
+        });
+
         // Fade in chart container
         svg.transition().duration(1000).style("opacity", 1);
 
@@ -174,42 +190,17 @@ function init() {
 
             pathMortality.datum(currentData).transition().duration(750).attr("d", lineMortality);
             pathICU.datum(currentData).transition().duration(750).attr("d", lineICUAdmissions);
-
-            // Remove any existing tooltip
-            d3.selectAll(".tooltip").remove();
-
-            // Create a new tooltip
-            const tooltip = d3.select("body")
-                .append("div")
-                .attr("class", "tooltip")
-                .style("opacity", 0)
-                .style("position", "absolute")
-                .style("pointer-events", "none");
-
-            // Add mouseover and mouseout for the mortality path
-            pathMortality.on("mouseover", function(event, d) {
-                tooltip.transition().duration(200).style("opacity", 0.9); // Make tooltip visible
-                tooltip.html("Date: " + d3.timeFormat("%Y-%m-%d")(d.Date) + "<br>Mortality: " + d.Mortality)
-                    .style("left", (event.pageX + 5) + "px") // Position tooltip horizontally
-                    .style("top", (event.pageY - 28) + "px"); // Position tooltip vertically
-            })
-            .on("mouseout", function() {
-                tooltip.transition().duration(200).style("opacity", 0); // Fade out tooltip
-            });
-
-            // Add mouseover and mouseout for the ICU admissions path
-            pathICU.on("mouseover", function(event, d) {
-                tooltip.transition().duration(200).style("opacity", 0.9); // Make tooltip visible
-                tooltip.html("Date: " + d3.timeFormat("%Y-%m-%d")(d.Date) + "<br>ICU Admissions: " + d["Weekly new ICU admissions"])
-                    .style("left", (event.pageX + 5) + "px") // Position tooltip horizontally
-                    .style("top", (event.pageY - 28) + "px"); // Position tooltip vertically
-            })
-            .on("mouseout", function() {
-                tooltip.transition().duration(200).style("opacity", 0); // Fade out tooltip
-            });
         }
+
+        loadingOverlay.classList.add('hidden');
+        setTimeout(() => {
+            chartContainer.classList.add('visible');
+        }, 100);
+    }).catch(error => {
+        console.error("Error loading or processing the CSV file: ", error);
+        loadingOverlay.classList.add('hidden');
     });
 }
 
-// Ensure the init function is called when the window has fully loaded
+// Call the init function when the window has fully loaded
 window.onload = init;
