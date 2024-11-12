@@ -1,5 +1,6 @@
 var top5DataFile = "../Datasets/log_scaled_vaccine_data_top_5.csv";
 var bottom5DataFile = "../Datasets/log_scaled_vaccine_data_bottom_5.csv";
+var allDataFile = "../Datasets/cumulative_vaccine_data.csv";
 
 var radarConfig = {
   containerClass: 'radar-chart',
@@ -28,12 +29,12 @@ var radarConfig = {
     return d.className || i;
   },
   tooltipFormatValue: function(d) {
-    return d;
+    return d3.format('.2f')(d);
   },
   tooltipFormatClass: function(d) {
     return d;
   },
-  transitionDuration: 300
+  transitionDuration: 750
 };
 
 // RadarChart module (your provided template)
@@ -73,63 +74,61 @@ var RadarChart = {
   chart: function() {
     // default config
     var cfg = Object.create(RadarChart.defaultConfig);
-    function setTooltip(tooltip, msg, data) {
-      if(msg === false || msg == undefined) {
-        tooltip.classed("visible", 0);
-        tooltip.select("rect").classed("visible", 0);
-      } else {
-        tooltip.classed("visible", 1);
-    
-        var container = tooltip.node().parentNode;
-        var coords = d3.mouse(container);
-    
-        // Format tooltip text with multiple lines if data is provided
-        var tooltipText = data ? 
-          "Country: " + msg + "\n" + 
-          "Vaccine: " + data.axis + "\n" +
-          "Value: " + d3.format(".2f")(data.value) :
-          msg;
-    
-        var tooltipLines = tooltipText.split('\n');
-        
-        tooltip.select("text")
-          .classed('visible', 1)
-          .style("fill", cfg.tooltipColor)
-          .selectAll('tspan')
-          .data(tooltipLines)
-          .enter()
-          .append('tspan')
-          .attr('x', 0)
-          .attr('dy', function(d, i) { return i * 1.2 + 'em'; })
-          .text(function(d) { return d; });
-    
-        var bbox = tooltip.select("text").node().getBBox();
-        var padding = 5;
-    
-        tooltip.select("rect")
-          .classed('visible', 1)
-          .attr("x", bbox.x - padding)
-          .attr("y", bbox.y - padding)
-          .attr("width", bbox.width + (padding*2))
-          .attr("height", bbox.height + (padding*2))
-          .attr("rx", "5").attr("ry", "5")
-          .style("fill", cfg.backgroundTooltipColor)
-          .style("opacity", cfg.backgroundTooltipOpacity);
-    
-        tooltip.attr("transform", "translate(" + (coords[0]+10) + "," + (coords[1]-10) + ")");
-      }
-    }
+
     function radar(selection) {
       selection.each(function(data) {
         var container = d3.select(this);
-        var tooltip = container.selectAll('g.tooltip').data([data[0]]);
 
-        var tt = tooltip.enter()
-        .append('g')
-        .classed('tooltip', true);
+        // Move setTooltip function inside radar where it has access to container
+        function setTooltip(tooltip, countryName, data) {
+          if (!countryName || !data) {
+            tooltip.style('opacity', 0);
+          } else {
+            var coords = d3.mouse(container.node());
 
-        tt.append('rect').classed("tooltip", true);
-        tt.append('text').classed("tooltip", true);
+            // Format tooltip text
+            var tooltipText = 'Country: ' + countryName + '\n' +
+                             'Vaccine: ' + data.axis + '\n' +
+                             'Value: ' + d3.format('.2f')(data.value);
+
+            tooltip.select('text')
+              .style('fill', radarConfig.tooltipColor)
+              .style('font-size', '12px')
+              .text('')
+              .selectAll('tspan')
+              .data(tooltipText.split('\n'))
+              .enter()
+              .append('tspan')
+              .attr('x', 0)
+              .attr('dy', function(d, i) { return i * 1.2 + 'em'; })
+              .text(function(d) { return d; });
+
+            var bbox = tooltip.select('text').node().getBBox();
+            var padding = 5;
+
+            tooltip.select('rect')
+              .attr('x', bbox.x - padding)
+              .attr('y', bbox.y - padding)
+              .attr('width', bbox.width + 2 * padding)
+              .attr('height', bbox.height + 2 * padding)
+              .attr('rx', 5)
+              .attr('ry', 5)
+              .style('fill', radarConfig.backgroundTooltipColor)
+              .style('opacity', radarConfig.backgroundTooltipOpacity);
+
+            tooltip.attr('transform', 'translate(' + (coords[0] + 10) + ',' + (coords[1] - 10) + ')')
+                   .style('opacity', 1);
+          }
+        }
+
+        // Initialize the tooltip once
+        var tooltip = container.append('g')
+          .attr('class', 'tooltip')
+          .style('opacity', 0)
+          .style('pointer-events', 'none');
+
+        tooltip.append('rect').attr('class', 'tooltip-bg');
+        tooltip.append('text').attr('class', 'tooltip-text');
 
         // allow simple notation
         data = data.map(function(datum) {
@@ -290,13 +289,13 @@ var RadarChart = {
           d3.event.stopPropagation();
           container.classed('focus', 1);
           d3.select(this).classed('focused', 1);
-          setTooltip(tooltip, dd.className);
+          setTooltip(tooltip, dd.className, { axis: 'All Vaccines', value: d3.sum(dd.axes, function(o){ return o.value; }) });
         })
         .on('mouseout', function(){
           d3.event.stopPropagation();
           container.classed('focus', 0);
           d3.select(this).classed('focused', 0);
-          setTooltip(tooltip, false);
+          setTooltip(tooltip, false, null);
         });
 
         polygon.exit()
@@ -362,7 +361,7 @@ var RadarChart = {
           })
           .on('mouseout', function(dd){
             d3.event.stopPropagation();
-            setTooltip(tooltip, false);
+            setTooltip(tooltip, false, null);
             container.classed('focus', 0);
           });
 
@@ -444,7 +443,6 @@ var RadarChart = {
 
 // Initialization function
 function init() {
-  // Load both CSV files using D3 v3's csv function with callbacks
   d3.csv(top5DataFile, function(errorTop5, top5Data) {
     if (errorTop5) {
       console.error("Error loading top 5 data:", errorTop5);
@@ -457,16 +455,98 @@ function init() {
         return;
       }
 
-      // Prepare data for radar chart
-      var processedData = prepareRadarData(top5Data, bottom5Data);
+      d3.csv(allDataFile, function(errorAll, allData) {
+        if (errorAll) {
+          console.error("Error loading all countries data:", errorAll);
+          return;
+        }
 
-      // Create the radar chart
-      RadarChart.draw("#radarChart", processedData, radarConfig);
+        // Store processed data globally
+        window.allChartData = {
+          top5: processCountryData(top5Data),
+          bottom5: processCountryData(bottom5Data),
+          allCountries: processCountryData(allData)
+        };
 
-      // Add Legend
-      createLegend(processedData);
+        // Default view shows both top 5 and bottom 5
+        var combinedData = window.allChartData.top5.concat(window.allChartData.bottom5);
+        RadarChart.draw("#radarChart", combinedData, radarConfig);
+        createLegend(combinedData);
+
+        // Populate country dropdown
+        populateCountryDropdown(allData);
+
+        // Add event listeners
+        setupEventListeners();
+      });
     });
   });
+}
+
+// New function to process datasets
+function processCountryData(data) {
+  var vaccines = ["Pfizer/BioNTech", "Moderna", "Oxford/AstraZeneca", "Johnson&Johnson", "Sputnik V"];
+  return data.map(function(country, index) {
+    return {
+      className: country.Country,
+      axes: vaccines.map(function(vaccine) {
+        return {
+          axis: vaccine,
+          value: parseFloat(country[vaccine]) || 0
+        };
+      }),
+      color: getColor(index)
+    };
+  });
+}
+
+// Function to get color
+function getColor(index) {
+  var colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"];
+  return colors[index % colors.length];
+}
+
+// Function to populate the country dropdown
+function populateCountryDropdown(allData) {
+  var select = d3.select("#countryDropdown");
+  select.append("option").text("Select a country").attr("value", "");
+  allData.forEach(function(country) {
+    select.append("option").text(country.Country).attr("value", country.Country);
+  });
+}
+
+// Function to set up event listeners
+function setupEventListeners() {
+  d3.select("#showTop5").on("click", function() {
+    var data = window.allChartData.top5;
+    updateChart(data);
+  });
+
+  d3.select("#showBottom5").on("click", function() {
+    var data = window.allChartData.bottom5;
+    updateChart(data);
+  });
+
+  d3.select("#showBoth").on("click", function() {
+    var data = window.allChartData.top5.concat(window.allChartData.bottom5);
+    updateChart(data);
+  });
+
+  d3.select("#countryDropdown").on("change", function() {
+    var selectedCountry = this.value;
+    if (selectedCountry) {
+      var countryData = window.allChartData.allCountries.filter(function(d) {
+        return d.className === selectedCountry;
+      });
+      updateChart(countryData);
+    }
+  });
+}
+
+// Function to update the radar chart
+function updateChart(data) {
+  RadarChart.draw("#radarChart", data, radarConfig);
+  createLegend(data);
 }
 
 // Function to transform data for radar chart input format
@@ -480,7 +560,7 @@ function prepareRadarData(top5Data, bottom5Data) {
   // Process top countries
   var top5 = top5Data.map(function(country, index) {
     return {
-      className: country.country, // Use 'country' from CSV
+      className: country.Country, // Use 'country' from CSV
       axes: vaccines.map(function(vaccine) {
         return {
           axis: vaccine,
@@ -494,7 +574,7 @@ function prepareRadarData(top5Data, bottom5Data) {
   // Process bottom countries
   var bottom5 = bottom5Data.map(function(country, index) {
     return {
-      className: country.country, // Use 'country' from CSV
+      className: country.Country, // Use 'country' from CSV
       axes: vaccines.map(function(vaccine) {
         return {
           axis: vaccine,

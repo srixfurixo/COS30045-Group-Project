@@ -229,3 +229,27 @@ article p {
   pointer-events: none; 
  /* Prevent the arrow from interfering with clicks */
 }
+
+/* Styles for controls */
+.controls {
+  margin: 20px 0;
+}
+
+.controls .btn-group .btn {
+  /* Adjust spacing between buttons if necessary */
+}
+
+.controls .form-select {
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.controls .btn-group {
+  margin-bottom: 10px;
+}
+
+/* Optional: Center the controls */
+.controls {
+  text-align: center;
+}

@@ -58,9 +58,28 @@
     transform: translate(-35px, 10px); /* Move 30px left and 30px up */
 }
 
+    /* Adjust tooltip styles */
     .tooltip {
+      pointer-events: none;
+    }
+
+    .tooltip-bg {
+      fill: #333;
+      opacity: 0.9;
+    }
+
+    .tooltip-text {
+      font-size: 12px;
       fill: white;
     }
+
+    /* Ensure the tooltip is above other elements */
+    .radar-chart .tooltip {
+      z-index: 10;
+    }
+
+    /* Remove position absolute and display properties */
+    /* ...remove any conflicting tooltip styles... */
 
     /* Legend styles */
     .legend {
@@ -106,6 +125,17 @@
   <!-- Content Section with Radar Chart Container -->
   <div id="content">
     <h2 class="title">Mortality against Number of Vaccination Doses</h2>
+    <!-- Add controls for dataset selection -->
+    <div class="controls text-center">
+      <div class="btn-group" role="group" aria-label="Data View Buttons">
+        <button id="showBoth" class="btn btn-primary">Show Both</button>
+        <button id="showTop5" class="btn btn-secondary">Show Top 5</button>
+        <button id="showBottom5" class="btn btn-secondary">Show Bottom 5</button>
+      </div>
+      <select id="countryDropdown" class="form-select d-inline-block mt-3" style="width: 200px;">
+        <!-- Options will be populated -->
+      </select>
+    </div>
     <div id="radarChart"></div>
   </div>
   <section class="p-4"> 
