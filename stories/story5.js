@@ -1,6 +1,6 @@
-const margin = {top: 60, right: 200, bottom: 60, left: 70},
-    width = 900 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+const margin = {top: 60, right: 280, bottom: 60, left: 100},
+    width = 2000 - margin.left - margin.right, // Increased width
+    height = 800 - margin.top - margin.bottom; // Increased height
 
 // Create SVG container
 const svg = d3.select("#chart")
@@ -10,27 +10,46 @@ const svg = d3.select("#chart")
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
+// Function to calculate rolling average
+function calculateRollingAverage(data, field, windowSize) {
+    return data.map((d, i, arr) => {
+        const start = Math.max(0, i - windowSize + 1);
+        const end = i + 1;
+        const subset = arr.slice(start, end);
+        const sum = subset.reduce((acc, val) => acc + val[field], 0);
+        return {
+            ...d,
+            [field]: sum / subset.length
+        };
+    });
+}
+
 // Load data
-d3.csv("../Datasets/story5_with_year.csv").then(function(data) {
+d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
     // Parse data
     data.forEach(d => {
         d["COVID-19 doses (cumulative, per hundred)"] = +d["COVID-19 doses (cumulative, per hundred)"] || 0;
-        d["Daily new confirmed cases of COVID-19 per million people (rolling 7-day average, right-aligned)"] = +d["Daily new confirmed cases of COVID-19 per million people (rolling 7-day average, right-aligned)"] || 0;
+        d["Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)"] = +d["Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)"] || 0;
         d.Year = +d.Year;
+        d.Date = new Date(d.Date); // Parse the Date field
     });
+
+    // Smooth data using a 7-day rolling average
+    data = calculateRollingAverage(data, "COVID-19 doses (cumulative, per hundred)", 7);
+    data = calculateRollingAverage(data, "Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)", 7);
 
     // Get unique countries and years
     const countries = [...new Set(data.map(d => d.Country))];
     const years = [...new Set(data.map(d => d.Year))];
     
-    // Get top 5 countries by total cases
+    // Get top 5 countries by total deaths
     const topCountries = countries
         .map(country => ({
             country,
-            totalCases: d3.sum(data.filter(d => d.Country === country), 
-                d => d["Daily new confirmed cases of COVID-19 per million people (rolling 7-day average, right-aligned)"])
+            totalDeaths: d3.sum(data.filter(d => d.Country === country), 
+                d => d["Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)"])
         }))
-        .sort((a, b) => b.totalCases - a.totalCases)
+        .sort((a, b) => b.totalDeaths - a.totalDeaths)
         .slice(0, 5)
         .map(d => d.country);
 
@@ -70,7 +89,20 @@ d3.csv("../Datasets/story5_with_year.csv").then(function(data) {
         .attr("transform", "rotate(-90)")
         .attr("y", -60)
         .attr("x", -height/2)
-        .text("Daily New Cases per Million");
+        .text("Daily New Deaths per Million");
+
+    // Add a clipPath: everything out of this area won't be drawn.
+    const clip = svg.append("defs").append("SVG:clipPath")
+        .attr("id", "clip")
+        .append("SVG:rect")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("x", 0)
+        .attr("y", 0);
+
+    // Create the scatter variable: where both the circles and the brush take place
+    const scatter = svg.append('g')
+        .attr("clip-path", "url(#clip)");
 
     // Timeline animation variables
     let playing = false;
@@ -148,7 +180,7 @@ d3.csv("../Datasets/story5_with_year.csv").then(function(data) {
         .text(d => d);
 
     // Enhanced tooltip
-    const tooltip = d3.select("#chart")
+    const tooltip = d3.select("body") // Changed from "#chart" to "body"
         .append("div")
         .attr("class", "tooltip")
         .style("opacity", 0)
@@ -157,7 +189,8 @@ d3.csv("../Datasets/story5_with_year.csv").then(function(data) {
         .style("border-radius", "5px")
         .style("padding", "10px")
         .style("position", "absolute")
-        .style("pointer-events", "none");
+        .style("pointer-events", "none")
+        .style("z-index", "10"); // Ensure tooltip is above other elements
 
     // Create legend
     const legend = svg.append("g")
@@ -190,22 +223,52 @@ d3.csv("../Datasets/story5_with_year.csv").then(function(data) {
         .attr("y", (d, i) => i * 20 + 12)
         .text(d => d);
 
+    // Add a variable to control the visibility of lines
+    let showLines = true;
+
+    // Add event listener to the toggle-lines checkbox in the controls
+    d3.select("#toggle-lines").on("change", function() {
+        showLines = this.checked;
+        d3.selectAll(".line")
+            .style("display", showLines ? null : "none");
+    });
+
     function updateChart() {
         const filteredData = data.filter(d => 
             selectedCountries.includes(d.Country) && 
-            d.Year === selectedYear);
+            d["COVID-19 doses (cumulative, per hundred)"] > 0 &&
+            d["Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)"] > 0);
 
         // Update scales
         x.domain([0, d3.max(filteredData, d => d["COVID-19 doses (cumulative, per hundred)"]) * 1.1]);
-        y.domain([0, d3.max(filteredData, d => d["Daily new confirmed cases of COVID-19 per million people (rolling 7-day average, right-aligned)"]) * 1.1]);
+        y.domain([0, d3.max(filteredData, d => d["Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)"]) * 1.1]);
 
         // Update axes
         xAxis.transition().duration(1000).call(d3.axisBottom(x));
         yAxis.transition().duration(1000).call(d3.axisLeft(y));
 
+        // Group data by country
+        const nestedData = d3.groups(filteredData, d => d.Country);
+
+        // Add lines to show the flow of time without any fill
+        scatter.selectAll(".line")
+            .data(nestedData)
+            .join("path")
+            .attr("class", "line")
+            .attr("fill", "none") // Ensure no fill under the lines
+            .attr("stroke", d => color(d[0])) // Match line color to circle color
+            .attr("stroke-width", 1.5)
+            .style("display", showLines ? null : "none") // Control visibility based on toggle
+            .attr("d", d => d3.line()
+                .x(d => x(d["COVID-19 doses (cumulative, per hundred)"]))
+                .y(d => y(d["Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)"]))
+                .curve(d3.curveMonotoneX)
+                (d[1].sort((a, b) => d3.ascending(a.Date, b.Date)))
+            );
+
         // Update dots
-        const dots = svg.selectAll("circle")
-            .data(filteredData, d => d.Country);
+        const dots = scatter.selectAll("circle")
+            .data(filteredData, d => d.Country + d.Date);
 
         // Enter + Update
         dots.enter()
@@ -214,33 +277,70 @@ d3.csv("../Datasets/story5_with_year.csv").then(function(data) {
             .transition()
             .duration(1000)
             .attr("cx", d => x(d["COVID-19 doses (cumulative, per hundred)"]))
-            .attr("cy", d => y(d["Daily new confirmed cases of COVID-19 per million people (rolling 7-day average, right-aligned)"]))
+            .attr("cy", d => y(d["Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)"]))
             .attr("r", 5)
             .style("fill", d => color(d.Country))
-            .style("opacity", 0.7);
-
-        // Add tooltip events
-        svg.selectAll("circle")
-            .on("mouseover", function(event, d) {
+            .style("opacity", 0.7)
+            .on("mouseenter", function(event, d) { // Changed from "mouseover" to "mouseenter"
                 tooltip.transition()
                     .duration(200)
                     .style("opacity", .9);
                 tooltip.html(`
                     <strong>${d.Country}</strong><br/>
+                    Date: ${d.Date.toLocaleDateString()}<br/>
                     Doses: ${d["COVID-19 doses (cumulative, per hundred)"].toFixed(2)}<br/>
-                    Cases: ${d["Daily new confirmed cases of COVID-19 per million people (rolling 7-day average, right-aligned)"].toFixed(2)}<br/>
-                    Year: ${d.Year}
+                    Deaths: ${d["Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)"].toFixed(2)}
                 `)
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 28) + "px");
             })
-            .on("mouseout", function() {
+            .on("mouseleave", function() { // Changed from "mouseout" to "mouseleave"
                 tooltip.transition()
                     .duration(500)
                     .style("opacity", 0);
             });
 
         dots.exit().remove();
+    }
+
+    // Set the zoom and Pan features: how much you can zoom, on which part, and what to do when there is a zoom
+    const zoom = d3.zoom()
+        .scaleExtent([.5, 20])  // This controls how much you can unzoom (x0.5) and zoom (x20)
+        .extent([[0, 0], [width, height]])
+        .on("zoom", updateZoom);
+
+    // This adds an invisible rect on top of the chart area. This rect can recover pointer events: necessary to understand when the user zooms
+    svg.append("rect")
+        .attr("width", width)
+        .attr("height", height)
+        .style("fill", "none")
+        .style("pointer-events", "all")
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+        .call(zoom);
+
+    // A function that updates the chart when the user zooms and thus new boundaries are available
+    function updateZoom(event) {
+        // recover the new scale
+        const newX = event.transform.rescaleX(x);
+        const newY = event.transform.rescaleY(y);
+
+        // update axes with these new boundaries
+        xAxis.call(d3.axisBottom(newX));
+        yAxis.call(d3.axisLeft(newY));
+
+        // update lines with new scales
+        scatter.selectAll(".line")
+            .attr("d", d => d3.line()
+                .x(d => newX(d["COVID-19 doses (cumulative, per hundred)"]))
+                .y(d => newY(d["Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)"]))
+                .curve(d3.curveMonotoneX)
+                (d[1].sort((a, b) => d3.ascending(a.Date, b.Date)))
+            );
+
+        // update circle positions with new scales
+        scatter.selectAll("circle")
+            .attr('cx', d => newX(d["COVID-19 doses (cumulative, per hundred)"]))
+            .attr('cy', d => newY(d["Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)"]));
     }
 
     // Initialize checkboxes with top 5 countries selected

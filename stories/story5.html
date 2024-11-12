@@ -29,6 +29,24 @@
         font-size: 1.2em;
         margin: 10px;
     }
+    /* Add tooltip styles to ensure it appears correctly */
+    .tooltip {
+        position: absolute;
+        text-align: left;
+        width: auto;
+        height: auto;
+        padding: 8px;
+        font: 12px sans-serif;
+        background: lightsteelblue;
+        border: 0px;
+        border-radius: 8px;
+        pointer-events: none;
+        z-index: 10; /* Ensure tooltip is above other elements */
+    }
+    /* Ensure lines have no fill */
+    .line {
+        fill: none;
+    }
   </style>
 </head>
 <body>
@@ -68,6 +86,12 @@
     </div>
     <div id="country-menu">
       <!-- Checkboxes populated by the script -->
+    </div>
+    
+    <!-- Ensure this toggle is present and correctly labeled -->
+    <div class="toggle-lines mt-3">
+      <input type="checkbox" id="toggle-lines" checked>
+      <label for="toggle-lines"> Show Lines</label>
     </div>
   </div>
 
