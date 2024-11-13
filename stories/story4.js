@@ -19,7 +19,7 @@ function init() {
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`)
         .style("opacity", 0);  // Initially hidden for fade-in
-
+        
     let currentCountry, currentYear, currentAdmissionType;
     currentAdmissionType = "icu"; // Default to ICU admissions
 
@@ -35,6 +35,8 @@ function init() {
             d.Year = +dateParts[2];  // Year is now extracted from the date string
             d.Date = new Date(d.Year, dateParts[0] - 1, dateParts[1]);  // Ensure proper date parsing
         });
+
+         
 
         currentCountry = data[0].Country;
         currentData = data.filter(d => d.Country === currentCountry && d.Year === currentYear);
@@ -233,35 +235,45 @@ function init() {
             tooltip.style("opacity", 0);
         }
 
+        // initial setup for left Y-axis label for Mortality (blue)
+        svg.select(".y-axis-left-label")
+        .style("fill", "steelblue")
+        .text("Mortality");
+        
+        // Initial setup for right Y-axis label color
+        svg.select(".y-axis-right-label")
+        .style("fill", "red") // Set the initial color to red
+        .text("Weekly ICU Admissions"); 
+
         function updateChart() {
             currentData = data.filter(d => d.Country === currentCountry && d.Year === currentYear);
-
+        
             x.domain(d3.extent(currentData, d => d.Date));
-            yLeft.domain([0, d3.max(currentData, d => d.Mortality)]);
+            yLeft.domain([0, d3.max(currentData, d => d.Mortality)]);  // Mortality Y-axis
             yRight.domain([0, d3.max(currentData, d => 
                 currentAdmissionType === "icu" ? d["Weekly new ICU admissions"] : d["Weekly new hospital admissions"]
-            )]);
-
+            )]);  // ICU/Hospital Admissions Y-axis
+        
             // Update axes
             svg.select(".x-axis").transition().duration(750).call(xAxis);
             svg.select(".y-axis-left").transition().duration(750).call(d3.axisLeft(yLeft));
             svg.select(".y-axis-right").transition().duration(750).call(d3.axisRight(yRight));
-
-            // Update right y-axis label
+        
+            // Update right Y-axis label for ICU/Hospital Admissions (red)
             svg.select(".y-axis-right-label")
-                .text(currentAdmissionType === "icu" ? "Weekly ICU Admissions" : "Weekly Hospital Admissions");
+            .style("fill", "red") // Set color to red
+            .text(currentAdmissionType === "icu" ? "Weekly ICU Admissions" : "Weekly Hospital Admissions");
 
             // Update lines
             pathMortality.datum(currentData).transition().duration(750)
                 .attr("d", lineMortality);
-
+        
             pathICU.datum(currentData).transition().duration(750)
                 .attr("d", d3.line()
                     .x(d => x(d.Date))
                     .y(d => yRight(currentAdmissionType === "icu" ? 
                         d["Weekly new ICU admissions"] : d["Weekly new hospital admissions"])));
         }
-
         // Add mouse event listeners
         overlay
             .on("mouseover", () => {
