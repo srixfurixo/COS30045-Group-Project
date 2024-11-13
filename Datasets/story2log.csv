@@ -1,0 +1,509 @@
+REF_AREA,Reference area,Health function,Price base,TIME_PERIOD,OBS_VALUE
+AUS,Australia,COVID-19 related costs for vaccination,Constant prices,2020,6.347263107134493
+AUS,Australia,COVID-19 related costs for medical goods,Constant prices,2020,7.335540757242932
+AUS,Australia,COVID-19 related treatment costs,Constant prices,2020,8.302834936129955
+AUS,Australia,COVID-19 related investment costs,Constant prices,2020,5.86436953930415
+AUT,Austria,COVID-19 related costs for medical goods,Constant prices,2020,4.974966664816796
+AUT,Austria,COVID-19 related treatment costs,Constant prices,2020,3.3952463761687155
+AUT,Austria,COVID-19 related costs for vaccination,Constant prices,2020,0.7026023393307005
+BEL,Belgium,COVID-19 related costs for medical goods,Constant prices,2020,7.726863519369852
+BEL,Belgium,COVID-19 related treatment costs,Constant prices,2020,6.430035557113142
+BGR,Bulgaria,COVID-19 related treatment costs,Constant prices,2020,6.488231813622932
+BGR,Bulgaria,COVID-19 related costs for medical goods,Constant prices,2020,3.6343176661212535
+CAN,Canada,COVID-19 related treatment costs,Constant prices,2020,8.851838617577698
+CAN,Canada,COVID-19 related costs for vaccination,Constant prices,2020,8.751590145009237
+CAN,Canada,COVID-19 related costs for medical goods,Constant prices,2020,8.87587943134246
+CHL,Chile,COVID-19 related costs for vaccination,Constant prices,2020,3.769237496679584
+CHL,Chile,COVID-19 related investment costs,Constant prices,2020,5.473001498990558
+CHL,Chile,COVID-19 related costs for medical goods,Constant prices,2020,6.821349536740572
+COL,Colombia,COVID-19 related costs for medical goods,Constant prices,2020,5.280087202283586
+CRI,Costa Rica,COVID-19 related treatment costs,Constant prices,2020,5.705976732178059
+CYP,Cyprus,COVID-19 related costs for vaccination,Constant prices,2020,1.0654001544619962
+CYP,Cyprus,COVID-19 related treatment costs,Constant prices,2020,1.0828216027617856
+CYP,Cyprus,COVID-19 related investment costs,Constant prices,2020,0.23269776411902143
+CYP,Cyprus,COVID-19 related costs for medical goods,Constant prices,2020,2.0421290067958564
+CZE,Czechia,COVID-19 related investment costs,Constant prices,2020,3.2798580298029947
+CZE,Czechia,COVID-19 related costs for vaccination,Constant prices,2020,0.18148787604537725
+CZE,Czechia,COVID-19 related treatment costs,Constant prices,2020,7.8272783811142475
+CZE,Czechia,COVID-19 related costs for medical goods,Constant prices,2020,6.312589253448784
+DEU,Germany,COVID-19 related costs for medical goods,Constant prices,2020,7.714207037415647
+DEU,Germany,COVID-19 related costs for vaccination,Constant prices,2020,1.5234441992671244
+DEU,Germany,COVID-19 related investment costs,Constant prices,2020,6.7854271801567325
+DEU,Germany,COVID-19 related treatment costs,Constant prices,2020,7.015081162039573
+DNK,Denmark,COVID-19 related treatment costs,Constant prices,2020,4.2466220601676765
+DNK,Denmark,COVID-19 related costs for medical goods,Constant prices,2020,5.315636520418503
+DNK,Denmark,COVID-19 related costs for vaccination,Constant prices,2020,2.740323761652506
+ESP,Spain,COVID-19 related costs for medical goods,Constant prices,2020,2.6840989802796966
+ESP,Spain,COVID-19 related treatment costs,Constant prices,2020,9.212834359402507
+ESP,Spain,COVID-19 related costs for vaccination,Constant prices,2020,2.053995520348361
+ESP,Spain,COVID-19 related investment costs,Constant prices,2020,7.197739200146273
+EST,Estonia,COVID-19 related treatment costs,Constant prices,2020,2.539631549477247
+EST,Estonia,COVID-19 related investment costs,Constant prices,2020,1.6444188813293459
+EST,Estonia,COVID-19 related costs for vaccination,Constant prices,2020,0.18065349969325756
+EST,Estonia,COVID-19 related costs for medical goods,Constant prices,2020,4.009186013140779
+FIN,Finland,COVID-19 related investment costs,Constant prices,2020,3.350570531817765
+FIN,Finland,COVID-19 related costs for vaccination,Constant prices,2020,0.1881379421153945
+FIN,Finland,COVID-19 related treatment costs,Constant prices,2020,3.902275653973266
+FIN,Finland,COVID-19 related costs for medical goods,Constant prices,2020,3.07056141417464
+FRA,France,COVID-19 related treatment costs,Constant prices,2020,8.46963900311385
+FRA,France,COVID-19 related costs for medical goods,Constant prices,2020,7.972153553370107
+GBR,United Kingdom,COVID-19 related costs for vaccination,Constant prices,2020,4.43191143760288
+HRV,Croatia,COVID-19 related treatment costs,Constant prices,2020,5.637286483367837
+HRV,Croatia,COVID-19 related costs for medical goods,Constant prices,2020,2.3799164359303693
+ISL,Iceland,COVID-19 related investment costs,Constant prices,2020,1.8198608993389298
+ISL,Iceland,COVID-19 related treatment costs,Constant prices,2020,3.4423073347183712
+ISL,Iceland,COVID-19 related costs for medical goods,Constant prices,2020,2.1716788231462467
+ISR,Israel,COVID-19 related investment costs,Constant prices,2020,6.437159474435212
+ISR,Israel,COVID-19 related costs for medical goods,Constant prices,2020,5.602159410461836
+ISR,Israel,COVID-19 related costs for vaccination,Constant prices,2020,5.0665177090105376
+ISR,Israel,COVID-19 related treatment costs,Constant prices,2020,6.6743669284632094
+JPN,Japan,COVID-19 related costs for medical goods,Constant prices,2020,4.039782774229418
+JPN,Japan,COVID-19 related investment costs,Constant prices,2020,5.717813576735822
+JPN,Japan,COVID-19 related treatment costs,Constant prices,2020,7.08775497567726
+JPN,Japan,COVID-19 related costs for vaccination,Constant prices,2020,6.139725056748907
+KOR,Korea,COVID-19 related treatment costs,Constant prices,2020,5.939449940005374
+KOR,Korea,COVID-19 related investment costs,Constant prices,2020,4.637618014853944
+KOR,Korea,COVID-19 related costs for medical goods,Constant prices,2020,6.773806656472187
+LTU,Lithuania,COVID-19 related costs for medical goods,Constant prices,2020,4.751544997675053
+LTU,Lithuania,COVID-19 related treatment costs,Constant prices,2020,1.7993968963572664
+LTU,Lithuania,COVID-19 related costs for vaccination,Constant prices,2020,1.0855270491194544
+LUX,Luxembourg,COVID-19 related costs for medical goods,Constant prices,2020,3.2751805410786683
+LUX,Luxembourg,COVID-19 related treatment costs,Constant prices,2020,4.138090278499451
+LUX,Luxembourg,COVID-19 related costs for vaccination,Constant prices,2020,0.14149956227369942
+LVA,Latvia,COVID-19 related treatment costs,Constant prices,2020,3.7043836406499016
+LVA,Latvia,COVID-19 related costs for medical goods,Constant prices,2020,2.12835074638271
+LVA,Latvia,COVID-19 related costs for vaccination,Constant prices,2020,0.1587116911548208
+MLT,Malta,COVID-19 related costs for medical goods,Constant prices,2020,3.991019011654644
+MLT,Malta,COVID-19 related treatment costs,Constant prices,2020,2.0635661925215456
+MLT,Malta,COVID-19 related costs for vaccination,Constant prices,2020,1.6315907170752337
+NLD,Netherlands,COVID-19 related investment costs,Constant prices,2020,6.638935522591416
+NLD,Netherlands,COVID-19 related treatment costs,Constant prices,2020,8.353925511086272
+NLD,Netherlands,COVID-19 related costs for medical goods,Constant prices,2020,5.754301302555319
+AUS,Australia,COVID-19 related investment costs,Current prices,2020,5.928258471204189
+AUS,Australia,COVID-19 related treatment costs,Current prices,2020,8.366884355579817
+AUS,Australia,COVID-19 related costs for vaccination,Current prices,2020,6.4112187448464235
+AUS,Australia,COVID-19 related costs for medical goods,Current prices,2020,7.399565041870066
+AUT,Austria,COVID-19 related costs for medical goods,Current prices,2020,5.146080687186037
+AUT,Austria,COVID-19 related treatment costs,Current prices,2020,3.5621250457684375
+AUT,Austria,COVID-19 related costs for vaccination,Current prices,2020,0.7929925155296614
+BEL,Belgium,COVID-19 related treatment costs,Current prices,2020,6.604106413008277
+BEL,Belgium,COVID-19 related costs for medical goods,Current prices,2020,7.901122230544302
+BGR,Bulgaria,COVID-19 related costs for medical goods,Current prices,2020,3.7363353952702316
+BGR,Bulgaria,COVID-19 related treatment costs,Current prices,2020,6.592734897168761
+CAN,Canada,COVID-19 related costs for vaccination,Current prices,2020,8.87495574369454
+CAN,Canada,COVID-19 related costs for medical goods,Current prices,2020,8.999247172649174
+CAN,Canada,COVID-19 related treatment costs,Current prices,2020,8.97520584034927
+CHL,Chile,COVID-19 related costs for vaccination,Current prices,2020,3.939112742618239
+CHL,Chile,COVID-19 related investment costs,Current prices,2020,5.64587790015467
+CHL,Chile,COVID-19 related costs for medical goods,Current prices,2020,6.994719821541719
+COL,Colombia,COVID-19 related costs for medical goods,Current prices,2020,5.444705135659062
+CRI,Costa Rica,COVID-19 related treatment costs,Current prices,2020,5.774744073593545
+CYP,Cyprus,COVID-19 related costs for vaccination,Current prices,2020,1.1546775126010584
+CYP,Cyprus,COVID-19 related costs for medical goods,Current prices,2020,2.1591765096986895
+CYP,Cyprus,COVID-19 related investment costs,Current prices,2020,0.26236426446749106
+CYP,Cyprus,COVID-19 related treatment costs,Current prices,2020,1.173101140658849
+CZE,Czechia,COVID-19 related investment costs,Current prices,2020,3.444065281889331
+CZE,Czechia,COVID-19 related treatment costs,Current prices,2020,7.997304959321484
+CZE,Czechia,COVID-19 related costs for medical goods,Current prices,2020,6.482394559254884
+CZE,Czechia,COVID-19 related costs for vaccination,Current prices,2020,0.211880359035499
+DEU,Germany,COVID-19 related treatment costs,Current prices,2020,7.189359418161795
+DEU,Germany,COVID-19 related costs for vaccination,Current prices,2020,1.662409797200206
+DEU,Germany,COVID-19 related investment costs,Current prices,2020,6.959668181372996
+DEU,Germany,COVID-19 related costs for medical goods,Current prices,2020,7.888558031642732
+DNK,Denmark,COVID-19 related costs for vaccination,Current prices,2020,2.903836258849454
+DNK,Denmark,COVID-19 related costs for medical goods,Current prices,2020,5.488714560761274
+DNK,Denmark,COVID-19 related treatment costs,Current prices,2020,4.4181897936533705
+ESP,Spain,COVID-19 related treatment costs,Current prices,2020,9.345401194426419
+ESP,Spain,COVID-19 related investment costs,Current prices,2020,7.330225641332019
+ESP,Spain,COVID-19 related costs for medical goods,Current prices,2020,2.8081368342573283
+ESP,Spain,COVID-19 related costs for vaccination,Current prices,2020,2.1705383120737136
+EST,Estonia,COVID-19 related costs for medical goods,Current prices,2020,4.142070668419094
+EST,Estonia,COVID-19 related investment costs,Current prices,2020,1.7549225791760812
+EST,Estonia,COVID-19 related costs for vaccination,Current prices,2020,0.20375683751401963
+EST,Estonia,COVID-19 related treatment costs,Current prices,2020,2.664794692431253
+FIN,Finland,COVID-19 related costs for vaccination,Current prices,2020,0.21591750622247025
+FIN,Finland,COVID-19 related investment costs,Current prices,2020,3.4987474752280048
+FIN,Finland,COVID-19 related costs for medical goods,Current prices,2020,3.21711427424854
+FIN,Finland,COVID-19 related treatment costs,Current prices,2020,4.052567250420455
+FRA,France,COVID-19 related costs for medical goods,Current prices,2020,8.166498047070677
+FRA,France,COVID-19 related treatment costs,Current prices,2020,8.66400725252404
+GBR,United Kingdom,COVID-19 related costs for vaccination,Current prices,2020,4.621574890013369
+HRV,Croatia,COVID-19 related costs for medical goods,Current prices,2020,2.510005683843019
+HRV,Croatia,COVID-19 related treatment costs,Current prices,2020,5.779251662792079
+ISL,Iceland,COVID-19 related investment costs,Current prices,2020,1.9268729430352292
+ISL,Iceland,COVID-19 related treatment costs,Current prices,2020,3.5649305736447574
+ISL,Iceland,COVID-19 related costs for medical goods,Current prices,2020,2.2844211223663744
+ISR,Israel,COVID-19 related costs for vaccination,Current prices,2020,5.170489676840192
+ISR,Israel,COVID-19 related investment costs,Current prices,2020,6.541599822379814
+ISR,Israel,COVID-19 related costs for medical goods,Current prices,2020,5.706392399171605
+ISR,Israel,COVID-19 related treatment costs,Current prices,2020,6.778839503702773
+JPN,Japan,COVID-19 related investment costs,Current prices,2020,5.72888475941703
+JPN,Japan,COVID-19 related costs for medical goods,Current prices,2020,4.050706105192271
+JPN,Japan,COVID-19 related costs for vaccination,Current prices,2020,6.150809570089064
+JPN,Japan,COVID-19 related treatment costs,Current prices,2020,7.098853210485586
+KOR,Korea,COVID-19 related investment costs,Current prices,2020,4.688048868480836
+KOR,Korea,COVID-19 related treatment costs,Current prices,2020,5.990228783867016
+KOR,Korea,COVID-19 related costs for medical goods,Current prices,2020,6.824659498755385
+LTU,Lithuania,COVID-19 related treatment costs,Current prices,2020,1.9413282395502016
+LTU,Lithuania,COVID-19 related costs for medical goods,Current prices,2020,4.918081312485648
+LTU,Lithuania,COVID-19 related costs for vaccination,Current prices,2020,1.199964782928397
+LUX,Luxembourg,COVID-19 related costs for vaccination,Current prices,2020,0.1570037488096647
+LUX,Luxembourg,COVID-19 related costs for medical goods,Current prices,2020,3.38021205525302
+LUX,Luxembourg,COVID-19 related treatment costs,Current prices,2020,4.24539042709588
+LVA,Latvia,COVID-19 related costs for vaccination,Current prices,2020,0.1839868361130158
+LVA,Latvia,COVID-19 related treatment costs,Current prices,2020,3.861634564694918
+LVA,Latvia,COVID-19 related costs for medical goods,Current prices,2020,2.2715071374231846
+MLT,Malta,COVID-19 related costs for vaccination,Current prices,2020,1.728642159912577
+MLT,Malta,COVID-19 related costs for medical goods,Current prices,2020,4.1083789511859035
+MLT,Malta,COVID-19 related treatment costs,Current prices,2020,2.168596452990729
+NLD,Netherlands,COVID-19 related investment costs,Current prices,2020,6.807772499567366
+NLD,Netherlands,COVID-19 related treatment costs,Current prices,2020,8.522929507252169
+NLD,Netherlands,COVID-19 related costs for medical goods,Current prices,2020,5.9228483903694045
+AUS,Australia,COVID-19 related costs for vaccination,Constant prices,2021,8.130570838309497
+AUS,Australia,COVID-19 related costs for medical goods,Constant prices,2021,7.289181077717569
+AUS,Australia,COVID-19 related treatment costs,Constant prices,2021,8.496897826744933
+AUS,Australia,COVID-19 related investment costs,Constant prices,2021,5.635824781472974
+AUT,Austria,COVID-19 related costs for medical goods,Constant prices,2021,5.365714298534089
+AUT,Austria,COVID-19 related treatment costs,Constant prices,2021,4.44979041780777
+AUT,Austria,COVID-19 related costs for vaccination,Constant prices,2021,6.461233773883605
+BEL,Belgium,COVID-19 related costs for vaccination,Constant prices,2021,6.295260466368977
+BEL,Belgium,COVID-19 related costs for medical goods,Constant prices,2021,7.0113744794302475
+BEL,Belgium,COVID-19 related treatment costs,Constant prices,2021,6.7249796190989795
+BGR,Bulgaria,COVID-19 related costs for vaccination,Constant prices,2021,5.048772086686499
+BGR,Bulgaria,COVID-19 related investment costs,Constant prices,2021,3.7107387884668297
+BGR,Bulgaria,COVID-19 related treatment costs,Constant prices,2021,7.353367593992592
+BGR,Bulgaria,COVID-19 related costs for medical goods,Constant prices,2021,4.04060969312413
+CAN,Canada,COVID-19 related treatment costs,Constant prices,2021,9.089727912272135
+CAN,Canada,COVID-19 related costs for vaccination,Constant prices,2021,8.192716005663893
+CAN,Canada,COVID-19 related costs for medical goods,Constant prices,2021,7.624388979241085
+CHL,Chile,COVID-19 related investment costs,Constant prices,2021,4.6840645422507725
+CHL,Chile,COVID-19 related costs for medical goods,Constant prices,2021,7.112848906118289
+COL,Colombia,COVID-19 related costs for vaccination,Constant prices,2021,7.853607143192209
+COL,Colombia,COVID-19 related treatment costs,Constant prices,2021,7.05686987040569
+CRI,Costa Rica,COVID-19 related costs for vaccination,Constant prices,2021,4.457690538594871
+CRI,Costa Rica,COVID-19 related treatment costs,Constant prices,2021,6.62921132644138
+CRI,Costa Rica,COVID-19 related costs for medical goods,Constant prices,2021,0.06578774053800315
+CRI,Costa Rica,COVID-19 related investment costs,Constant prices,2021,2.478637036774405
+CYP,Cyprus,COVID-19 related investment costs,Constant prices,2021,0.07973496801885352
+CYP,Cyprus,COVID-19 related costs for vaccination,Constant prices,2021,3.5982159617165896
+CYP,Cyprus,COVID-19 related treatment costs,Constant prices,2021,3.0971600661841046
+CYP,Cyprus,COVID-19 related costs for medical goods,Constant prices,2021,0.49956243148728
+CZE,Czechia,COVID-19 related investment costs,Constant prices,2021,1.873493054254725
+CZE,Czechia,COVID-19 related costs for vaccination,Constant prices,2021,6.693822924042356
+CZE,Czechia,COVID-19 related treatment costs,Constant prices,2021,7.411713375170184
+CZE,Czechia,COVID-19 related costs for medical goods,Constant prices,2021,0.010939940038334263
+DEU,Germany,COVID-19 related costs for medical goods,Constant prices,2021,8.286367961410397
+DEU,Germany,COVID-19 related costs for vaccination,Constant prices,2021,9.001533926424036
+DEU,Germany,COVID-19 related investment costs,Constant prices,2021,6.2476520824918635
+DEU,Germany,COVID-19 related treatment costs,Constant prices,2021,6.994557550777466
+DNK,Denmark,COVID-19 related treatment costs,Constant prices,2021,4.7220372467119365
+DNK,Denmark,COVID-19 related costs for medical goods,Constant prices,2021,5.0184248763710855
+DNK,Denmark,COVID-19 related costs for vaccination,Constant prices,2021,6.130291269692714
+ESP,Spain,COVID-19 related costs for medical goods,Constant prices,2021,1.8811430303627406
+ESP,Spain,COVID-19 related treatment costs,Constant prices,2021,9.092052433878012
+ESP,Spain,COVID-19 related costs for vaccination,Constant prices,2021,7.5402114605227295
+ESP,Spain,COVID-19 related investment costs,Constant prices,2021,5.763945813627473
+EST,Estonia,COVID-19 related treatment costs,Constant prices,2021,4.489299071445159
+EST,Estonia,COVID-19 related investment costs,Constant prices,2021,1.7376552102348541
+EST,Estonia,COVID-19 related costs for vaccination,Constant prices,2021,4.1927106739669675
+EST,Estonia,COVID-19 related costs for medical goods,Constant prices,2021,4.276027025950691
+FRA,France,COVID-19 related treatment costs,Constant prices,2021,8.330018678054284
+FRA,France,COVID-19 related costs for vaccination,Constant prices,2021,7.657386284787189
+FRA,France,COVID-19 related costs for medical goods,Constant prices,2021,6.747721494246625
+GBR,United Kingdom,COVID-19 related costs for vaccination,Constant prices,2021,8.920672863182773
+GBR,United Kingdom,COVID-19 related costs for medical goods,Constant prices,2021,6.04973109673861
+GRC,Greece,COVID-19 related costs for vaccination,Constant prices,2021,6.250434596199765
+HRV,Croatia,COVID-19 related treatment costs,Constant prices,2021,5.93217887225186
+HRV,Croatia,COVID-19 related costs for vaccination,Constant prices,2021,5.095644111746164
+HRV,Croatia,COVID-19 related costs for medical goods,Constant prices,2021,2.0843046973458237
+HUN,Hungary,COVID-19 related costs for vaccination,Constant prices,2021,6.883578358399782
+IRL,Ireland,COVID-19 related costs for vaccination,Constant prices,2021,6.180567226697096
+ISL,Iceland,COVID-19 related investment costs,Constant prices,2021,1.2116433106301556
+ISL,Iceland,COVID-19 related treatment costs,Constant prices,2021,3.7065228892865316
+ISL,Iceland,COVID-19 related costs for vaccination,Constant prices,2021,2.61863593949627
+ISR,Israel,COVID-19 related investment costs,Constant prices,2021,5.674013750382569
+ISR,Israel,COVID-19 related costs for medical goods,Constant prices,2021,4.02720711123461
+ISR,Israel,COVID-19 related costs for vaccination,Constant prices,2021,6.687164716018108
+ISR,Israel,COVID-19 related treatment costs,Constant prices,2021,6.5215647175836695
+KOR,Korea,COVID-19 related treatment costs,Constant prices,2021,7.494677681628314
+KOR,Korea,COVID-19 related costs for vaccination,Constant prices,2021,8.77879762882671
+KOR,Korea,COVID-19 related investment costs,Constant prices,2021,4.338061685408402
+KOR,Korea,COVID-19 related costs for medical goods,Constant prices,2021,6.308599226842434
+LTU,Lithuania,COVID-19 related costs for medical goods,Constant prices,2021,3.026212980807578
+LTU,Lithuania,COVID-19 related costs for vaccination,Constant prices,2021,4.302631633859629
+LUX,Luxembourg,COVID-19 related costs for medical goods,Constant prices,2021,3.3851357481148048
+LUX,Luxembourg,COVID-19 related treatment costs,Constant prices,2021,4.348624958039851
+LUX,Luxembourg,COVID-19 related investment costs,Constant prices,2021,2.876441852362667
+LUX,Luxembourg,COVID-19 related costs for vaccination,Constant prices,2021,4.1886694082596625
+LVA,Latvia,COVID-19 related treatment costs,Constant prices,2021,6.174737734291404
+LVA,Latvia,COVID-19 related costs for medical goods,Constant prices,2021,2.9419094668564845
+LVA,Latvia,COVID-19 related costs for vaccination,Constant prices,2021,4.80601904739593
+NLD,Netherlands,COVID-19 related costs for vaccination,Constant prices,2021,7.510993069183439
+NLD,Netherlands,COVID-19 related treatment costs,Constant prices,2021,7.553933485997811
+NLD,Netherlands,COVID-19 related costs for medical goods,Constant prices,2021,6.5554450813784655
+NOR,Norway,COVID-19 related costs for vaccination,Constant prices,2021,5.220063890577703
+ROU,Romania,COVID-19 related costs for vaccination,Constant prices,2021,6.520473841307601
+SWE,Sweden,COVID-19 related costs for vaccination,Constant prices,2021,5.538569723999614
+AUS,Australia,COVID-19 related investment costs,Current prices,2021,5.737152774131307
+AUS,Australia,COVID-19 related treatment costs,Current prices,2021,8.598550480802329
+AUS,Australia,COVID-19 related costs for vaccination,Current prices,2021,8.232214661098766
+AUS,Australia,COVID-19 related costs for medical goods,Current prices,2021,7.390787417417392
+AUT,Austria,COVID-19 related costs for medical goods,Current prices,2021,5.599451058922986
+AUT,Austria,COVID-19 related treatment costs,Current prices,2021,4.682057150306526
+AUT,Austria,COVID-19 related costs for vaccination,Current prices,2021,6.69562090368724
+BEL,Belgium,COVID-19 related treatment costs,Current prices,2021,6.942912941420272
+BEL,Belgium,COVID-19 related costs for medical goods,Current prices,2021,7.229366927716907
+BEL,Belgium,COVID-19 related costs for vaccination,Current prices,2021,6.513068376765796
+BGR,Bulgaria,COVID-19 related treatment costs,Current prices,2021,7.526657785737423
+BGR,Bulgaria,COVID-19 related costs for vaccination,Current prices,2021,5.221144703021469
+BGR,Bulgaria,COVID-19 related investment costs,Current prices,2021,3.8802226928783483
+BGR,Bulgaria,COVID-19 related costs for medical goods,Current prices,2021,4.211193828718393
+CAN,Canada,COVID-19 related costs for medical goods,Current prices,2021,7.792871908720027
+CAN,Canada,COVID-19 related treatment costs,Current prices,2021,9.258269022291959
+CAN,Canada,COVID-19 related costs for vaccination,Current prices,2021,8.36123153943501
+CHL,Chile,COVID-19 related costs for medical goods,Current prices,2021,7.273692693490011
+CHL,Chile,COVID-19 related investment costs,Current prices,2021,4.843659388195232
+COL,Colombia,COVID-19 related costs for vaccination,Current prices,2021,8.045877662005672
+COL,Colombia,COVID-19 related treatment costs,Current prices,2021,7.249057262149427
+CRI,Costa Rica,COVID-19 related costs for medical goods,Current prices,2021,0.07232066157962608
+CRI,Costa Rica,COVID-19 related treatment costs,Current prices,2021,6.738272155682729
+CRI,Costa Rica,COVID-19 related investment costs,Current prices,2021,2.5791556606911077
+CRI,Costa Rica,COVID-19 related costs for vaccination,Current prices,2021,4.565691039443778
+CYP,Cyprus,COVID-19 related costs for vaccination,Current prices,2021,3.7648214576890937
+CYP,Cyprus,COVID-19 related costs for medical goods,Current prices,2021,0.5698489642154517
+CYP,Cyprus,COVID-19 related investment costs,Current prices,2021,0.0944006754214843
+CYP,Cyprus,COVID-19 related treatment costs,Current prices,2021,3.260938649240587
+CZE,Czechia,COVID-19 related investment costs,Current prices,2021,2.0704007970276868
+CZE,Czechia,COVID-19 related treatment costs,Current prices,2021,7.640478878655266
+CZE,Czechia,COVID-19 related costs for medical goods,Current prices,2021,0.013902905168991434
+CZE,Czechia,COVID-19 related costs for vaccination,Current prices,2021,6.922458652645358
+DEU,Germany,COVID-19 related treatment costs,Current prices,2021,7.20641809182685
+DEU,Germany,COVID-19 related costs for vaccination,Current prices,2021,9.213545729325105
+DEU,Germany,COVID-19 related investment costs,Current prices,2021,6.459317427650962
+DEU,Germany,COVID-19 related costs for medical goods,Current prices,2021,8.498355062841592
+DNK,Denmark,COVID-19 related costs for vaccination,Current prices,2021,6.347348928634583
+DNK,Denmark,COVID-19 related costs for medical goods,Current prices,2021,5.234615828375813
+DNK,Denmark,COVID-19 related treatment costs,Current prices,2021,4.937784992281999
+ESP,Spain,COVID-19 related treatment costs,Current prices,2021,9.27961966910606
+ESP,Spain,COVID-19 related investment costs,Current prices,2021,5.950994053304111
+ESP,Spain,COVID-19 related costs for medical goods,Current prices,2021,2.0423884774771253
+ESP,Spain,COVID-19 related costs for vaccination,Current prices,2021,7.72770690188586
+EST,Estonia,COVID-19 related costs for medical goods,Current prices,2021,4.42955409720914
+EST,Estonia,COVID-19 related investment costs,Current prices,2021,1.8676396795633732
+EST,Estonia,COVID-19 related costs for vaccination,Current prices,2021,4.346062612740295
+EST,Estonia,COVID-19 related treatment costs,Current prices,2021,4.643207506901208
+FRA,France,COVID-19 related costs for medical goods,Current prices,2021,6.9733501170205185
+FRA,France,COVID-19 related treatment costs,Current prices,2021,8.555836045333333
+FRA,France,COVID-19 related costs for vaccination,Current prices,2021,7.883157205666657
+GBR,United Kingdom,COVID-19 related costs for vaccination,Current prices,2021,9.122759414624634
+GBR,United Kingdom,COVID-19 related costs for medical goods,Current prices,2021,6.2514105052129585
+GRC,Greece,COVID-19 related costs for vaccination,Current prices,2021,6.409421308627404
+HRV,Croatia,COVID-19 related costs for vaccination,Current prices,2021,5.276644190866542
+HRV,Croatia,COVID-19 related costs for medical goods,Current prices,2021,2.245485500953473
+HRV,Croatia,COVID-19 related treatment costs,Current prices,2021,6.1137573982421936
+HUN,Hungary,COVID-19 related costs for vaccination,Current prices,2021,7.029890607434527
+IRL,Ireland,COVID-19 related costs for vaccination,Current prices,2021,6.301097672629759
+ISL,Iceland,COVID-19 related costs for vaccination,Current prices,2021,2.778322254087542
+ISL,Iceland,COVID-19 related investment costs,Current prices,2021,1.33500106673234
+ISL,Iceland,COVID-19 related treatment costs,Current prices,2021,3.8738641283273747
+ISR,Israel,COVID-19 related costs for vaccination,Current prices,2021,6.835619975222689
+ISR,Israel,COVID-19 related investment costs,Current prices,2021,5.822166810976581
+ISR,Israel,COVID-19 related costs for medical goods,Current prices,2021,4.173371369428072
+ISR,Israel,COVID-19 related treatment costs,Current prices,2021,6.669989086050787
+KOR,Korea,COVID-19 related investment costs,Current prices,2021,4.42409185606725
+KOR,Korea,COVID-19 related treatment costs,Current prices,2021,7.5817522593690345
+KOR,Korea,COVID-19 related costs for vaccination,Current prices,2021,8.865905638649702
+KOR,Korea,COVID-19 related costs for medical goods,Current prices,2021,6.395568729576805
+LTU,Lithuania,COVID-19 related costs for medical goods,Current prices,2021,3.2327392815273543
+LTU,Lithuania,COVID-19 related costs for vaccination,Current prices,2021,4.515956385443261
+LUX,Luxembourg,COVID-19 related costs for vaccination,Current prices,2021,4.33465983204463
+LUX,Luxembourg,COVID-19 related costs for medical goods,Current prices,2021,3.5285346301233504
+LUX,Luxembourg,COVID-19 related investment costs,Current prices,2021,3.0167106799391825
+LUX,Luxembourg,COVID-19 related treatment costs,Current prices,2021,4.494919957367191
+LVA,Latvia,COVID-19 related costs for vaccination,Current prices,2021,4.998913528511962
+LVA,Latvia,COVID-19 related treatment costs,Current prices,2021,6.368710205641248
+LVA,Latvia,COVID-19 related costs for medical goods,Current prices,2021,3.126892106252013
+NLD,Netherlands,COVID-19 related treatment costs,Current prices,2021,7.770785730588201
+NLD,Netherlands,COVID-19 related costs for medical goods,Current prices,2021,6.772122250896677
+NLD,Netherlands,COVID-19 related costs for vaccination,Current prices,2021,7.727840790622758
+NOR,Norway,COVID-19 related costs for vaccination,Current prices,2021,5.444899476875343
+ROU,Romania,COVID-19 related costs for vaccination,Current prices,2021,6.79653987911365
+SWE,Sweden,COVID-19 related costs for vaccination,Current prices,2021,5.7305152810578734
+AUT,Austria,COVID-19 related costs for medical goods,Constant prices,2022,4.7318204579115815
+AUT,Austria,COVID-19 related treatment costs,Constant prices,2022,4.305577462510476
+AUT,Austria,COVID-19 related costs for vaccination,Constant prices,2022,5.72517860289693
+BEL,Belgium,COVID-19 related costs for vaccination,Constant prices,2022,5.004268401718052
+BEL,Belgium,COVID-19 related costs for medical goods,Constant prices,2022,6.696655163477473
+BEL,Belgium,COVID-19 related treatment costs,Constant prices,2022,6.1859122836997775
+BGR,Bulgaria,COVID-19 related treatment costs,Constant prices,2022,6.293130882365878
+BGR,Bulgaria,COVID-19 related costs for vaccination,Constant prices,2022,3.7717719434534964
+BGR,Bulgaria,COVID-19 related investment costs,Constant prices,2022,2.030645127490873
+BGR,Bulgaria,COVID-19 related costs for medical goods,Constant prices,2022,3.2301322331239
+CAN,Canada,COVID-19 related treatment costs,Constant prices,2022,7.445117862265086
+CAN,Canada,COVID-19 related costs for vaccination,Constant prices,2022,7.344916063165894
+CAN,Canada,COVID-19 related costs for medical goods,Constant prices,2022,7.4691483437678485
+CHL,Chile,COVID-19 related investment costs,Constant prices,2022,0.7537718023763802
+CHL,Chile,COVID-19 related costs for medical goods,Constant prices,2022,6.671061587769951
+COL,Colombia,COVID-19 related costs for vaccination,Constant prices,2022,6.499406517138143
+COL,Colombia,COVID-19 related treatment costs,Constant prices,2022,5.9958797855813915
+CRI,Costa Rica,COVID-19 related costs for vaccination,Constant prices,2022,3.8287066117538378
+CRI,Costa Rica,COVID-19 related treatment costs,Constant prices,2022,1.4499731377830734
+CRI,Costa Rica,COVID-19 related costs for medical goods,Constant prices,2022,0.16296882827813972
+CRI,Costa Rica,COVID-19 related investment costs,Constant prices,2022,1.2187628897985714
+CYP,Cyprus,COVID-19 related costs for vaccination,Constant prices,2022,3.51734945839818
+CYP,Cyprus,COVID-19 related treatment costs,Constant prices,2022,3.424360369688583
+CYP,Cyprus,COVID-19 related investment costs,Constant prices,2022,0.06765864847381486
+CYP,Cyprus,COVID-19 related costs for medical goods,Constant prices,2022,2.222459048514761
+CZE,Czechia,COVID-19 related costs for vaccination,Constant prices,2022,6.507043356567623
+CZE,Czechia,COVID-19 related investment costs,Constant prices,2022,0.9685036033210893
+CZE,Czechia,COVID-19 related treatment costs,Constant prices,2022,5.364783715730411
+DEU,Germany,COVID-19 related costs for medical goods,Constant prices,2022,7.011333908022535
+DEU,Germany,COVID-19 related costs for vaccination,Constant prices,2022,9.239660310740662
+DEU,Germany,COVID-19 related investment costs,Constant prices,2022,6.987330492782054
+DEU,Germany,COVID-19 related treatment costs,Constant prices,2022,3.8964422534611227
+DNK,Denmark,COVID-19 related treatment costs,Constant prices,2022,4.553013360970526
+DNK,Denmark,COVID-19 related costs for medical goods,Constant prices,2022,4.522733782375623
+DNK,Denmark,COVID-19 related costs for vaccination,Constant prices,2022,5.184818266721304
+EST,Estonia,COVID-19 related treatment costs,Constant prices,2022,3.8481455990393854
+EST,Estonia,COVID-19 related costs for medical goods,Constant prices,2022,3.2085830353827687
+EST,Estonia,COVID-19 related investment costs,Constant prices,2022,0.2821668917636708
+EST,Estonia,COVID-19 related costs for vaccination,Constant prices,2022,3.3271201782658397
+FRA,France,COVID-19 related treatment costs,Constant prices,2022,6.504813484638402
+FRA,France,COVID-19 related costs for vaccination,Constant prices,2022,6.504021670962121
+FRA,France,COVID-19 related costs for medical goods,Constant prices,2022,6.249421034660764
+GBR,United Kingdom,COVID-19 related costs for vaccination,Constant prices,2022,7.987745583121028
+GBR,United Kingdom,COVID-19 related costs for medical goods,Constant prices,2022,7.731354240025235
+GRC,Greece,COVID-19 related costs for vaccination,Constant prices,2022,6.5515802100850555
+HRV,Croatia,COVID-19 related investment costs,Constant prices,2022,0.3660310388627573
+HRV,Croatia,COVID-19 related treatment costs,Constant prices,2022,5.331718292931786
+HRV,Croatia,COVID-19 related costs for vaccination,Constant prices,2022,4.90834413720779
+HRV,Croatia,COVID-19 related costs for medical goods,Constant prices,2022,1.5824777308513172
+IRL,Ireland,COVID-19 related costs for vaccination,Constant prices,2022,5.774324811767714
+ISL,Iceland,COVID-19 related investment costs,Constant prices,2022,0.4330802751411378
+ISL,Iceland,COVID-19 related treatment costs,Constant prices,2022,4.207301154501555
+ISL,Iceland,COVID-19 related costs for vaccination,Constant prices,2022,2.5858072347237333
+KOR,Korea,COVID-19 related treatment costs,Constant prices,2022,8.296208557960869
+KOR,Korea,COVID-19 related costs for vaccination,Constant prices,2022,8.146162263112206
+KOR,Korea,COVID-19 related investment costs,Constant prices,2022,5.4972460911140395
+KOR,Korea,COVID-19 related costs for medical goods,Constant prices,2022,6.562229381379144
+LTU,Lithuania,COVID-19 related investment costs,Constant prices,2022,0.10436001532424286
+LTU,Lithuania,COVID-19 related costs for vaccination,Constant prices,2022,1.249615162204637
+LUX,Luxembourg,COVID-19 related treatment costs,Constant prices,2022,3.3322402238231783
+LUX,Luxembourg,COVID-19 related investment costs,Constant prices,2022,2.1935511719699106
+LUX,Luxembourg,COVID-19 related costs for medical goods,Constant prices,2022,2.004852684688763
+LUX,Luxembourg,COVID-19 related costs for vaccination,Constant prices,2022,3.663484720093992
+LVA,Latvia,COVID-19 related treatment costs,Constant prices,2022,5.338321426651119
+LVA,Latvia,COVID-19 related costs for medical goods,Constant prices,2022,0.8883026953339863
+LVA,Latvia,COVID-19 related costs for vaccination,Constant prices,2022,2.0335284846654296
+MLT,Malta,COVID-19 related costs for medical goods,Constant prices,2022,2.797098391267731
+MLT,Malta,COVID-19 related treatment costs,Constant prices,2022,2.1765682524105587
+MLT,Malta,COVID-19 related costs for vaccination,Constant prices,2022,3.072276561193777
+NLD,Netherlands,COVID-19 related costs for vaccination,Constant prices,2022,6.359430259745192
+NLD,Netherlands,COVID-19 related treatment costs,Constant prices,2022,5.877534080767089
+NLD,Netherlands,COVID-19 related costs for medical goods,Constant prices,2022,5.72385303991001
+NOR,Norway,COVID-19 related costs for vaccination,Constant prices,2022,4.126553571244116
+POL,Poland,COVID-19 related costs for vaccination,Constant prices,2022,7.449255974932376
+POL,Poland,COVID-19 related costs for medical goods,Constant prices,2022,0.3386128011203239
+POL,Poland,COVID-19 related treatment costs,Constant prices,2022,8.513953750087362
+POL,Poland,COVID-19 related investment costs,Constant prices,2022,6.631935899072868
+ROU,Romania,COVID-19 related costs for vaccination,Constant prices,2022,6.0339084256629745
+SWE,Sweden,COVID-19 related costs for vaccination,Constant prices,2022,4.998326517628658
+AUT,Austria,COVID-19 related costs for medical goods,Current prices,2022,5.052333704451931
+AUT,Austria,COVID-19 related treatment costs,Current prices,2022,4.62479632712327
+AUT,Austria,COVID-19 related costs for vaccination,Current prices,2022,6.047225596199518
+BEL,Belgium,COVID-19 related treatment costs,Current prices,2022,6.493233280783716
+BEL,Belgium,COVID-19 related costs for medical goods,Current prices,2022,7.004194820817021
+BEL,Belgium,COVID-19 related costs for vaccination,Current prices,2022,5.310359567320824
+BGR,Bulgaria,COVID-19 related costs for medical goods,Current prices,2022,3.4981728407855415
+BGR,Bulgaria,COVID-19 related treatment costs,Current prices,2022,6.57035341038699
+BGR,Bulgaria,COVID-19 related costs for vaccination,Current prices,2022,4.043857959914843
+BGR,Bulgaria,COVID-19 related investment costs,Current prices,2022,2.2760357577605093
+CAN,Canada,COVID-19 related costs for medical goods,Current prices,2022,7.700165724689534
+CAN,Canada,COVID-19 related treatment costs,Current prices,2022,7.676132837277213
+CAN,Canada,COVID-19 related costs for vaccination,Current prices,2022,7.575917929347913
+CHL,Chile,COVID-19 related costs for medical goods,Current prices,2022,6.92327325003848
+CHL,Chile,COVID-19 related investment costs,Current prices,2022,0.8956797779700306
+COL,Colombia,COVID-19 related costs for vaccination,Current prices,2022,6.792418498801535
+COL,Colombia,COVID-19 related treatment costs,Current prices,2022,6.2886407820275165
+CRI,Costa Rica,COVID-19 related costs for medical goods,Current prices,2022,0.1939206926373065
+CRI,Costa Rica,COVID-19 related treatment costs,Current prices,2022,1.599589576379286
+CRI,Costa Rica,COVID-19 related investment costs,Current prices,2022,1.3571229838196106
+CRI,Costa Rica,COVID-19 related costs for vaccination,Current prices,2022,4.016220845440522
+CYP,Cyprus,COVID-19 related costs for vaccination,Current prices,2022,3.764705592231933
+CYP,Cyprus,COVID-19 related costs for medical goods,Current prices,2022,2.4518667957098
+CYP,Cyprus,COVID-19 related investment costs,Current prices,2022,0.08617769624105241
+CYP,Cyprus,COVID-19 related treatment costs,Current prices,2022,3.671046385962144
+CZE,Czechia,COVID-19 related investment costs,Current prices,2022,1.1755733298042381
+CZE,Czechia,COVID-19 related treatment costs,Current prices,2022,5.679158443047434
+CZE,Czechia,COVID-19 related costs for vaccination,Current prices,2022,6.8222779973934635
+DEU,Germany,COVID-19 related costs for medical goods,Current prices,2022,7.301013518837235
+DEU,Germany,COVID-19 related treatment costs,Current prices,2022,4.181225375133057
+DEU,Germany,COVID-19 related costs for vaccination,Current prices,2022,9.529542186846642
+DEU,Germany,COVID-19 related investment costs,Current prices,2022,7.277004435117287
+DNK,Denmark,COVID-19 related costs for vaccination,Current prices,2022,5.456977861853123
+DNK,Denmark,COVID-19 related costs for medical goods,Current prices,2022,4.793622908712286
+DNK,Denmark,COVID-19 related treatment costs,Current prices,2022,4.823992413818741
+EST,Estonia,COVID-19 related costs for medical goods,Current prices,2022,3.4476673960470063
+EST,Estonia,COVID-19 related investment costs,Current prices,2022,0.34854196070854343
+EST,Estonia,COVID-19 related costs for vaccination,Current prices,2022,3.5671919308568323
+EST,Estonia,COVID-19 related treatment costs,Current prices,2022,4.091440349074711
+FRA,France,COVID-19 related costs for medical goods,Current prices,2022,6.548097318842714
+FRA,France,COVID-19 related treatment costs,Current prices,2022,6.803602922095388
+FRA,France,COVID-19 related costs for vaccination,Current prices,2022,6.802811343209527
+GBR,United Kingdom,COVID-19 related costs for vaccination,Current prices,2022,8.247625000871041
+GBR,United Kingdom,COVID-19 related costs for medical goods,Current prices,2022,7.991211289337197
+GRC,Greece,COVID-19 related costs for vaccination,Current prices,2022,6.790931533060192
+HRV,Croatia,COVID-19 related costs for vaccination,Current prices,2022,5.171358612448812
+HRV,Croatia,COVID-19 related costs for medical goods,Current prices,2022,1.798238435325764
+HRV,Croatia,COVID-19 related treatment costs,Current prices,2022,5.595324574459068
+HRV,Croatia,COVID-19 related investment costs,Current prices,2022,0.4548899914356874
+IRL,Ireland,COVID-19 related costs for vaccination,Current prices,2022,5.990046041504449
+ISL,Iceland,COVID-19 related costs for vaccination,Current prices,2022,2.814689898258417
+ISL,Iceland,COVID-19 related investment costs,Current prices,2022,0.5259112611840315
+ISL,Iceland,COVID-19 related treatment costs,Current prices,2022,4.449510034147628
+KOR,Korea,COVID-19 related treatment costs,Current prices,2022,8.417535936758311
+KOR,Korea,COVID-19 related investment costs,Current prices,2022,5.618133805122508
+KOR,Korea,COVID-19 related costs for vaccination,Current prices,2022,8.267484901176227
+KOR,Korea,COVID-19 related costs for medical goods,Current prices,2022,6.683423522031118
+LTU,Lithuania,COVID-19 related costs for vaccination,Current prices,2022,1.4772770088317615
+LTU,Lithuania,COVID-19 related investment costs,Current prices,2022,0.13889199886661865
+LUX,Luxembourg,COVID-19 related costs for vaccination,Current prices,2022,3.8864795309574487
+LUX,Luxembourg,COVID-19 related costs for medical goods,Current prices,2022,2.2053029701874918
+LUX,Luxembourg,COVID-19 related investment costs,Current prices,2022,2.3987131200882663
+LUX,Luxembourg,COVID-19 related treatment costs,Current prices,2022,3.5531742719485613
+LVA,Latvia,COVID-19 related costs for vaccination,Current prices,2022,2.27706213576296
+LVA,Latvia,COVID-19 related treatment costs,Current prices,2022,5.61263893566869
+LVA,Latvia,COVID-19 related costs for medical goods,Current prices,2022,1.0591782194227026
+MLT,Malta,COVID-19 related costs for vaccination,Current prices,2022,3.285562038063231
+MLT,Malta,COVID-19 related costs for medical goods,Current prices,2022,3.007413778327829
+MLT,Malta,COVID-19 related treatment costs,Current prices,2022,2.3762072328646595
+NLD,Netherlands,COVID-19 related treatment costs,Current prices,2022,6.184872340524919
+NLD,Netherlands,COVID-19 related costs for medical goods,Current prices,2022,6.031064995844887
+NLD,Netherlands,COVID-19 related costs for vaccination,Current prices,2022,6.667050935580298
+NOR,Norway,COVID-19 related costs for vaccination,Current prices,2022,4.432624687436973
+POL,Poland,COVID-19 related costs for vaccination,Current prices,2022,7.704810570971337
+POL,Poland,COVID-19 related costs for medical goods,Current prices,2022,0.4193680132771557
+POL,Poland,COVID-19 related investment costs,Current prices,2022,6.887324994750548
+POL,Poland,COVID-19 related treatment costs,Current prices,2022,8.769594140330875
+ROU,Romania,COVID-19 related costs for vaccination,Current prices,2022,6.406414531227361
+SWE,Sweden,COVID-19 related costs for vaccination,Current prices,2022,5.277645161278498
+COL,Colombia,COVID-19 related costs for vaccination,Constant prices,2023,5.945438933046011
+DEU,Germany,COVID-19 related costs for medical goods,Constant prices,2023,4.489254156390748
+DEU,Germany,COVID-19 related costs for vaccination,Constant prices,2023,7.231972008443086
+DEU,Germany,COVID-19 related investment costs,Constant prices,2023,5.428779679361494
+DEU,Germany,COVID-19 related treatment costs,Constant prices,2023,2.334374415483453
+KOR,Korea,COVID-19 related treatment costs,Constant prices,2023,6.17107827437177
+KOR,Korea,COVID-19 related costs for vaccination,Constant prices,2023,6.823348144371346
+KOR,Korea,COVID-19 related costs for medical goods,Constant prices,2023,5.570289176544168
+LUX,Luxembourg,COVID-19 related treatment costs,Constant prices,2023,0.39339252687389514
+LUX,Luxembourg,COVID-19 related costs for vaccination,Constant prices,2023,1.8418186691007918
+COL,Colombia,COVID-19 related costs for vaccination,Current prices,2023,6.267077201275957
+DEU,Germany,COVID-19 related costs for medical goods,Current prices,2023,4.832090595983798
+DEU,Germany,COVID-19 related treatment costs,Current prices,2023,2.651761996755421
+DEU,Germany,COVID-19 related costs for vaccination,Current prices,2023,7.577884057179311
+DEU,Germany,COVID-19 related investment costs,Current prices,2023,5.7736194342449805
+KOR,Korea,COVID-19 related treatment costs,Current prices,2023,6.307630208043783
+KOR,Korea,COVID-19 related costs for vaccination,Current prices,2023,6.960027943630033
+KOR,Korea,COVID-19 related costs for medical goods,Current prices,2023,5.706621773363361
+LUX,Luxembourg,COVID-19 related costs for vaccination,Current prices,2023,2.077564781666976
+LUX,Luxembourg,COVID-19 related treatment costs,Current prices,2023,0.49103099643781106
