@@ -246,34 +246,60 @@ function init() {
         .text("Weekly ICU Admissions"); 
 
         function updateChart() {
+            // Fade out the chart during the data update with a smoother transition
+            svg.transition().duration(1000).ease(d3.easeCubicOut).style("opacity", 0);
+        
+            // Filter data based on selected country and year
             currentData = data.filter(d => d.Country === currentCountry && d.Year === currentYear);
         
+            // Calculate dynamic maximum values for both axes
+            const maxMortality = d3.max(currentData, d => d.Mortality) || 0;
+            const maxAdmissions = d3.max(currentData, d => 
+                currentAdmissionType === "icu" ? d["Weekly new ICU admissions"] : d["Weekly new hospital admissions"]) || 0;
+        
+            // Adjust the max values for hospital admissions only
+            let adjustedMaxAdmissions = maxAdmissions;
+            if (currentAdmissionType === "hospital") {
+                adjustedMaxAdmissions *= 3.5;  // Apply multiplier for hospital data
+            }
+            
+            // Adjust the max values for mortality only if we are showing hospital data
+            let adjustedMaxMortality = maxMortality;
+            if (currentAdmissionType === "hospital") {
+                adjustedMaxMortality *= 4.5;  // Apply multiplier for mortality when showing hospital data
+            }
+        
+            // Update the domains for x and both Y axes
             x.domain(d3.extent(currentData, d => d.Date));
-            yLeft.domain([0, d3.max(currentData, d => d.Mortality)]);  // Mortality Y-axis
-            yRight.domain([0, d3.max(currentData, d => 
-                currentAdmissionType === "icu" ? d["Weekly new ICU admissions"] : d["Weekly new hospital admissions"]
-            )]);  // ICU/Hospital Admissions Y-axis
+            yLeft.domain([0, adjustedMaxMortality]);
+            yRight.domain([0, adjustedMaxAdmissions]);
         
-            // Update axes
-            svg.select(".x-axis").transition().duration(750).call(xAxis);
-            svg.select(".y-axis-left").transition().duration(750).call(d3.axisLeft(yLeft));
-            svg.select(".y-axis-right").transition().duration(750).call(d3.axisRight(yRight));
+            // Smooth transition for the axes
+            svg.select(".x-axis").transition().duration(1000).ease(d3.easeCubicOut).call(xAxis);
+            svg.select(".y-axis-left").transition().duration(1000).ease(d3.easeCubicOut).call(d3.axisLeft(yLeft));
+            svg.select(".y-axis-right").transition().duration(1000).ease(d3.easeCubicOut).call(d3.axisRight(yRight));
         
-            // Update right Y-axis label for ICU/Hospital Admissions (red)
+            // Update the Y-axis label with the correct admission type
             svg.select(".y-axis-right-label")
-            .style("fill", "red") // Set color to red
-            .text(currentAdmissionType === "icu" ? "Weekly ICU Admissions" : "Weekly Hospital Admissions");
-
-            // Update lines
-            pathMortality.datum(currentData).transition().duration(750)
+                .style("fill", "red")
+                .text(currentAdmissionType === "icu" ? "Weekly ICU Admissions" : "Weekly Hospital Admissions");
+        
+            // Update the line for mortality with a smooth transition
+            pathMortality.datum(currentData).transition().duration(1000).ease(d3.easeCubicOut)
                 .attr("d", lineMortality);
         
-            pathICU.datum(currentData).transition().duration(750)
+            // Update the line for the selected admissions type with a smooth transition
+            pathICU.datum(currentData).transition().duration(1000).ease(d3.easeCubicOut)
                 .attr("d", d3.line()
                     .x(d => x(d.Date))
                     .y(d => yRight(currentAdmissionType === "icu" ? 
                         d["Weekly new ICU admissions"] : d["Weekly new hospital admissions"])));
+        
+            // Fade in the chart after the update with a smooth transition
+            svg.transition().duration(1000).ease(d3.easeCubicInOut).style("opacity", 1);
         }
+        
+        
         // Add mouse event listeners
         overlay
             .on("mouseover", () => {
