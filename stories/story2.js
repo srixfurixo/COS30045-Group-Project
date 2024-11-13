@@ -1,197 +1,77 @@
-function init() {
-    // Add loading overlay
-    const loadingOverlay = document.createElement('div');
-    loadingOverlay.className = 'loading-overlay';
-    loadingOverlay.innerHTML = '<div class="loading-spinner"></div>';
-    document.body.appendChild(loadingOverlay);
+// Define chart dimensions
+const width = 1000;
+const height = 500;
+const marginTop = 20;
+const marginRight = 10;
+const marginBottom = 20;
+const marginLeft = 40;
 
-    // Add fade-in class to chart container
-    const chartContainer = document.querySelector('#chart');
-    chartContainer.classList.add('fade-in');
+// Define keys (health functions) from the dataset
+const keys = ["COVID-19 related costs for vaccination", "COVID-19 related costs for medical goods", "COVID-19 related treatment costs", "COVID-19 related investment costs"];
 
-    // Set fixed dimensions for the SVG
-    const width = 960;
-    const height = 400;
+// Load data
+d3.csv("../Datasets/story2.csv").then(data => {
 
-    var container = d3.select("#chart");
+  // Map each health function to a linear scale
+  const x = new Map();
+  keys.forEach(key => {
+    x.set(key, d3.scaleLinear()
+      .domain(d3.extent(data.filter(d => d["Health function"] === key), d => +d.OBS_VALUE))
+      .range([marginLeft, width - marginRight]));
+  });
 
-    // Create the SVG once during initialization
-    if (container.select("svg").empty()) {
-        container.append("svg")
-            .attr("width", width)
-            .attr("height", height);
-    }
+  // Define the vertical y scale as a point scale for each health function
+  const y = d3.scalePoint(keys, [marginTop, height - marginBottom]);
 
-    // Load and process the CSV data directly
-    d3.csv("../Datasets/monthly_deaths.csv")
-        .then(function (data) {
-            if (!data) {
-                throw new Error("No CSV data received");
-            }
+  // Define color scale for each country
+  const color = d3.scaleOrdinal(d3.schemeCategory10)
+                  .domain([...new Set(data.map(d => d.REF_AREA))]);
 
-            // Get distinct countries from the data
-            const countries = Array.from(new Set(data.map(d => d.Country)));
+  // Create the SVG container
+  const svg = d3.select("#chart").append("svg")
+    .attr("viewBox", `0 0 ${width} ${height}`)
+    .attr("width", width)
+    .attr("height", height);
 
-            // Create dropdown for countries
-            let dropdown = d3.select("#country-select");
-            if (dropdown.empty()) {
-                dropdown = d3.select("#content")
-                    .insert("select", "#chart")
-                    .attr("id", "country-select");
+  // Define line generator for each path
+  const line = d3.line()
+    .defined(([, value]) => value != null)
+    .x(([key, value]) => x.get(key)(value))
+    .y(([key]) => y(key));
 
-                dropdown.selectAll("option")
-                    .data(countries)
-                    .enter()
-                    .append("option")
-                    .text(d => d)
-                    .property("selected", d => d === "Australia");
+  // Nest data by REF_AREA to create paths per region
+  const nestedData = d3.groups(data, d => d.REF_AREA);
 
-                dropdown.on("change", function () {
-                    updateChart(data, width, height);
-                });
-            }
+  // Append paths for each REF_AREA
+  svg.append("g")
+    .attr("fill", "none")
+    .attr("stroke-width", 1.5)
+    .attr("stroke-opacity", 0.6)
+    .selectAll("path")
+    .data(nestedData)
+    .join("path")
+    .attr("stroke", d => color(d[0]))  // color by country
+    .attr("d", d => line(keys.map(key => [key, d[1].find(e => e["Health function"] === key)?.OBS_VALUE || null])))
+    .append("title")
+    .text(d => d[0]);
 
-            updateChart(data, width, height);
-            // Hide loading overlay and show visualization
-            loadingOverlay.classList.add('hidden');
-            setTimeout(() => {
-                chartContainer.classList.add('visible');
-            }, 100);
-        })
-        .catch(function (error) {
-            console.error("Error loading CSV:", error);
-            d3.select("#chart").html("Error loading data: " + error.message);
-            loadingOverlay.classList.add('hidden');
-        });
-}
-
-function updateChart(data, w, h) {
-    const selectedCountry = d3.select("#country-select").property("value");
-
-    // Filter data for selected country
-    const filteredData = data.filter(d => d.Country === selectedCountry);
-
-    // Prepare data for the area chart
-    const groupedData = groupDataByYearAndMonth(filteredData);
-
-    // Update the area chart
-    updateAreaChart(groupedData, w, h);
-}
-
-function groupDataByYearAndMonth(data) {
-    const grouped = {};
-    data.forEach(d => {
-        const key = `${d.Year}-${d.Month}`;
-        if (!grouped[key]) {
-            grouped[key] = {
-                Year: +d.Year,
-                Month: +d.Month,
-                Deaths: 0,
-                Expenditure: 0
-            };
-        }
-        grouped[key].Deaths += +d.Deaths;
-        grouped[key].Expenditure += +d.Expenditure;
-    });
-    return Object.values(grouped);
-}
-
-function updateAreaChart(data, w, h) {
-    const svg = d3.select("#chart svg");
-    svg.selectAll("*").remove(); // Clear existing SVG elements
-
-    const margin = { top: 40, right: 80, bottom: 60, left: 80 }; // Increased margins
-    const width = w - margin.left - margin.right;
-    const height = h - margin.top - margin.bottom;
-
-    const xScale = d3.scaleTime()
-        .domain(d3.extent(data, d => new Date(d.Year, 0))) // Set month to 0 (January)
-        .range([0, width]);
-
-    const yScale = d3.scaleLinear()
-        .domain([0, d3.max(data, d => d.Deaths)])
-        .range([height, 0]);
-
-    const area = d3.area()
-        .x(d => xScale(new Date(d.Year, d.Month - 1)))
-        .y0(height)
-        .y1(d => yScale(d.Deaths));
-
-    const g = svg.append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
-
-    // Add tooltip
-    const tooltip = d3.select("body").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
-
-    g.append("path")
-        .datum(data)
-        .attr("fill", "steelblue")
-        .attr("d", area)
-        .on("mouseover", function (event, d) {
-            const bisectDate = d3.bisector(d => new Date(d.Year, d.Month - 1)).left;
-            const x0 = xScale.invert(event.offsetX - margin.left);
-            const i = bisectDate(d, x0, 1);
-
-            if (i > 0 && i < d.length) {
-                const d0 = d[i - 1];
-                const d1 = d[i];
-                const selectedData = x0 - new Date(d0.Year, d0.Month - 1) > new Date(d1.Year, d1.Month - 1) - x0 ? d1 : d0;
-
-                tooltip.transition()
-                    .duration(200)
-                    .style("opacity", .9);
-                tooltip.html(`
-                        <strong>Year:</strong> ${selectedData.Year}<br>
-                        <strong>Month:</strong> ${getMonthName(selectedData.Month)}<br> 
-                        <strong>Deaths:</strong> ${selectedData.Deaths}<br>
-                        <strong>Expenditure:</strong> ${selectedData.Expenditure}
-                    `)
-                    .style("left", (event.pageX + 2) + "px") // Changed from +5 to +2
-                    .style("top", (event.pageY - 10) + "px");
-            }
-        })
-        .on("mouseout", function (d) {
-            tooltip.transition()
-                .duration(500)
-                .style("opacity", 0);
-        });
-
-    g.append("g")
-        .attr("transform", `translate(0,${height})`)
-        .call(d3.axisBottom(xScale)
-            .ticks(d3.timeYear.every(1)) // Show ticks for every year
-            .tickFormat(d3.timeFormat("%Y")) // Format tick labels as year only
-        );
-
-    g.append("g")
-        .call(d3.axisLeft(yScale));
-
-    // Add axis labels
-    g.append("text")
-        .attr("class", "axis-label")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left + 15)
-        .attr("x", 0 - (height / 2))
-        .attr("dy", "1em")
-        .style("text-anchor", "middle")
-        .text("Deaths");
-
-    g.append("text")
-        .attr("class", "axis-label")
-        .attr("transform",
-            "translate(" + (width / 2) + " ," +
-            (height + margin.top - 5) + ")")
-        .style("text-anchor", "middle")
-        .text("Year");
-}
-
-function getMonthName(monthNumber) {
-    const monthNames = ["January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"];
-    return monthNames[monthNumber - 1];
-}
-
-// Initialize on window load
-window.addEventListener('load', init);
+  // Append axes for each key
+  svg.append("g")
+    .selectAll("g")
+    .data(keys)
+    .join("g")
+    .attr("transform", d => `translate(0,${y(d)})`)
+    .each(function(d) { d3.select(this).call(d3.axisBottom(x.get(d))); })
+    .call(g => g.append("text")
+      .attr("x", marginLeft)
+      .attr("y", -6)
+      .attr("text-anchor", "start")
+      .attr("fill", "currentColor")
+      .text(d => d))
+    .call(g => g.selectAll("text")
+      .clone(true).lower()
+      .attr("fill", "none")
+      .attr("stroke-width", 5)
+      .attr("stroke-linejoin", "round")
+      .attr("stroke", "white"));
+});

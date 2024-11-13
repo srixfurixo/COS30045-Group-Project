@@ -208,17 +208,7 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
         .text(d => d);
 
     // Enhanced tooltip
-    const tooltip = d3.select("body") // Changed from "#chart" to "body"
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0)
-        .style("background-color", "white")
-        .style("border", "1px solid black")
-        .style("border-radius", "5px")
-        .style("padding", "10px")
-        .style("position", "absolute")
-        .style("pointer-events", "none")
-        .style("z-index", "10"); // Ensure tooltip is above other elements
+    const tooltip = d3.select(".tooltip");
 
     // Create legend
     const legend = svg.append("g")
@@ -337,22 +327,19 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
             .attr("cx", d => x(d[vaccinationField]))
             .attr("cy", d => y(d[deathsField]))
             .on("mouseover", function(event, d) {
-                tooltip.transition()
-                    .duration(200)
-                    .style("opacity", .9);
-                tooltip.html(`
-                    <strong>${d.Country}</strong><br/>
-                    Date: ${d.Date.toLocaleDateString()}<br/>
-                    Doses: ${d[vaccinationField].toFixed(2)}<br/>
-                    Deaths: ${d[deathsField].toFixed(2)}
-                `)
+                tooltip
+                    .html(`
+                        <strong>${d.Country}</strong><br/>
+                        Date: ${d.Date.toLocaleDateString()}<br/>
+                        Doses: ${d[vaccinationField].toFixed(2)}<br/>
+                        Deaths: ${d[deathsField].toFixed(2)}
+                    `)
                     .style("left", (event.pageX + 10) + "px")
-                    .style("top", (event.pageY - 28) + "px");
+                    .style("top", (event.pageY - 28) + "px")
+                    .classed("visible", true);
             })
             .on("mouseout", function() {
-                tooltip.transition()
-                    .duration(500)
-                    .style("opacity", 0);
+                tooltip.classed("visible", false);
             });
 
         // Remove or comment out metric-specific color assignments for the main graph
@@ -390,6 +377,7 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
             .style("stroke-dasharray", "4 4")
             .style("display", "none");
 
+        /*
         scatter.on("mousemove", function(event) {
             const [mouseX] = d3.pointer(event);
             const x0 = x.invert(mouseX);
@@ -432,6 +420,7 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
                 .duration(500)
                 .style("opacity", 0);
         });
+        */
     }
 
     // Set the zoom and Pan features: how much you can zoom, on which part, and what to do when there is a zoom
