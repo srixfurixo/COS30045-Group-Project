@@ -31,21 +31,35 @@
     }
     /* Add tooltip styles to ensure it appears correctly */
     .tooltip {
-        position: absolute;
+        position: fixed; /* Change to fixed positioning */
         text-align: left;
         width: auto;
         height: auto;
         padding: 8px;
         font: 12px sans-serif;
-        background: lightsteelblue;
-        border: 0px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid #ddd;
         border-radius: 8px;
         pointer-events: none;
-        z-index: 10; /* Ensure tooltip is above other elements */
+        z-index: 1000; /* Ensure tooltip is above other elements */
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     /* Ensure lines have no fill */
     .line {
         fill: none;
+    }
+    .line {
+        fill: none;
+        stroke-width: 1.5px;
+    }
+    .metric-deaths {
+        stroke: red;
+    }
+    .metric-cases {
+        stroke: steelblue;
+    }
+    .metric-doses {
+        stroke: green;
     }
   </style>
 </head>
@@ -81,11 +95,10 @@
   <div id="controls" class="p-4">
     <div class="slider-container">
       <button id="play-button">Play</button>
-      <span id="year-display">2021</span>
-      <input type="range" min="2020" max="2023" value="2021" class="timeline-slider" id="year-slider">
+      <span id="date-display"></span>
+      <input type="range" class="timeline-slider" id="date-slider">
     </div>
     <div id="country-menu">
-      <!-- Checkboxes populated by the script -->
     </div>
     
     <!-- Ensure this toggle is present and correctly labeled -->
@@ -98,7 +111,52 @@
   <div id="content">
     <h1 class="title">Population vs. Cumulative Vaccinations</h1>
     <div id="chart"></div>
+    <hr class="my-4"> <!-- Add divider between visualizations -->
+    <h2 class="text-center mb-4">Vaccination Impact on Cases and Deaths</h2>
+    <!-- Add year selection -->
+    <div class="text-center mb-3">
+        <label for="year-select">Select Year: </label>
+        <select id="year-select" class="form-select d-inline-block w-auto">
+            <option value="all">All Years</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+        </select>
+    </div>
+    <div id="my_dataviz" class="d-flex flex-wrap justify-content-center"></div>
+    
+    <!-- Move the criteria selection dropdown below the small multiples -->
+    <div class="text-center mt-3 mb-4">
+        <label for="criteria-select">Select Metric: </label>
+        <select id="criteria-select" class="form-select d-inline-block w-auto">
+            <option value="deaths">New Deaths</option>
+            <option value="cases">New Cases</option>
+        </select>
+    </div>
+
+    <!-- Add legend with metric-specific classes -->
+    <div id="legend" class="text-center mb-4">
+      <svg width="200" height="80">
+          <!-- Deaths -->
+          <rect x="10" y="10" width="15" height="15" class="metric-deaths"></rect>
+          <text x="30" y="22" font-size="12px" fill="#000">Deaths</text>
+          
+          <!-- Cases -->
+          <rect x="10" y="35" width="15" height="15" class="metric-cases"></rect>
+          <text x="30" y="47" font-size="12px" fill="#000">Cases</text>
+          
+          <!-- Doses -->
+          <rect x="10" y="60" width="15" height="15" class="metric-doses"></rect>
+          <text x="30" y="72" font-size="12px" fill="#000">Doses</text>
+      </svg>
+    </div>
   </div>
+
+  <!-- Tooltip for main chart -->
+  <div class="tooltip"></div>
+
+  <!-- Tooltip for small multiples -->
+  <div class="small-multiple-tooltip"></div>
 
   <section class="p-4"> 
     <article class="bg-light rounded shadow-sm p-3 mb-4">
