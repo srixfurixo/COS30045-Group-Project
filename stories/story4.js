@@ -1,4 +1,4 @@
-const dataFile = "../AdnanDataProcessing/weekly_combined_admissions_mortality.csv";
+const dataFile = "../Datasets/weekly_combined_admissions_mortality.csv";
 
 function init() {
     const loadingOverlay = document.createElement('div');
