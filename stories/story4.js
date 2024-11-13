@@ -10,7 +10,7 @@ function init() {
     chartContainer.classList.add('fade-in');
 
     const w = 1000;  // Increased Chart width
-    const h = 850;  // Increased Chart height
+    const h = 450;  // Increased Chart height
     const margin = { top: 20, right: 100, bottom: 100, left: 100 };  // Increased margins
 
     const svg = d3.select("#chartContainer").append("svg")
