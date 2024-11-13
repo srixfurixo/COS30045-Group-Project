@@ -23,7 +23,7 @@ function init() {
     }
 
     // Load and process the CSV data directly
-    d3.csv("monthly_deaths.csv")
+    d3.csv("../Datasets/monthly_deaths.csv")
         .then(function (data) {
             if (!data) {
                 throw new Error("No CSV data received");

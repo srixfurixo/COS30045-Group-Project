@@ -223,7 +223,7 @@ function updateVisualization(json, w, h) {
     const year = +d3.select("#year-slider").property("value");
     const month = +d3.select("#month-slider").property("value");
 
-    d3.csv("WHO-COVID-19-global-data.csv")
+    d3.csv("../Datasets/WHO-COVID-19-global-data.csv")
         .then(function(data) {
             if (!data) {
                 throw new Error("No CSV data received");
