@@ -435,3 +435,21 @@ article p {
     font-size: 12px;
     fill: #000;
 }
+
+.small-multiple-tooltip {
+  position: absolute;
+  text-align: left;
+  padding: 8px;
+  font: 12px sans-serif;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  pointer-events: none;
+  z-index: 1000;
+  visibility: hidden;
+}
+
+.small-multiple-tooltip.visible {
+  visibility: visible;
+}

@@ -403,20 +403,28 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
             const i = bisect(filteredData, x0, 1);
             const d0 = filteredData[i - 1];
             const d1 = filteredData[i];
-            const dClosest = x0 - d0.Date > d1.Date - x0 ? d1 : d0;
+            let dClosest;
+
+            if (d1) {
+                dClosest = x0 - d0.Date > d1.Date - x0 ? d1 : d0;
+            } else {
+                dClosest = d0;
+            }
 
             // Update tooltip position and content
-            tooltip.transition()
-                .duration(200)
-                .style("opacity", .9);
-            tooltip.html(`
-                <strong>${dClosest.Country}</strong><br/>
-                Date: ${dClosest.Date.toLocaleDateString()}<br/>
-                Doses: ${dClosest[vaccinationField].toFixed(2)}<br/>
-                Deaths: ${dClosest[deathsField].toFixed(2)}
-            `)
-                .style("left", (event.pageX + 10) + "px")
-                .style("top", (event.pageY - 28) + "px");
+            if (dClosest) {
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltip.html(`
+                    <strong>${dClosest.Country}</strong><br/>
+                    Date: ${dClosest.Date.toLocaleDateString()}<br/>
+                    Doses: ${dClosest[vaccinationField].toFixed(2)}<br/>
+                    Deaths: ${dClosest[deathsField].toFixed(2)}
+                `)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            }
         })
         .on("mouseout", function() {
             hoverLine.style("display", "none");
@@ -608,9 +616,7 @@ function createSmallMultiples(selectedYear = 'all', criterion = 'deaths') {
                 .text(country);
 
             // Add tooltip
-            const tooltip = d3.select("body").append("div")
-                .attr("class", "tooltip")
-                .style("opacity", 0);
+            const tooltip = d3.select(".small-multiple-tooltip");
 
             // Add invisible overlay for tooltip
             svg.append("rect")
@@ -626,16 +632,17 @@ function createSmallMultiples(selectedYear = 'all', criterion = 'deaths') {
                     const d = processedData[i];
 
                     if (d) {
-                        tooltip.transition()
-                            .duration(200)
-                            .style("opacity", .9);
-                        tooltip.html(`
-                            Date: ${d.date.toLocaleDateString()}<br/>
-                            Doses: ${d.doses.toFixed(1)}<br/>
-                            ${criterion === 'deaths' ? 'Deaths' : 'Cases'}: ${d.metric.toFixed(2)}
-                        `)
+                        tooltip
+                            .style("opacity", 1)
                             .style("left", (event.pageX + 10) + "px")
-                            .style("top", (event.pageY - 28) + "px");
+                            .style("top", (event.pageY - 28) + "px")
+                            .html(`
+                                <strong>${country}</strong><br/>
+                                Date: ${d.date.toLocaleDateString()}<br/>
+                                Doses: ${d.doses.toFixed(1)}<br/>
+                                ${criterion === 'deaths' ? 'Deaths' : 'Cases'}: ${d.metric.toFixed(2)}
+                            `)
+                            .classed("visible", true);
 
                         // Add vertical line
                         svg.selectAll(".hover-line").remove();
@@ -651,9 +658,9 @@ function createSmallMultiples(selectedYear = 'all', criterion = 'deaths') {
                     }
                 })
                 .on("mouseout", function() {
-                    tooltip.transition()
-                        .duration(500)
-                        .style("opacity", 0);
+                    tooltip
+                        .style("opacity", 0)
+                        .classed("visible", false);
                     svg.selectAll(".hover-line").remove();
                 });
         });
