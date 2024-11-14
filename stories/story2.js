@@ -65,8 +65,8 @@ Promise.all([
   // Append SVG to the tooltip div for line chart
   const tooltipSvg = tooltip.append("svg")
       .attr("id", "tooltip-line-chart")
-      .attr("width", 200)   // Adjusted width
-      .attr("height", 100); // Adjusted height
+      .attr("width", 200)
+      .attr("height", 100);
 
   // Function to update the chart based on selections
   function updateChart() {
@@ -151,17 +151,6 @@ Promise.all([
         .attr("stroke-width", 0.5)
         .attr("fill", d => color(d.key)) 
         .on("mouseover", function(event, d) {
-          // Bar hover effect
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .attr("transform", function(d) {
-              const angle = (x(d.data.REF_AREA) + x.bandwidth() / 2);
-              const xOffset = Math.sin(angle) * 10;
-              const yOffset = -Math.cos(angle) * 10;
-              return `translate(${xOffset}, ${yOffset}) scale(1.05)`;
-            });
-
           const refArea = d.data.REF_AREA;
           const healthFunc = d.key;
 
@@ -171,32 +160,9 @@ Promise.all([
           showLineTooltip(event, filteredTooltipData); // Call the line chart tooltip function
         })
         .on("mousemove", function(event) {
-          // Tooltip positioning
-          const tooltipWidth = parseInt(tooltip.style("width"));
-          const tooltipHeight = parseInt(tooltip.style("height"));
-          let tooltipX = event.pageX + 20;
-          let tooltipY = event.pageY - tooltipHeight / 2;
-
-          // Adjust if tooltip goes beyond window bounds
-          if (tooltipX + tooltipWidth > window.innerWidth) {
-            tooltipX = event.pageX - tooltipWidth - 20;
-          }
-          if (tooltipY < 0) {
-            tooltipY = 0;
-          }
-          if (tooltipY + tooltipHeight > window.innerHeight) {
-            tooltipY = window.innerHeight - tooltipHeight;
-          }
-
-          tooltip.style("top", `${tooltipY}px`).style("left", `${tooltipX}px`);
+          tooltip.style("top", (event.pageY - 70) + "px").style("left", (event.pageX + 20) + "px");
         })
         .on("mouseout", function() {
-          // Reset bar on mouse out
-          d3.select(this)
-            .transition()
-            .duration(200)
-            .attr("transform", "translate(0,0) scale(1)");
-
           tooltip.style("visibility", "hidden");
         });
 
@@ -208,56 +174,38 @@ Promise.all([
       tooltipSvg.selectAll("*").remove();
 
       // Set up dimensions and margins for the line chart
-      const margin = { top: 10, right: 10, bottom: 30, left: 40 };
-      const tooltipWidth = parseInt(tooltip.style("width")) - margin.left - margin.right;
-      const tooltipHeight = parseInt(tooltip.style("height")) - margin.top - margin.bottom;
+      const margin = { top: 10, right: 10, bottom: 20, left: 30 };
+      const tooltipWidth = +tooltipSvg.attr("width") - margin.left - margin.right;
+      const tooltipHeight = +tooltipSvg.attr("height") - margin.top - margin.bottom;
 
-      // Append a group for the line chart
-      const g = tooltipSvg.append("g")
-        .attr("transform", `translate(${margin.left},${margin.top})`);
-
-      // Define scales
       const x = d3.scaleLinear()
         .domain(d3.extent(data, d => +d.TIME_PERIOD))
         .range([0, tooltipWidth]);
 
       const y = d3.scaleLinear()
         .domain([0, d3.max(data, d => +d.OBS_VALUE)])
-        .nice()
         .range([tooltipHeight, 0]);
 
-      // Define the line generator
       const line = d3.line()
         .x(d => x(+d.TIME_PERIOD))
         .y(d => y(+d.OBS_VALUE));
 
-      // Append x-axis
-      g.append("g")
-        .attr("transform", `translate(0,${tooltipHeight})`)
-        .call(d3.axisBottom(x).ticks(4).tickFormat(d3.format("d")))
-        .attr("font-size", "8px");
+      const g = tooltipSvg.append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
 
-      // Append y-axis
-      g.append("g")
-        .call(d3.axisLeft(y).ticks(4))
-        .attr("font-size", "8px");
-
-      // Append the line path
       g.append("path")
         .datum(data)
         .attr("fill", "none")
         .attr("stroke", "steelblue")
-        .attr("stroke-width", 1)
+        .attr("stroke-width", 1.5)
         .attr("d", line);
 
-      // Optionally, add circles at data points
-      g.selectAll("circle")
-        .data(data)
-        .enter().append("circle")
-          .attr("cx", d => x(+d.TIME_PERIOD))
-          .attr("cy", d => y(+d.OBS_VALUE))
-          .attr("r", 2)
-          .attr("fill", "steelblue");
+      g.append("g")
+        .attr("transform", `translate(0,${tooltipHeight})`)
+        .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format("d")));
+
+      g.append("g")
+        .call(d3.axisLeft(y).ticks(5));
     }
 
     // X-axis (country labels)
@@ -340,4 +288,4 @@ Promise.all([
           updateChart();
         });
       });
-
+      

@@ -7,61 +7,8 @@
   <link rel="stylesheet" href="../css/styles.css"> 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Load D3.js first -->
   <script src="https://d3js.org/d3.v7.min.js"></script>
-  <!-- Then load your custom script -->
   <script src="story5.js" defer></script>
-  <style>
-    .timeline-slider {
-        width: 80%;
-        margin: 20px auto;
-    }
-    .slider-container {
-        text-align: center;
-        padding: 20px;
-    }
-    #play-button {
-        padding: 5px 10px;
-        margin: 10px;
-        cursor: pointer;
-    }
-    #year-display {
-        font-size: 1.2em;
-        margin: 10px;
-    }
-    /* Add tooltip styles to ensure it appears correctly */
-    .tooltip {
-        position: fixed; /* Change to fixed positioning */
-        text-align: left;
-        width: auto;
-        height: auto;
-        padding: 8px;
-        font: 12px sans-serif;
-        background: rgba(255, 255, 255, 0.9);
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        pointer-events: none;
-        z-index: 1000; /* Ensure tooltip is above other elements */
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    /* Ensure lines have no fill */
-    .line {
-        fill: none;
-    }
-    .line {
-        fill: none;
-        stroke-width: 1.5px;
-    }
-    .metric-deaths {
-        stroke: red;
-    }
-    .metric-cases {
-        stroke: steelblue;
-    }
-    .metric-doses {
-        stroke: green;
-    }
-  </style>
 </head>
 <body>
   <header class="logo-header bg-primary">
@@ -92,28 +39,29 @@
     </div>
   </nav>
 
-  <div id="controls" class="p-4">
-    <div class="slider-container">
-      <button id="play-button">Play</button>
-      <span id="date-display"></span>
-      <input type="range" class="timeline-slider" id="date-slider">
-    </div>
-    <div id="country-menu">
-    </div>
-    
-    <!-- Ensure this toggle is present and correctly labeled -->
-    <div class="toggle-lines mt-3">
-      <input type="checkbox" id="toggle-lines" checked>
-      <label for="toggle-lines"> Show Lines</label>
+  <!-- Floating Controls Container -->
+  <div class="floating-controls">
+    <div id="controls" class="p-3">
+      <div class="slider-container">
+        <button id="play-button" class="btn btn-primary">Play</button>
+        <span id="date-display"></span>
+        <input type="range" class="timeline-slider" id="date-slider">
+      </div>
+      <div id="country-menu">
+        <!-- Checkboxes for countries will be dynamically generated here -->
+      </div>
+      <div class="toggle-lines mt-3">
+        <input type="checkbox" id="toggle-lines" checked>
+        <label for="toggle-lines"> Show Lines</label>
+      </div>
     </div>
   </div>
 
   <div id="content">
     <h1 class="title">Population vs. Cumulative Vaccinations</h1>
-    <div id="chart"></div>
-    <hr class="my-4"> <!-- Add divider between visualizations -->
+    <div id="chart" class="chart-container"></div>
+    <hr class="my-4">
     <h2 class="text-center mb-4">Vaccination Impact on Cases and Deaths</h2>
-    <!-- Add year selection -->
     <div class="text-center mb-3">
         <label for="year-select">Select Year: </label>
         <select id="year-select" class="form-select d-inline-block w-auto">
@@ -124,8 +72,7 @@
         </select>
     </div>
     <div id="my_dataviz" class="d-flex flex-wrap justify-content-center"></div>
-    
-    <!-- Move the criteria selection dropdown below the small multiples -->
+
     <div class="text-center mt-3 mb-4">
         <label for="criteria-select">Select Metric: </label>
         <select id="criteria-select" class="form-select d-inline-block w-auto">
@@ -134,54 +81,42 @@
         </select>
     </div>
 
-    <!-- Add legend with metric-specific classes -->
     <div id="legend" class="text-center mb-4">
       <svg width="200" height="80">
-          <!-- Deaths -->
           <rect x="10" y="10" width="15" height="15" class="metric-deaths"></rect>
           <text x="30" y="22" font-size="12px" fill="#000">Deaths</text>
-          
-          <!-- Cases -->
           <rect x="10" y="35" width="15" height="15" class="metric-cases"></rect>
           <text x="30" y="47" font-size="12px" fill="#000">Cases</text>
-          
-          <!-- Doses -->
           <rect x="10" y="60" width="15" height="15" class="metric-doses"></rect>
           <text x="30" y="72" font-size="12px" fill="#000">Doses</text>
       </svg>
     </div>
   </div>
 
-  <!-- Tooltip for main chart -->
   <div class="tooltip"></div>
-
-  <!-- Tooltip for small multiples -->
   <div class="small-multiple-tooltip"></div>
 
   <section class="p-4"> 
     <article class="bg-light rounded shadow-sm p-3 mb-4">
       <h2>Introduction</h2>
-      <p>Analyzing population size alongside the cumulative number of COVID-19 vaccinations provides insights into global vaccination coverage and highlights disparities in vaccine distribution. By examining countries with varied population sizes, we can observe how effectively different regions met vaccination needs relative to their populations. This analysis aims to assess whether larger populations received an adequate number of doses to control the spread of COVID-19 and protect public health.</p>
+      <p>Analyzing population size alongside the cumulative number of COVID-19 vaccinations provides insights into global vaccination coverage and highlights disparities in vaccine distribution...</p>
     </article>
   </section>
 
   <section class="p-4"> 
     <article class="bg-light rounded shadow-sm p-3 mb-4">
       <h2>Analysis</h2>
-      <p>A comparison of cumulative vaccinations against population size reveal that during the early stages of the pandemic, many countries had received very little vaccination doses that does not reflect their total population. as the pandemic carried on, many countries started to receive more vaccination doses. The number of vaccine doses gradually starts to out number the population size highlighting the positive trend in vaccination availability.</p>
+      <p>A comparison of cumulative vaccinations against population size reveals that during the early stages of the pandemic...</p>
     </article>
   </section>
 
   <section class="p-4"> 
     <article class="bg-light rounded shadow-sm p-3 mb-4">
       <h2>Conclusion</h2>
-      <p>The comparison underscores the critical role of equitable vaccine distribution to meet the needs of populations worldwide, regardless of size. Some countries received more vaccines than the general population while other received less vaccines to cater to their population. Addressing these disparities is essential for global health resilience, particularly in preparing for and responding to future pandemics.</p>
+      <p>The comparison underscores the critical role of equitable vaccine distribution to meet the needs of populations worldwide...</p>
     </article>
   </section>
 
-  <!-- Include any additional content or sections as needed -->
-
-  <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

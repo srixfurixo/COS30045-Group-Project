@@ -46,6 +46,15 @@ function init() {
     // Create the Simulate Button
     createSimulateButton();
 
+    // Create new tooltip once during initialization
+    const tooltip = d3.select("body")
+        .append("div")
+        .attr("class", "map-tooltip")
+        .style("visibility", "hidden");
+
+    // Store the tooltip in a global variable for access in other functions
+    window.mapTooltip = tooltip;
+
     // After data is loaded and visualization is ready
     function finishLoading() {
         // Hide loading overlay
@@ -269,17 +278,8 @@ function updateVisualization(json, w, h) {
             // Remove any existing tooltips
             d3.selectAll(".tooltip").remove();
 
-            // Create new tooltip
-            const tooltip = d3.select("body")
-                .append("div")
-                .attr("class", "tooltip")
-                .style("opacity", 0)
-                .style("position", "absolute")
-                .style("pointer-events", "none")
-                .style("background", "white")
-                .style("padding", "10px")
-                .style("border", "1px solid #ccc")
-                .style("border-radius", "5px");
+            // Use the tooltip from global scope
+            const tooltip = window.mapTooltip;
 
             // Draw the map inside the group
             g.selectAll("path")
@@ -318,30 +318,14 @@ function updateVisualization(json, w, h) {
                     const country = d.properties.name;
                     const deaths = accumulatedDeaths[country] || 0;
 
-                    tooltip.transition()
-                        .duration(200)
-                        .style("opacity", .9);
-                    tooltip.html(
-                        `<strong>${country}</strong><br/>` +
-                        `Accumulated Deaths: ${deaths.toLocaleString()}`
-                    );
-
-                    // Adjust tooltip position dynamically to avoid overlap
-                    let tooltipX = event.pageX + 20; // Move tooltip further from pointer
-                    let tooltipY = event.pageY - 50; // Adjust vertical position
-
-                    // Check if tooltip is too close to the right edge
-                    if (tooltipX + tooltip.node().getBoundingClientRect().width > window.innerWidth) {
-                        tooltipX = window.innerWidth - tooltip.node().getBoundingClientRect().width - 20;
-                    }
-
-                    // Check if tooltip is too close to the bottom edge
-                    if (tooltipY + tooltip.node().getBoundingClientRect().height > window.innerHeight) {
-                        tooltipY = window.innerHeight - tooltip.node().getBoundingClientRect().height - 20;
-                    }
-
-                    tooltip.style("left", tooltipX + "px")
-                        .style("top", tooltipY + "px"); // Adjust position dynamically
+                    tooltip
+                        .style("visibility", "visible")
+                        .html(
+                            `<strong>${country}</strong><br/>` +
+                            `Accumulated Deaths: ${deaths.toLocaleString()}`
+                        )
+                        .style("left", `${event.pageX + 20}px`)
+                        .style("top", `${event.pageY - 50}px`);
                 })
                 .on("mouseout", function() {
                     // Remove blur and opacity changes from all paths
@@ -357,9 +341,7 @@ function updateVisualization(json, w, h) {
                         .style("transform-origin", "center");
 
                     // Hide tooltip
-                    tooltip.transition()
-                        .duration(500)
-                        .style("opacity", 0);
+                    tooltip.style("visibility", "hidden");
                 });
 
             // Add legend with adjusted thresholds

@@ -123,7 +123,7 @@ var RadarChart = {
 
         // Initialize the tooltip once
         var tooltip = container.append('g')
-          .attr('class', 'tooltip')
+          .attr('class', 'radar-tooltip')
           .style('opacity', 0)
           .style('pointer-events', 'none');
 
@@ -497,6 +497,25 @@ function init() {
       });
     });
   });
+
+  // Initialize tooltip
+  const tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("visibility", "hidden");
+
+  // Example event handlers to show and hide tooltip
+  d3.select("#some-element")
+    .on("mouseover", function(event, d) {
+        tooltip.style("visibility", "visible")
+               .text("Tooltip content");
+    })
+    .on("mousemove", function(event) {
+        tooltip.style("top", (event.pageY - 10) + "px")
+               .style("left", (event.pageX + 10) + "px");
+    })
+    .on("mouseout", function() {
+        tooltip.style("visibility", "hidden");
+    });
 }
 
 // New function to process datasets

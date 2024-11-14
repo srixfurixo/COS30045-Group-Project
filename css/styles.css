@@ -506,3 +506,120 @@ article p {
     max-width: 100%;
   }
 }
+
+/* Floating Controls Container */
+.floating-controls {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  width: 250px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow-y: auto;
+  max-height: 70vh;
+}
+
+#country-menu {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.chart-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  max-width: 90%;
+  position: relative;
+}
+
+/* Checkbox styles within floating controls */
+#country-menu div {
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+}
+
+#country-menu label {
+  margin-left: 8px;
+  font-size: 0.9em;
+}
+
+/* Ensure scatterplot SVG is responsive */
+#chart svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Tooltip styles */
+.tooltip {
+    position: absolute;
+    text-align: left;
+    padding: 8px;
+    font: 12px sans-serif;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    pointer-events: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    visibility: hidden;
+    z-index: 1000;
+}
+
+.tooltip.visible {
+    visibility: visible;
+}
+
+/* New Tooltip Styles for Map */
+.map-tooltip {
+    position: absolute;
+    text-align: left;
+    padding: 10px;
+    font: 12px sans-serif;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    pointer-events: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    visibility: hidden;
+    z-index: 1000;
+}
+
+.map-tooltip.visible {
+    visibility: visible;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .floating-controls {
+    width: 90%;
+    top: auto;
+    bottom: 20px;
+    left: 5
+  }
+}
+
+/* Adjust tooltip styles for radar chart */
+.radar-tooltip {
+  pointer-events: none;
+}
+
+.radar-tooltip .tooltip-bg {
+  fill: #333;
+  opacity: 0.9;
+}
+
+.radar-tooltip .tooltip-text {
+  font-size: 12px;
+  fill: white;
+}
+
+/* Ensure the radar tooltip is above other elements */
+.radar-chart .radar-tooltip {
+  z-index: 10;
+}
