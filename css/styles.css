@@ -879,3 +879,31 @@ hr.my-4 {
 }
 
 /* ...existing code... */
+
+/* ...existing code... */
+
+.metric-selection {
+  margin: 5px 10px;
+}
+
+.metric-selection label {
+  margin-right: 5px;
+}
+
+.metric-selection select {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* ...existing code... */
+
+/* ...existing code... */
+
+.x-label, .y-label {
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px;
+    fill: #000;
+}
+
+/* ...existing code... */

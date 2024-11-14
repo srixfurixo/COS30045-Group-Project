@@ -45,7 +45,27 @@
     <h1 class="title">Deaths vs. Cumulative Vaccinations</h1>
     <div id="chart" class="chart-container"></div>
 
-   
+    <!-- Removed x-label and y-label text elements -->
+    <!--
+    <text
+        class="x-label"
+        text-anchor="middle"
+        x="<...>"
+        y="<...>"
+    >
+        COVID-19 Vaccination Doses per Hundred
+    </text>
+
+    <text
+        class="y-label"
+        text-anchor="middle"
+        transform="rotate(-90)"
+        x="<...>"
+        y="<...>"
+    >
+        Daily New Deaths per Million
+    </text>
+    -->
 
     <!-- Fixed Controls Container at the bottom of the graph -->
     <div class="fixed-controls">
@@ -61,6 +81,13 @@
         <div class="toggle-lines">
           <input type="checkbox" id="toggle-lines" class="form-check-input">
           <label for="toggle-lines" class="form-check-label">Show Lines</label>
+        </div>
+        <div class="metric-selection">
+          <label for="metric-select">Select Metric:</label>
+          <select id="metric-select">
+            <option value="cases">Daily New Confirmed Cases</option>
+            <option value="deaths">Daily New Confirmed Deaths</option>
+          </select>
         </div>
       </div>
     </div>

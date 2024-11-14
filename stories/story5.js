@@ -31,6 +31,17 @@ function calculateRollingAverage(data, field, windowSize) {
     });
 }
 
+// Define the available metrics
+const metrics = {
+  deaths: "Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)",
+  cases: "Daily new confirmed cases of COVID-19 per million people (rolling 7-day average, right-aligned)",
+  doses: "COVID-19 doses (cumulative, per hundred)"
+};
+
+// Set initial metric
+let selectedMetricKey = 'deaths';
+let selectedMetricField = metrics[selectedMetricKey];
+
 d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
     const parseDate = d3.timeParse("%d/%m/%Y");
 
@@ -39,7 +50,8 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
 
     data.forEach(d => {
         d[vaccinationField] = +d[vaccinationField] || 0;
-        d[deathsField] = +d[deathsField] || 0;
+        d[metrics.deaths] = +d[metrics.deaths] || 0;
+        d[metrics.cases] = +d[metrics.cases] || 0;
         d.Year = +d.Year;
 
         d.Date = parseDate(d.Day);
@@ -150,7 +162,7 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
         selectedDate = new Date(selectedDate.getTime() + 7 * 24 * 60 * 60 * 1000);
         slider.property("value", selectedDate.getTime());
         dateDisplay.text(selectedDate.toLocaleDateString());
-        updateChart();
+        updatePlot(selectedMetricField, selectedMetricKey);
     }
 
     function startTimeline() {
@@ -177,7 +189,7 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
         stopTimeline();
         selectedDate = new Date(+this.value);
         dateDisplay.text(selectedDate.toLocaleDateString());
-        updateChart();
+        updatePlot(selectedMetricField, selectedMetricKey);
     });
 
     const countryMenu = d3.select("#country-menu")
@@ -197,7 +209,7 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
             } else {
                 selectedCountries = selectedCountries.filter(c => c !== d);
             }
-            updateChart();
+            updatePlot(selectedMetricField, selectedMetricKey);
         });
 
     countryMenu.append("label")
@@ -244,7 +256,15 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
 
     d3.select("#toggle-lines").property("checked", false);
 
-    function updateChart() {
+    function updateAxisLabels(metricKey) {
+        svg.select(".x-label")
+            .text(metricKey === 'cases' ? "COVID-19 Cases per Million" : "Daily New Deaths per Million");
+        
+        svg.select(".y-label")
+            .text(metricKey === 'cases' ? "Daily New Cases per Million" : "Daily New Deaths per Million");
+    }
+
+    function updatePlot(metricName, metricKey) {
         scatter.selectAll(".line").remove();
         scatter.selectAll("circle").remove();
 
@@ -252,14 +272,16 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
             selectedCountries.includes(d.Country) && 
             d.Date <= selectedDate &&
             d[vaccinationField] > 0 &&
-            d[deathsField] > 0
+            d[metricName] > 0
         );
 
         x.domain([0, d3.max(filteredData, d => d[vaccinationField]) * 1.1]);
-        y.domain([0, d3.max(filteredData, d => d[deathsField]) * 1.1]);
+        y.domain([0, d3.max(filteredData, d => d[metricName]) * 1.1]);
 
         xAxis.transition().duration(500).call(d3.axisBottom(x));
         yAxis.transition().duration(500).call(d3.axisLeft(y));
+
+        updateAxisLabels(metricKey);
 
         const nestedData = d3.groups(filteredData, d => d.Country);
 
@@ -275,7 +297,7 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
             .style("display", showLines ? null : "none")
             .attr("d", d => d3.line()
                 .x(d => x(d[vaccinationField]))
-                .y(d => y(d[deathsField]))
+                .y(d => y(d[metricName]))
                 .curve(d3.curveMonotoneX)
                 (d[1].sort((a, b) => d3.ascending(a.Date, b.Date)))
             );
@@ -292,7 +314,7 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
             .style("opacity", 0.7)
             .merge(dots)
             .attr("cx", d => x(d[vaccinationField]))
-            .attr("cy", d => y(d[deathsField]))
+            .attr("cy", d => y(d[metricName]))
             .on("mouseover", function(event, d) {
                 mainChartTooltip
                     .style("opacity", 1)
@@ -301,7 +323,7 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
                         <strong>${d.Country}</strong><br/>
                         Date: ${d.Date.toLocaleDateString()}<br/>
                         Doses: ${d[vaccinationField].toFixed(2)}<br/>
-                        Deaths: ${d[deathsField].toFixed(2)}
+                        ${selectedMetricKey === 'deaths' ? 'Deaths per Million' : 'Cases per Million'}: ${d[metricName].toFixed(2)}
                     `)
                     .style("left", (event.pageX + 10) + "px")
                     .style("top", (event.pageY - 28) + "px");
@@ -318,6 +340,13 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
             });
     }
 
+    // Move the event listener inside the CSV callback
+    document.getElementById('metric-select').addEventListener('change', function(event) {
+        selectedMetricKey = event.target.value;
+        selectedMetricField = metrics[selectedMetricKey];
+        updatePlot(selectedMetricField, selectedMetricKey);
+    });
+
     function updateZoom(event) {
         const newX = event.transform.rescaleX(x);
         const newY = event.transform.rescaleY(y);
@@ -328,18 +357,18 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
         scatter.selectAll(".line")
             .attr("d", d => d3.line()
                 .x(d => newX(d[vaccinationField]))
-                .y(d => newY(d[deathsField]))
+                .y(d => newY(d[selectedMetricField]))
                 .curve(d3.curveMonotoneX)
                 (d[1].sort((a, b) => d3.ascending(a.Date, b.Date)))
             );
 
         scatter.selectAll("circle")
             .attr('cx', d => newX(d[vaccinationField]))
-            .attr('cy', d => newY(d[deathsField]));
+            .attr('cy', d => newY(d[selectedMetricField]));
     }
 
     dateDisplay.text(selectedDate.toLocaleDateString());
-    updateChart();
+    updatePlot(selectedMetricField, selectedMetricKey);
 });
 
 // **Small Multiples with Single Legend**
