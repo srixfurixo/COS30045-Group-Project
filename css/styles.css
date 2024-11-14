@@ -754,4 +754,20 @@ article p {
   opacity: 1;
 }
 
+/* Unique tooltip styles for the main visualization */
+.unique-tooltip {
+  position: absolute;
+  text-align: left;
+  padding: 10px;
+  font: 12px sans-serif;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  z-index: 1500;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
 /* Other CSS styles as per your original code */

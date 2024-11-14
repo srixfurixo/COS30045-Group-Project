@@ -126,6 +126,13 @@ function init() {
             .style("pointer-events", "none")
             .style("opacity", 0);
 
+        // Create a unique tooltip element
+        const uniqueTooltip = d3.select("body").append("div")
+            .attr("class", "unique-tooltip")  // Use a distinctive class name
+            .style("position", "absolute")
+            .style("opacity", 0)
+            .style("pointer-events", "none");
+
         // Add vertical line for tooltip
         const verticalLine = svg.append("line")
             .attr("class", "vertical-line")
@@ -219,9 +226,10 @@ function init() {
                 .attr("y2", h)
                 .style("opacity", 1);
 
-            tooltip
+            uniqueTooltip
                 .style("opacity", 1)
-                .html(`Date: ${d3.timeFormat("%Y-%m-%d")(d.Date)}<br/>
+                .html(`Country: ${d.Country}<br/>
+                      Date: ${d3.timeFormat("%Y-%m-%d")(d.Date)}<br/>
                       Mortality: ${d.Mortality}<br/>
                       ${currentAdmissionType === "icu" ? "ICU" : "Hospital"} Admissions: ${
                         currentAdmissionType === "icu" ? d["Weekly new ICU admissions"] : d["Weekly new hospital admissions"]
@@ -232,7 +240,7 @@ function init() {
 
         function mouseout() {
             verticalLine.style("opacity", 0);
-            tooltip.style("opacity", 0);
+            uniqueTooltip.style("opacity", 0);
         }
 
         // initial setup for left Y-axis label for Mortality (blue)
