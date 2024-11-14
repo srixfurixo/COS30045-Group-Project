@@ -103,8 +103,8 @@ path {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 100px; /* Adjust this value based on the height of the fixed controls */
+  margin-bottom: 150px; /* Increased to accommodate the fixed controls */
   width: 100%;  /* Make sure it takes full width */
   position: relative;
   overflow: visible;
@@ -134,9 +134,9 @@ path {
   box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
   /* Prevent interference with mouse events */
   pointer-events: none;
-  /* Increased dimensions to accommodate the line chart */
-  width: 240px;   /* Increased width */
-  height: 150px;  /* Increased height */
+  /* Further increased dimensions to accommodate the line chart */
+  width: 300px;   /* Further increased width */
+  height: 200px;  /* Further increased height */
   /* Ensure padding is included in width and height */
   box-sizing: border-box;
 }
@@ -210,6 +210,9 @@ article p {
 /* Basic Styling */
 .slider-container {
   margin-bottom: 10px; /* Space between sliders */
+  display: flex;
+  align-items: center;
+  margin: 5px 10px;
 }
 
 .slider-container label {
@@ -297,10 +300,7 @@ article p {
   width: auto;
   display: inline-block;
   vertical-align: middle;
-}
-
-.controls .btn-group {
-  margin-bottom: 10px;
+  margin-top: 10px; /* Add spacing between dropdown and buttons */
 }
 
 /* Optional: Center the controls */
@@ -506,19 +506,43 @@ article p {
 }
 
 /* Floating Controls Container */
-.floating-controls {
-  position: fixed;
-  top: 80px;
-  left: 20px;
-  width: 250px;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
+
+
+/* Fixed Controls Container */
+.fixed-controls {
+  position:sticky;
+  width: auto;
+  max-width: 90%;
+  background: rgba(255, 255, 255, 0.95);
+  border-top: 1px solid #ccc;
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px 8px 0 0;
+  margin-left: 120px;
+}
+
+/* Slider Container */
+.slider-container {
+  display: flex;
+  align-items: center;
+  margin: 5px 10px;
+}
+
+/* Country Menu Container */
+#country-menu {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 150px; /* Reduced height to prevent blocking */
   overflow-y: auto;
-  max-height: 70vh;
+  margin: 5px 10px;
+}
+
+/* Toggle Lines Container */
+.toggle-lines {
+  margin: 5px 10px;
 }
 
 #country-menu {
@@ -809,13 +833,12 @@ hr.my-4 {
 
 /* ...existing code... */
 
-body {
+/* ...existing code... */
+
+.gradient-header {
   background: linear-gradient(270deg, #ff7e5f, #feb47b, #86a8e7, #91eae4);
-  background-size: 800% 800%;
-  animation: gradientAnimation 20s ease infinite;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+  background-size: 400% 400%;
+  animation: gradientAnimation 5s ease infinite;
 }
 
 @keyframes gradientAnimation {
@@ -830,8 +853,15 @@ body {
   }
 }
 
-header, nav, section, article, .row, .col-md-6, .col-md-12 {
-  background: transparent !important;
+/* ...existing code... */
+
+#radarChart {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px; /* Add margin to position lower */
 }
 
 /* ...existing code... */

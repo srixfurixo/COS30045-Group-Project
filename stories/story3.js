@@ -550,19 +550,28 @@ function populateCountryDropdown(allData) {
   });
 }
 
+// Function to set active button
+function setActiveButton(buttonId) {
+  d3.selectAll('.btn-group .btn').classed('btn-primary', false).classed('btn-secondary', true);
+  d3.select(buttonId).classed('btn-primary', true).classed('btn-secondary', false);
+}
+
 // Function to set up event listeners
 function setupEventListeners() {
   d3.select("#showTop5").on("click", function() {
+    setActiveButton("#showTop5");
     var data = window.allChartData.top5;
     updateChart(data);
   });
 
   d3.select("#showBottom5").on("click", function() {
+    setActiveButton("#showBottom5");
     var data = window.allChartData.bottom5;
     updateChart(data);
   });
 
   d3.select("#showBoth").on("click", function() {
+    setActiveButton("#showBoth");
     var data = window.allChartData.top5.concat(window.allChartData.bottom5);
     updateChart(data);
   });

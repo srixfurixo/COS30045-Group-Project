@@ -65,8 +65,8 @@ Promise.all([
   // Append SVG to the tooltip div for line chart
   const tooltipSvg = tooltip.append("svg")
       .attr("id", "tooltip-line-chart")
-      .attr("width", 200)
-      .attr("height", 100);
+      .attr("width", 300)  // Further increased width
+      .attr("height", 200); // Further increased height
 
   // Function to update the chart based on selections
   function updateChart() {
@@ -174,7 +174,7 @@ Promise.all([
       tooltipSvg.selectAll("*").remove();
 
       // Set up dimensions and margins for the line chart
-      const margin = { top: 10, right: 10, bottom: 20, left: 30 };
+      const margin = { top: 10, right: 10, bottom: 30, left: 40 }; // Adjusted margins
       const tooltipWidth = +tooltipSvg.attr("width") - margin.left - margin.right;
       const tooltipHeight = +tooltipSvg.attr("height") - margin.top - margin.bottom;
 
@@ -202,10 +202,24 @@ Promise.all([
 
       g.append("g")
         .attr("transform", `translate(0,${tooltipHeight})`)
-        .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format("d")));
+        .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format("d")))
+        .append("text")
+        .attr("fill", "#000")
+        .attr("x", tooltipWidth / 2)
+        .attr("y", margin.bottom - 5)
+        .attr("text-anchor", "middle")
+        .text("Year"); // X-axis label
 
       g.append("g")
-        .call(d3.axisLeft(y).ticks(5));
+        .call(d3.axisLeft(y).ticks(5))
+        .append("text")
+        .attr("fill", "#000")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -margin.left + 10)
+        .attr("x", -tooltipHeight / 2)
+        .attr("dy", "-1em")
+        .attr("text-anchor", "middle")
+        .text("Value"); // Y-axis label
     }
 
     // X-axis (country labels)
@@ -288,4 +302,4 @@ Promise.all([
           updateChart();
         });
       });
-      
+
