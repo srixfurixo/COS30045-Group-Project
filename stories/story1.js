@@ -67,11 +67,9 @@ function init() {
     }
 
     // Load and process the GeoJSON data
-    d3.json("custom.geo.json")
+    d3.json("https://raw.githubusercontent.com/srixfurixo/jsoncontainer/refs/heads/main/custom.geo.json")
         .then(function(json) {
-            if (!json) {
-                throw new Error("No GeoJSON data received");
-            }
+ 
             window.geoJsonData = json;
             updateVisualization(window.geoJsonData, width, height);
             finishLoading(); // Add this line to trigger fade-in
