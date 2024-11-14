@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=Tiny5&display=swap');
+
+nav {
+  margin-top: 0;
+}
+
+.container {
+  text-align: center;
+}
+
+#content-slider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;  /* Make sure it takes full width */
+  position: relative;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 60%;
+  height: 0;
+  overflow: hidden;
+}
+
+.chart-container svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  .chart-container {
+    padding-bottom: 50%;
+  }
+}
+
+a.logo {
+  font-family: 'Tiny5', sans-serif;  /* Use your Google font */
+  font-weight: 700;  /* Adjust the weight as needed (400 is normal, 700 is bold) */
+  font-size: 2rem;   /* Adjust the size as needed */
+  text-decoration: none; /* removes anchor underline */
+}
+
+/* Basic styles for the navigation */
+.story-header {
+  background-color: #f0f0f0; /* Light background color */
+  padding: 10px 0;
+}
+
+.story-list {
+  list-style: none; /* Remove bullet points */
+  margin: 0;
+  padding: 0;
+  text-align: center; /* Center the links */
+}
+
+.story {
+  display: inline-block; /* Arrange items horizontally */
+  margin: 0 20px; /* Add space between stories */
+}
+
+.story-link {
+  text-decoration: none; /* Remove underlines */
+  color: #333; /* Dark text color */
+  font-weight: bold;
+}
+
+/* Hover effect for the links */
+.story-link:hover {
+  color: #007bff; /* Change color on hover (blue) */
+}
+
+/* story 1 */
+path {
+  fill: #ccc;
+  stroke: #333;
+  stroke-width: 0.5;
+}
+
+#chart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;  /* Make sure it takes full width */
+  position: relative;
+
+}
+
+.tooltip {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+  position: absolute;
+}
+
+/* Add specific styling for the map SVG */
+#chart svg {
+  display: block;  /* Important for centering */
+  margin: 0 auto;  /* Center horizontally */
+}
+
+/* articles */
+
+#content .title {
+  font-family: 'Crimson Pro', serif; 
+  text-align: center;
+}
+
+section {
+  margin-top: 20px; /* Space between the chart and the article section */
+  padding: 20px;   /* Add some padding around the content */
+  background-color: #f8f9fa; /* Light background color */
+  border-radius: 5px; /* Slightly rounded corners */
+}
+
+article {
+  margin-bottom: 30px; /* Space between articles if you have multiple */
+}
+
+article h2 {
+  color: #333; /* Dark heading color */
+  margin-bottom: 10px; 
+  font-family: "Crimson Pro", serif;
+  font-optical-sizing: auto;
+}
+
+article p {
+  line-height: 1.6; /* Adjust line spacing for better readability */
+  color: #555; /* Slightly lighter text color for the paragraph */
+  font-family: "Crimson Pro", serif;
+  font-optical-sizing: auto;
+}
+
+.center-button {
+  display: flex;
+  justify-content: center; 
+}
+
+#slider-wrapper {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+/* Basic Styling */
+.slider-container {
+  margin-bottom: 10px; /* Space between sliders */
+}
+
+.slider-container label {
+  display: inline-block;
+  width: 60px; /* Adjust as needed */
+  text-align: right;
+  margin-right: 5px;
+}
+
+.slider-container input[type=range] {
+  width: 200px; /* Adjust as needed */
+  margin-right: 10px;
+}
+
+/* Appearance */
+.slider-container input[type=range] {
+  -webkit-appearance: none; /* Override default appearance */
+  appearance: none;
+  height: 6px; /* Adjust slider height */
+  background: #d3d3d3; /* Slider track color */
+  outline: none;
+  border-radius: 5px; /* Rounded corners */
+}
+
+.slider-container input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px; /* Adjust thumb size */
+  height: 15px;
+  border-radius: 50%; /* Circular thumb */
+  background: #084594; /* Thumb color */
+  cursor: pointer;
+}
+
+/* Hover Effect */
+.slider-container input[type=range]:hover {
+  opacity: 0.8;
+}
+
+/* Focus State */
+.slider-container input[type=range]:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 2px #2171b5; /* Add a focus ring */
+}
+
+#country-select {
+  display: block; /* Make it a block-level element */
+  margin: 20px auto; /* Center horizontally with top/bottom margin */
+  padding: 8px 12px; /* Add some padding */
+  font-size: 16px; /* Adjust font size as needed */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 4px; /* Add rounded corners */
+  width: 200px; /* Adjust width as needed */
+  text-align: center; /* Center the text within the dropdown */
+  appearance: none; /* Remove default dropdown arrow in some browsers */
+  -webkit-appearance: none; 
+  -moz-appearance: none; 
+}
+
+/* Optional: Add a custom dropdown arrow */
+#country-select::-ms-expand { 
+  display: none; /* Hide the default arrow in IE11 */
+}
+
+#country-select::after {
+  content: '\25BC'; /* Unicode character for a down arrow */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none; 
+ /* Prevent the arrow from interfering with clicks */
+}
