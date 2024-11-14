@@ -623,3 +623,19 @@ article p {
 .radar-chart .radar-tooltip {
   z-index: 10;
 }
+
+/* Tooltip styles for small multiples */
+.small-multiple-tooltip {
+    position: absolute;
+    text-align: left;
+    width: auto;
+    height: auto;
+    padding: 8px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+}

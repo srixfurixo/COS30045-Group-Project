@@ -39,7 +39,7 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
         d.Year = +d.Year; // Parse Year as number
 
         // Parse the date from the 'Day' field
-        d.Date = parseDate(d.Day);
+        d.Date = new Date(d.Day.split('/').reverse().join('-'));
 
         // Handle cases where date parsing fails
         if (!d.Date) {
@@ -480,80 +480,89 @@ const smallMargin = {top: 30, right: 10, bottom: 30, left: 50},
 // Add dropdown selection for criteria
 const criteriaSelect = d3.select("#criteria-select");
 
+// Verify that the dropdowns exist before attaching event listeners
+d3.select("#criteria-select").node() || console.error("Missing #criteria-select element.");
+d3.select("#year-select").node() || console.error("Missing #year-select element.");
+
 // Create small multiples
 function createSmallMultiples(selectedYear = 'all', criterion = 'deaths') {
     d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
-        // Parse 'Year' as number
+        // Define the date parser for 'd/m/yyyy' format
+        const parseDate = d3.timeParse("%d/%m/%Y");
+
+        // Define the metric field based on the selected criterion
+        const metricField = criterion === 'deaths'
+            ? "Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)"
+            : "Daily new confirmed cases of COVID-19 per million people (rolling 7-day average, right-aligned)";
+
+        // Parse and process data
         data.forEach(d => {
             d.Year = +d.Year;
+            d.Date = parseDate(d.Day);
+
+            // Handle invalid dates
+            if (!d.Date) {
+                console.warn("Invalid date for entry:", d);
+            }
+
+            // Convert fields to numbers
+            d[metricField] = +d[metricField] || 0;
+            d["COVID-19 doses (cumulative, per hundred)"] = +d["COVID-19 doses (cumulative, per hundred)"] || 0;
         });
 
-        // Clear existing charts
-        d3.select("#my_dataviz").html("");
+        // Filter out entries with invalid dates or missing metric data
+        data = data.filter(d => d.Date && !isNaN(d[metricField]));
 
-        // Filter data by year if selected
+        // Filter data by selected year if not 'all'
         if (selectedYear !== 'all') {
             data = data.filter(d => d.Year === +selectedYear);
         }
 
-        // Group data by country
-        const countryData = d3.group(data, d => d.Country);
-
-        // Define the field based on the selected criterion with exact CSV header names
-        const metricField = criterion === 'deaths' 
-            ? "Daily new confirmed deaths due to COVID-19 per million people (rolling 7-day average, right-aligned)" 
-            : "Daily new confirmed cases of COVID-19 per million people (rolling 7-day average, right-aligned)";
-
-        // Check if metricField exists in data
-        if (!data.length || !Object.keys(data[0]).includes(metricField)) {
-            console.error(`Metric field "${metricField}" not found in data.`);
-            d3.select("#my_dataviz").append("p").text("Error: Selected metric not found.");
+        // Check if there is data to display
+        if (data.length === 0) {
+            console.warn("No data available for the selected filters.");
+            d3.select("#my_dataviz").append("p").text("No data available for the selected filters.");
             return;
         }
 
-        // Update color scheme based on criterion
-        const metricColor = criterion === 'deaths' ? "red" : "steelblue";
-        const dosesColor = "green";
+        // Group data by country
+        const countryData = d3.groups(data, d => d.Country);
 
-        // Create SVG for each country
-        countryData.forEach((values, country) => {
-            const countryContainer = d3.select("#my_dataviz")
-                .append("div")
-                .attr("class", "country-container")
-                .style("display", "inline-block")
-                .style("margin", "10px");
+        // Clear existing charts
+        d3.select("#my_dataviz").html("");
 
-            const svg = countryContainer.append("svg")
-                .attr("width", smallWidth + smallMargin.left + smallMargin.right)
-                .attr("height", smallHeight + smallMargin.top + smallMargin.bottom)
-                .append("g")
-                .attr("transform", `translate(${smallMargin.left},${smallMargin.top})`);
-
-            // Process data
+        // Create small multiples for each country
+        countryData.forEach(([country, values]) => {
+            // Process data for the country
             const processedData = values.map(d => ({
-                doses: +d['COVID-19 doses (cumulative, per hundred)'],
-                metric: +d[metricField],
-                date: d3.timeParse("%Y-%m-%d")(d.Day)
+                date: d.Date,
+                doses: d["COVID-19 doses (cumulative, per hundred)"],
+                metric: d[metricField]
             })).filter(d => !isNaN(d.doses) && !isNaN(d.metric));
 
             if (processedData.length === 0) {
-                console.warn(`No data for ${country} with selected metric.`);
-                countryContainer.append("p").text(`No data available for ${country}.`);
+                console.warn(`No data for ${country} with the selected criterion.`);
                 return;
             }
 
             // Create scales
-            const x = d3.scaleTime()
-                .domain(d3.extent(processedData, d => d.date))
+            const x = d3.scaleLinear()
+                .domain(d3.extent(processedData, d => d.doses))
                 .range([0, smallWidth]);
 
-            const yMetric = d3.scaleLinear()
-                .domain([0, d3.max(processedData, d => d.metric)])
+            const y = d3.scaleLinear()
+                .domain(d3.extent(processedData, d => d.metric))
                 .range([smallHeight, 0]);
 
-            const yDoses = d3.scaleLinear()
-                .domain([0, d3.max(processedData, d => d.doses)])
-                .range([smallHeight, 0]);
+            // Create SVG container
+            const svg = d3.select("#my_dataviz")
+                .append("div")
+                .attr("class", "small-multiple")
+                .append("svg")
+                .attr("width", smallWidth + smallMargin.left + smallMargin.right)
+                .attr("height", smallHeight + smallMargin.top + smallMargin.bottom)
+                .append("g")
+                .attr("transform", `translate(${smallMargin.left},${smallMargin.top})`);
 
             // Add axes
             svg.append("g")
@@ -561,101 +570,31 @@ function createSmallMultiples(selectedYear = 'all', criterion = 'deaths') {
                 .call(d3.axisBottom(x).ticks(3));
 
             svg.append("g")
-                .attr("class", "y-axis")
-                .call(d3.axisLeft(yMetric).ticks(5));
+                .call(d3.axisLeft(y).ticks(3));
 
             // Add lines
-            const lineMetric = d3.line()
-                .x(d => x(d.date))
-                .y(d => yMetric(d.metric))
-                .curve(d3.curveMonotoneX);
-
-            const lineDoses = d3.line()
-                .x(d => x(d.date))
-                .y(d => yDoses(d.doses))
-                .curve(d3.curveMonotoneX);
-
-            // Clear any existing paths first
-            svg.selectAll("path").remove();
-
-            // Add metric line (deaths/cases) with correct color and no fill
             svg.append("path")
                 .datum(processedData)
-                .attr("class", `line metric-${criterion}`) // Assign metric-specific class
-                .attr("fill", "none")  // Explicitly set fill to none
-                .attr("stroke", metricColor)  // Use red for deaths, blue for cases
-                .attr("stroke-width", 2)
-                .attr("d", lineMetric);
+                .attr("fill", "none")
+                .attr("stroke", criterion === 'deaths' ? "red" : "steelblue")
+                .attr("stroke-width", 1.5)
+                .attr("d", d3.line()
+                    .x(d => x(d.doses))
+                    .y(d => y(d.metric))
+                );
 
-            // Add doses line with green color and no fill
-            svg.append("path")
-                .datum(processedData)
-                .attr("class", "doses-line")
-                .attr("fill", "none")  // Explicitly set fill to none
-                .attr("stroke", dosesColor)  // Always green for doses
-                .attr("stroke-width", 2)
-                .attr("d", lineDoses);
-
-            // Add title
+            // Add country label
             svg.append("text")
                 .attr("x", smallWidth / 2)
                 .attr("y", -10)
                 .attr("text-anchor", "middle")
-                .style("font-size", "12px")
                 .text(country);
 
-            // Add tooltip
-            const tooltip = d3.select(".small-multiple-tooltip");
-
-            // Add invisible overlay for tooltip
-            svg.append("rect")
-                .attr("width", smallWidth)
-                .attr("height", smallHeight)
-                .style("fill", "none")
-                .style("pointer-events", "all")
-                .on("mousemove", function(event) {
-                    const [mouseX] = d3.pointer(event);
-                    const bisect = d3.bisector(d => d.date).left;
-                    const x0 = x.invert(mouseX);
-                    const i = bisect(processedData, x0);
-                    const d = processedData[i];
-
-                    if (d) {
-                        tooltip
-                            .style("opacity", 1)
-                            .style("left", (event.pageX + 10) + "px")
-                            .style("top", (event.pageY - 28) + "px")
-                            .html(`
-                                <strong>${country}</strong><br/>
-                                Date: ${d.date.toLocaleDateString()}<br/>
-                                Doses: ${d.doses.toFixed(1)}<br/>
-                                ${criterion === 'deaths' ? 'Deaths' : 'Cases'}: ${d.metric.toFixed(2)}
-                            `)
-                            .classed("visible", true);
-
-                        // Add vertical line
-                        svg.selectAll(".hover-line").remove();
-                        svg.append("line")
-                            .attr("class", "hover-line")
-                            .attr("x1", x(d.date))
-                            .attr("x2", x(d.date))
-                            .attr("y1", 0)
-                            .attr("y2", smallHeight)
-                            .attr("stroke", "black")
-                            .attr("stroke-width", 1)
-                            .attr("stroke-dasharray", "4 4");
-                    }
-                })
-                .on("mouseout", function() {
-                    tooltip
-                        .style("opacity", 0)
-                        .classed("visible", false);
-                    svg.selectAll(".hover-line").remove();
-                });
+            // Add tooltip interactions if needed
+            // ...existing code...
         });
     }).catch(function(error) {
         console.error("Error loading small multiples data:", error);
-        d3.select("#my_dataviz").append("p").text("Failed to load small multiples.");
     });
 }
 
