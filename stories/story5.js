@@ -1,13 +1,14 @@
 // **Main Scatter Chart with Tooltip Fixes**
 
-const margin = {top: 60, right: 280, bottom: 60, left: 100},
+const margin = {top: 60, right: 280, bottom: 120, left: 100},  // further increased bottom margin
       width = 2000 - margin.left - margin.right,
       height = 800 - margin.top - margin.bottom;
 
+// Create a responsive SVG with viewBox
 const svg = d3.select("#chart")
     .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${height + margin.top + margin.bottom}`)
+    .attr("preserveAspectRatio", "xMidYMid meet")
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
@@ -233,13 +234,15 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
         .attr("y", (d, i) => i * 20 + 12)
         .text(d => d);
 
-    let showLines = true;
+    let showLines = false;
 
     d3.select("#toggle-lines").on("change", function() {
         showLines = this.checked;
         scatter.selectAll(".line")
             .style("display", showLines ? null : "none");
     });
+
+    d3.select("#toggle-lines").property("checked", false);
 
     function updateChart() {
         scatter.selectAll(".line").remove();
