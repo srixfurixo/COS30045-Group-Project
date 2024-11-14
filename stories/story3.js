@@ -2,6 +2,36 @@ var top5DataFile = "../Datasets/log_scaled_vaccine_data_top_5.csv";
 var bottom5DataFile = "../Datasets/log_scaled_vaccine_data_bottom_5.csv";
 var allDataFile = "../Datasets/cumulative_vaccine_data.csv";
 
+// Define color schemes for different views with completely distinct colors and better visibility
+var colorSchemes = {
+  top5: [
+    "#FF0000",  // Bright Red
+    "#4CAF50",  // Distinct Green
+    "#2196F3",  // Bright Blue
+    "#9C27B0",  // Purple
+    "#FFC107"   // Amber
+  ],
+  bottom5: [
+    "#FF5722",  // Deep Orange
+    "#009688",  // Teal
+    "#795548",  // Brown
+    "#607D8B",  // Blue Grey
+    "#000000"   // Black
+  ],
+  combined: [
+    "#FF0000",  // Bright Red
+    "#4CAF50",  // Distinct Green
+    "#2196F3",  // Bright Blue
+    "#9C27B0",  // Purple
+    "#FFC107",  // Amber
+    "#FF5722",  // Deep Orange
+    "#009688",  // Teal
+    "#795548",  // Brown
+    "#607D8B",  // Blue Grey
+    "#000000"   // Black
+  ]
+};
+
 var radarConfig = {
   containerClass: 'radar-chart',
   w: 700,
@@ -15,7 +45,10 @@ var radarConfig = {
   minValue: 0,
   radians: 2 * Math.PI,
   color: function(d, i) {
-    return d.color; // Use the color assigned in the data
+    // Current view will be determined by the active button
+    var currentView = d3.select("#showTop5").classed("btn-primary") ? "top5" :
+                      d3.select("#showBottom5").classed("btn-primary") ? "bottom5" : "combined";
+    return colorSchemes[currentView][i];
   },
   axisLine: true,
   axisText: true,
@@ -34,7 +67,9 @@ var radarConfig = {
   tooltipFormatClass: function(d) {
     return d;
   },
-  transitionDuration: 750
+  transitionDuration: 750,
+  opacity: 0.7,  // Add base opacity
+  strokeWidth: 2  // Add stroke width
 };
 
 // RadarChart module (your provided template)
@@ -529,8 +564,7 @@ function processCountryData(data) {
           axis: vaccine,
           value: parseFloat(country[vaccine]) || 0
         };
-      }),
-      color: getColor(index)
+      })
     };
   });
 }
@@ -589,8 +623,47 @@ function setupEventListeners() {
 
 // Function to update the radar chart
 function updateChart(data) {
-  RadarChart.draw("#radarChart", data, radarConfig);
-  createLegend(data);
+  // Determine current view
+  var currentView = d3.select("#showTop5").classed("btn-primary") ? "top5" :
+                     d3.select("#showBottom5").classed("btn-primary") ? "bottom5" : "combined";
+  
+  // Update data with appropriate colors and opacity
+  var coloredData = data.map(function(d, i) {
+    return {
+      ...d,
+      color: colorSchemes[currentView][i],
+      opacity: 0.7,  // Base opacity
+      strokeWidth: 2  // Stroke width for better visibility
+    };
+  });
+
+  // Assign a unique sanitized class to each area for selection
+  coloredData.forEach(d => {
+    d.sanitizedClassName = sanitizeClassName(d.className);
+  });
+
+  RadarChart.draw("#radarChart", coloredData, radarConfig);
+
+  // Update polygon styles after drawing with enhanced visibility
+  d3.selectAll('.area')
+    .attr('class', d => `area class-${d.sanitizedClassName}`) // Use sanitized class name
+    .style('fill-opacity', function(d) { return d.opacity; })
+    .style('stroke-width', function(d) { return d.strokeWidth + 'px'; })
+    .style('stroke', function(d) { return d.color; })
+    .on('mouseover', function(event, d) {
+      // Bring the hovered area to the front
+      this.parentNode.appendChild(this);
+      d3.select(this)
+        .style('fill-opacity', radarConfig.hoverOpacity)
+        .style('stroke-width', '3px');
+    })
+    .on('mouseout', function(d) {
+      d3.select(this)
+        .style('fill-opacity', d.opacity)
+        .style('stroke-width', d.strokeWidth + 'px');
+    });
+
+  createLegend(coloredData); // Add this line to generate the legend
 }
 
 // Function to transform data for radar chart input format
@@ -637,31 +710,54 @@ function prepareRadarData(top5Data, bottom5Data) {
 function createLegend(data) {
   var svg = d3.select("#radarChart svg");
 
+  // Remove existing legend if any
+  svg.select('.legend').remove();
+
   var legend = svg.append("g")
     .attr("class", "legend")
-    .attr("height", 200)
-    .attr("width", 200)
-    .attr('transform', 'translate(20,70)');
+    .attr("transform", `translate(${radarConfig.w - 150}, 70)`);
 
-  legend.selectAll('rect')
+  var legendItems = legend.selectAll('.legend-item')
     .data(data)
     .enter()
-    .append('rect')
-    .attr('x', radarConfig.w - 100)
-    .attr('y', function(d, i){ return i * 20;})
+    .append('g')
+    .attr('class', 'legend-item')
+    .attr('transform', (d, i) => `translate(0, ${i * 20})`)
+    .on('mouseover', function(event, d) {
+      // Dim all areas except the hovered one
+      d3.selectAll('.area').each(function(areaData) {
+        if (areaData.sanitizedClassName === d.sanitizedClassName) {
+          d3.select(this).style('opacity', 1);
+        } else {
+          d3.select(this).style('opacity', 0.1);
+        }
+      });
+    })
+    .on('mouseout', function(event, d) {
+      // Reset all areas to default opacity
+      d3.selectAll('.area').style('opacity', radarConfig.opacity);
+    });
+
+  // Rest of legend creation code remains the same
+  legendItems.append('rect')
+    .attr('x', 0)
+    .attr('y', -10)
     .attr('width', 10)
     .attr('height', 10)
-    .style('fill', function(d){ return d.color; });
+    .style('fill', d => d.color);
 
-  legend.selectAll('text')
-    .data(data)
-    .enter()
-    .append('text')
-    .attr('x', radarConfig.w - 85)
-    .attr('y', function(d, i){ return i * 20 + 9;})
-    .attr('font-size', '11px')
-    .attr('fill', '#737373')
-    .text(function(d) { return d.className; });
+  legendItems.append('text')
+    .attr('x', 15)
+    .attr('y', 0)
+    .text(d => d.className)
+    .style('font-family', "'Crimson Pro', serif")
+    .style('font-size', '12px')
+    .style('fill', '#000');
+}
+
+// Function to sanitize class names
+function sanitizeClassName(name) {
+  return name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-_]/g, '');
 }
 
 // Load the radar chart on window load

@@ -652,6 +652,10 @@ article p {
   fill: white;
 }
 
+.radar-chart .radar-tooltip {
+  z-index: 10;
+}
+
 /* Ensure the radar tooltip is above other elements */
 .radar-chart .radar-tooltip {
   z-index: 10;
@@ -922,6 +926,60 @@ hr.my-4 {
     font-family: 'Crimson Pro', serif;
     font-size: 14px;
     fill: #000;
+}
+
+/* Radar chart specific styles */
+.radar-chart .area {
+  stroke-width: 2px;
+  fill-opacity: 0.7;
+  pointer-events: all; /* Allow pointer events on areas */
+  transition: fill-opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Bring hovered area to front */
+.radar-chart .area:hover {
+  fill-opacity: 1;
+  stroke-width: 3px;
+  transform: scale(1.05);
+  z-index: 10; /* Increase z-index to layer above others */
+}
+
+/* Ensure areas are positioned correctly for layering */
+.radar-chart svg {
+  position: relative;
+}
+
+.radar-chart .area {
+  position: relative;
+}
+
+/* Legend container styles */
+
+/* ...existing code... */
+
+/* Add transition for opacity changes */
+.radar-chart .area {
+  transition: opacity 0.3s ease;
+}
+
+/* ...existing code... */
+
+.legend-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.legend {
+  font-family: 'Crimson Pro', serif;
+}
+
+.legend-item rect {
+  cursor: pointer;
+}
+
+.legend-item text {
+  cursor: pointer;
 }
 
 /* ...existing code... */
