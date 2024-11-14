@@ -24,7 +24,7 @@ nav {
   width: 100%;
   padding-bottom: 60%;
   height: 0;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -107,7 +107,7 @@ path {
   margin-bottom: 20px;
   width: 100%;  /* Make sure it takes full width */
   position: relative;
-
+  overflow: visible;
 }
 
 /* Tooltip styles */
@@ -771,3 +771,67 @@ article p {
 }
 
 /* Other CSS styles as per your original code */
+
+/* ...existing code... */
+
+.display-4 {
+  font-family: 'Crimson Pro', serif;
+  font-weight: 700;
+  color: #333;
+}
+
+.lead {
+  font-family: 'Crimson Pro', serif;
+  font-size: 1.25rem;
+  color: #555;
+}
+
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-unstyled li {
+  margin-bottom: 10px;
+  font-family: 'Crimson Pro', serif;
+  font-size: 1rem;
+  color: #333;
+}
+
+.list-unstyled i {
+  margin-right: 10px;
+}
+
+hr.my-4 {
+  border-top: 1px solid #ccc;
+  margin: 1.5rem 0;
+}
+
+/* ...existing code... */
+
+body {
+  background: linear-gradient(270deg, #ff7e5f, #feb47b, #86a8e7, #91eae4);
+  background-size: 800% 800%;
+  animation: gradientAnimation 20s ease infinite;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+header, nav, section, article, .row, .col-md-6, .col-md-12 {
+  background: transparent !important;
+}
+
+/* ...existing code... */
