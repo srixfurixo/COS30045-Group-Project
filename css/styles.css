@@ -103,8 +103,8 @@ path {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  margin-top: 100px; /* Adjust this value based on the height of the fixed controls */
-  margin-bottom: 150px; /* Increased to accommodate the fixed controls */
+  margin-top: 80px; /* Reduced margin-top */
+  margin-bottom: 0; /* Remove bottom margin completely */
   width: 100%;  /* Make sure it takes full width */
   position: relative;
   overflow: visible;
@@ -510,39 +510,43 @@ article p {
 
 /* Fixed Controls Container */
 .fixed-controls {
-  position:sticky;
-  width: auto;
-  max-width: 90%;
-  background: rgba(255, 255, 255, 0.95);
-  border-top: 1px solid #ccc;
-  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
+  position: relative; /* Changed from sticky */
+  width: fit-content; /* Adjust width to content */
+  margin: 0 auto; /* Center horizontally */
+  margin-top: -10px; /* Adjusted to bring controls closer to the graph */
+  margin-bottom: 10px; /* Reduced bottom margin */
+  padding: 5px 10px; /* Reduced padding for compactness */
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  border-radius: 8px 8px 0 0;
-  margin-left: 120px;
+  gap: 5px; /* Decreased spacing between elements */
+  /* Remove max-width to allow natural content width */
 }
 
 /* Slider Container */
 .slider-container {
   display: flex;
   align-items: center;
-  margin: 5px 10px;
+  margin: 2px 5px; /* Reduced margins */
 }
 
 /* Country Menu Container */
 #country-menu {
   display: flex;
   flex-wrap: wrap;
-  max-height: 150px; /* Reduced height to prevent blocking */
+  max-height: 200px; /* Adjusted height for better compactness */
   overflow-y: auto;
-  margin: 5px 10px;
+  margin: 2px 5px; /* Reduced margins */
 }
 
 /* Toggle Lines Container */
 .toggle-lines {
-  margin: 5px 10px;
+  margin: 2px 5px; /* Reduced margins */
 }
 
 #country-menu {
@@ -883,7 +887,7 @@ hr.my-4 {
 /* ...existing code... */
 
 .metric-selection {
-  margin: 5px 10px;
+  margin: 2px 5px; /* Reduced margins */
 }
 
 .metric-selection label {
