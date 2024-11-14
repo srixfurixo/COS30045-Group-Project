@@ -122,7 +122,6 @@ path {
     pointer-events: none;
     z-index: 1000; /* Ensure tooltip is above other elements */
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    visibility: hidden; /* Hide tooltips by default */
 }
 
 #line-tooltip {
@@ -477,7 +476,6 @@ article p {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   pointer-events: none;
   z-index: 1000;
-  visibility: hidden;
 }
 
 .small-multiple-tooltip.visible {
@@ -567,7 +565,6 @@ article p {
     border-radius: 8px;
     pointer-events: none;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    visibility: hidden;
     z-index: 1000;
 }
 
@@ -624,18 +621,137 @@ article p {
   z-index: 10;
 }
 
-/* Tooltip styles for small multiples */
-.small-multiple-tooltip {
-    position: absolute;
-    text-align: left;
-    width: auto;
-    height: auto;
-    padding: 8px;
-    font: 12px sans-serif;
-    background: lightsteelblue;
-    border: 0px;
-    border-radius: 8px;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.3s;
+/* Main visualization tooltip - unique identifier */
+/* Tooltip styles */
+.tooltip, .small-multiple-tooltip, .main-viz-tooltip {
+  position: absolute;
+  text-align: left;
+  padding: 8px;
+  font: 12px sans-serif;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden; /* Added visibility hidden */
+  transition: opacity 0.2s ease-in-out;
 }
+
+.tooltip.visible, .small-multiple-tooltip.visible, .main-viz-tooltip.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Main visualization tooltip */
+.main-viz-tooltip {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 2px solid #3498db;
+  border-radius: 6px;
+  padding: 12px;
+  font-family: 'Crimson Pro', serif;
+  font-size: 14px;
+  color: #2c3e50;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.15);
+  max-width: 250px;
+  z-index: 1500;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+}
+
+/* Ensure that line paths have no fill and set stroke properties */
+.line {
+  fill: none;
+  stroke-width: 1.5px;
+}
+
+/* Specific classes for lines */
+.metric-line {
+  fill: none;
+  stroke-width: 2px;
+}
+
+.doses-line {
+  fill: none;
+  stroke-width: 2px;
+}
+
+/* Optional: If you want to enforce colors via CSS */
+.metric-line.deaths {
+  stroke: red;
+}
+
+.metric-line.cases {
+  stroke: steelblue;
+}
+
+.doses-line {
+  stroke: #ccc; /* Gray color for doses line */
+}
+
+/* Other CSS styles remain unchanged */
+
+/* Style for the legend */
+#legend svg {
+  display: inline-block;
+}
+
+#legend rect {
+  stroke: none;
+}
+
+#legend text {
+  font-family: 'Crimson Pro', serif;
+  font-size: 12px;
+  vertical-align: middle;
+  margin-left: 5px;
+  fill: #000;
+}
+
+/* Axis styles */
+.x-axis path,
+.y-axis path,
+.x-axis line,
+.y-axis line {
+  stroke: #000;
+  stroke-width: 1px;
+}
+
+.x-axis text,
+.y-axis text {
+  font-family: 'Crimson Pro', serif;
+  font-size: 12px;
+  fill: #000;
+}
+
+/* Hover line style */
+.hover-line {
+  stroke: black;
+  stroke-width: 1px;
+  stroke-dasharray: 4 4;
+}
+
+/* Small multiples tooltip */
+.small-multiple-tooltip {
+  position: absolute;
+  text-align: left;
+  padding: 8px;
+  font: 12px sans-serif;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden; /* Added visibility hidden */
+  transition: opacity 0.2s ease-in-out;
+}
+
+.small-multiple-tooltip.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Other CSS styles as per your original code */
