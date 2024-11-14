@@ -24,8 +24,9 @@ Promise.all([
 
   // Populate the year dropdown
   const yearDropdown = d3.select("#year-dropdown");
+  const filteredYears = years.filter(year => year !== 2023); // Exclude 2023
   yearDropdown.selectAll("option")
-    .data(years)
+    .data(filteredYears)
     .enter()
     .append("option")
     .attr("value", d => d)
@@ -59,8 +60,11 @@ Promise.all([
       .style("background-color", "white")
       .style("border", "1px solid #ccc")
       .style("border-radius", "8px")
-      .style("padding", "10px")
-      .style("box-shadow", "0px 0px 10px rgba(0,0,0,0.2)");
+      .style("padding", "20px") // Increased padding
+      .style("box-shadow", "0px 0px 10px rgba(0,0,0,0.2)")
+      .style("width", "500px")   // Further increased width
+      .style("height", "300px")  // Adjusted height
+      .style("z-index", "1100"); // Ensure tooltip is above the legend
 
   // Append SVG to the tooltip div for line chart
   const tooltipSvg = tooltip.append("svg")
@@ -160,7 +164,29 @@ Promise.all([
           showLineTooltip(event, filteredTooltipData); // Call the line chart tooltip function
         })
         .on("mousemove", function(event) {
-          tooltip.style("top", (event.pageY - 70) + "px").style("left", (event.pageX + 20) + "px");
+          const tooltipWidth = 600; // Further increased tooltip width
+          const tooltipHeight = 300; // Adjusted tooltip height
+          // Remove legendHeight as it's no longer needed for horizontal positioning
+
+          let left = event.pageX + 20; // Position tooltip to the right of the cursor
+          let top = event.pageY - (tooltipHeight / 2); // Center tooltip vertically relative to cursor
+
+          // Prevent tooltip from going beyond the right edge of the window
+          if (left + tooltipWidth > window.innerWidth) {
+            left = event.pageX - tooltipWidth - 20;
+          }
+
+          // Prevent tooltip from going beyond the top edge of the window
+          if (top < 0) {
+            top = 20;
+          }
+
+          // Prevent tooltip from going beyond the bottom edge of the window
+          if (top + tooltipHeight > window.innerHeight) {
+            top = window.innerHeight - tooltipHeight - 20;
+          }
+
+          tooltip.style("top", `${top}px`).style("left", `${left}px`);
         })
         .on("mouseout", function() {
           tooltip.style("visibility", "hidden");
@@ -170,56 +196,80 @@ Promise.all([
     function showLineTooltip(event, data) {
       tooltip.style("visibility", "visible");
 
-      // Clear existing chart
-      tooltipSvg.selectAll("*").remove();
+      // Clear existing content
+      tooltip.selectAll("*").remove();
 
-      // Set up dimensions and margins for the line chart
-      const margin = { top: 10, right: 10, bottom: 30, left: 40 }; // Adjusted margins
+      // Create a container div with flex display
+      const tooltipContent = tooltip.append("div")
+        .style("display", "flex")
+        .style("align-items", "flex-start")
+        .style("width", "100%")
+        .style("padding", "15px"); // Reduced padding
+
+      // Create a div for the info with fixed width
+      const infoDiv = tooltipContent.append("div")
+        .style("width", "180px") // Slightly reduced width
+        .style("margin-right", "20px") // Reduced margin
+        .style("font-size", "13px"); // Slightly smaller font
+
+      // Add information about the hovered data point
+      if (data.length > 0) {
+        const refArea = data[0].REF_AREA;
+        const healthFunc = data[0]["Health function"];
+        const totalValue = d3.sum(data, d => d.OBS_VALUE);
+
+        infoDiv.html(`
+          <p style="margin: 3px 0"><strong>Country:</strong> ${refArea}</p>
+          <p style="margin: 3px 0"><strong>Category:</strong> ${healthFunc}</p>
+          <p style="margin: 3px 0"><strong>Total Value:</strong> ${totalValue}</p>
+        `);
+      }
+
+      // Append SVG with adjusted dimensions
+      const tooltipSvg = tooltipContent.append("svg")
+        .attr("id", "tooltip-line-chart")
+        .attr("width", 400)  // Adjusted width
+        .attr("height", 200); // Adjusted height
+
+      // Adjust margins for better fit
+      const margin = { top: 15, right: 25, bottom: 25, left: 40 };
       const tooltipWidth = +tooltipSvg.attr("width") - margin.left - margin.right;
       const tooltipHeight = +tooltipSvg.attr("height") - margin.top - margin.bottom;
 
-      const x = d3.scaleLinear()
+      const xScale = d3.scaleLinear()
         .domain(d3.extent(data, d => +d.TIME_PERIOD))
         .range([0, tooltipWidth]);
 
-      const y = d3.scaleLinear()
+      const yScale = d3.scaleLinear()
         .domain([0, d3.max(data, d => +d.OBS_VALUE)])
         .range([tooltipHeight, 0]);
-
-      const line = d3.line()
-        .x(d => x(+d.TIME_PERIOD))
-        .y(d => y(+d.OBS_VALUE));
 
       const g = tooltipSvg.append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
+      // Add the line
       g.append("path")
         .datum(data)
         .attr("fill", "none")
         .attr("stroke", "steelblue")
-        .attr("stroke-width", 1.5)
-        .attr("d", line);
+        .attr("stroke-width", 2)
+        .attr("d", d3.line()
+          .x(d => xScale(+d.TIME_PERIOD))
+          .y(d => yScale(+d.OBS_VALUE))
+        );
 
+      // Add x-axis with fewer ticks
       g.append("g")
         .attr("transform", `translate(0,${tooltipHeight})`)
-        .call(d3.axisBottom(x).ticks(5).tickFormat(d3.format("d")))
-        .append("text")
-        .attr("fill", "#000")
-        .attr("x", tooltipWidth / 2)
-        .attr("y", margin.bottom - 5)
-        .attr("text-anchor", "middle")
-        .text("Year"); // X-axis label
+        .call(d3.axisBottom(xScale)
+          .ticks(5)
+          .tickFormat(d3.format("d")));
 
+      // Add y-axis with fewer ticks
       g.append("g")
-        .call(d3.axisLeft(y).ticks(5))
-        .append("text")
-        .attr("fill", "#000")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -margin.left + 10)
-        .attr("x", -tooltipHeight / 2)
-        .attr("dy", "-1em")
-        .attr("text-anchor", "middle")
-        .text("Value"); // Y-axis label
+        .call(d3.axisLeft(yScale)
+          .ticks(5)
+          .tickFormat(d => d3.format(".1s")(d))); // Use shorter number format
     }
 
     // X-axis (country labels)
@@ -286,6 +336,15 @@ Promise.all([
             .attr("y", 0)
             .attr("dy", "0.35em")
             .text(d => d);
+
+          // Add a note to the graph at the bottom of the chart
+          svg.append("text")
+            .attr("x", 0) // Center horizontally
+            .attr("y", outerRadius + 50) // Slightly lower position
+            .attr("font-size", "14px")
+            .attr("fill", "#555")
+            .attr("text-anchor", "middle") // Center the text
+            .text("Tooltip chart shows the trend throughout the years");
         }
       
         // Initial chart rendering
