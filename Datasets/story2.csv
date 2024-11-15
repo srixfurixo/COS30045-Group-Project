@@ -507,3 +507,8 @@ KOR,Korea,COVID-19 related costs for vaccination,Current prices,2023,1052.663
 KOR,Korea,COVID-19 related costs for medical goods,Current prices,2023,299.853
 LUX,Luxembourg,COVID-19 related costs for vaccination,Current prices,2023,6.985
 LUX,Luxembourg,COVID-19 related treatment costs,Current prices,2023,0.634
+
+# Ensure 'JPN' has all necessary data entries
+# If any data for 'JPN' is missing, add it here
+# Example:
+# JPN,Japan,COVID-19 related new metric,Constant prices,2020,1234.56

@@ -106,10 +106,10 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
 
     svg.append("text")
         .attr("class", "x-label")
+        .attr("x", width / 2)
+        .attr("y", height + margin.bottom - 10)
         .attr("text-anchor", "middle")
-        .attr("x", width/2)
-        .attr("y", height + 40)
-        .text("COVID-19 Vaccination Doses per Hundred");
+        .text("COVID-19 doses (cumulative, per hundred)");
 
     svg.append("text")
         .attr("class", "y-label")
@@ -258,7 +258,7 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
 
     function updateAxisLabels(metricKey) {
         svg.select(".x-label")
-            .text(metricKey === 'cases' ? "COVID-19 Cases per Million" : "Daily New Deaths per Million");
+            .text("COVID-19 doses (cumulative, per hundred)");
         
         svg.select(".y-label")
             .text(metricKey === 'cases' ? "Daily New Cases per Million" : "Daily New Deaths per Million");

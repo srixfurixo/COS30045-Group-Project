@@ -159,9 +159,9 @@ Promise.all([
           const healthFunc = d.key;
 
           // Filter tooltip data for the hovered country and health function
-          const filteredTooltipData = tooltipData.filter(item => item.REF_AREA === refArea && item["Health function"] === healthFunc);
+          const filteredTooltipData = tooltipData.filter(item => item.REF_AREA === refArea && item["Health function"] === healthFunc && item["Price base"] === selectedPrice);
 
-          showLineTooltip(event, filteredTooltipData); // Call the line chart tooltip function
+          showLineTooltip(event, filteredTooltipData, selectedYear, selectedPrice); // Pass selectedYear and selectedPrice
         })
         .on("mousemove", function(event) {
           const tooltipWidth = 600; // Further increased tooltip width
@@ -192,8 +192,28 @@ Promise.all([
           tooltip.style("visibility", "hidden");
         });
 
+    // Update tooltip display logic with reduced offsets
+    svg.selectAll('.data-point')
+      .on('mouseover', function(event, d) {
+          if (d.value) { // Check if data exists
+              tooltip
+                  .style('visibility', 'visible')
+                  .html(`<strong>${d.country}</strong><br/>Value: ${d.value}`);
+          } else {
+              tooltip.style('visibility', 'hidden'); // Hide tooltip if no data
+          }
+      })
+      .on('mousemove', function(event) {
+          tooltip
+              .style('left', (event.pageX + 10) + 'px') // Reduced X offset
+              .style('top', (event.pageY + 10) + 'px'); // Reduced Y offset
+      })
+      .on('mouseout', function() {
+          tooltip.style('visibility', 'hidden');
+      });
+
     // Function to create and show the line chart in the tooltip
-    function showLineTooltip(event, data) {
+    function showLineTooltip(event, data, year, price) {
       tooltip.style("visibility", "visible");
 
       // Clear existing content
@@ -222,6 +242,8 @@ Promise.all([
           <p style="margin: 3px 0"><strong>Country:</strong> ${refArea}</p>
           <p style="margin: 3px 0"><strong>Category:</strong> ${healthFunc}</p>
           <p style="margin: 3px 0"><strong>Total Value:</strong> ${totalValue}</p>
+          <p style="margin: 3px 0"><strong>Year:</strong> ${year}</p>
+          <p style="margin: 3px 0"><strong>Price Base:</strong> ${price}</p>
         `);
       }
 

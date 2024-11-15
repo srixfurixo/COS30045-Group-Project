@@ -93,9 +93,10 @@ a.logo {
 /* story 1 */
 path {
   /* fill: none; */ /* Commented out to enable fill colors from JavaScript */
-  stroke: #333; /* Default stroke color, can be overridden */
+  /* stroke: #333; */ /* Commented out to allow data-driven colors */
   stroke-width: 0.5;
-  transition: transform 0.2s ease-in-out;
+  /* Comment out or remove the transition property */
+  /* transition: transform 0.2s ease-in-out; */
 }
 
 #chart {
@@ -122,6 +123,7 @@ path {
     pointer-events: none;
     z-index: 1000; /* Ensure tooltip is above other elements */
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    visibility: hidden; /* Added visibility hidden */
 }
 
 /* Tooltip container for line chart */
@@ -410,15 +412,18 @@ article p {
 
 /* Define colors for metrics */
 .metric-deaths {
-    stroke: red;
+    /* Ensure this does not override data colors */
+    /* stroke: red; */ /* Commented out */
 }
 
 .metric-cases {
-    stroke: steelblue;
+    /* Ensure this does not override data colors */
+    /* stroke: steelblue; */ /* Commented out */
 }
 
 .metric-doses {
-    stroke: green;
+    /* Ensure this does not override data colors */
+    /* stroke: green; */ /* Commented out */
 }
 
 /* Style for the legend */
@@ -427,7 +432,7 @@ article p {
 }
 
 #legend rect {
-    stroke: none;
+    /* stroke: none; */ /* Ensure no stroke overrides */
 }
 
 #legend text {
@@ -484,6 +489,7 @@ article p {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   pointer-events: none;
   z-index: 1000;
+  visibility: hidden;
 }
 
 .small-multiple-tooltip.visible {
@@ -602,6 +608,7 @@ article p {
     pointer-events: none;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     z-index: 1000;
+    visibility: hidden;
 }
 
 .tooltip.visible {
@@ -704,6 +711,8 @@ article p {
 .line {
   fill: none;
   stroke-width: 1.5px;
+  /* Remove or comment out generic stroke color */
+  /* stroke: #333; */
 }
 
 /* Specific classes for lines */
@@ -719,11 +728,11 @@ article p {
 
 /* Optional: If you want to enforce colors via CSS */
 .metric-line.deaths {
-  stroke: red;
+  /* stroke: red; */ /* Commented out */
 }
 
 .metric-line.cases {
-  stroke: steelblue;
+  /* stroke: steelblue; */ /* Commented out */
 }
 
 .doses-line {
@@ -738,7 +747,7 @@ article p {
 }
 
 #legend rect {
-  stroke: none;
+  /* stroke: none; */ /* Ensure no stroke overrides */
 }
 
 #legend text {
@@ -929,19 +938,36 @@ hr.my-4 {
 }
 
 /* Radar chart specific styles */
-.radar-chart .area {
-  stroke-width: 2px;
-  fill-opacity: 0.7;
-  pointer-events: all; /* Allow pointer events on areas */
-  transition: fill-opacity 0.3s ease, transform 0.3s ease;
+
+/* Adjust legend text positioning and visibility */
+.radar-chart .axis text.legend.left {
+  font-size: 11px;
+  transform: translateX(-20px); 
+  fill: #000; /* Ensure text is visible */
 }
 
-/* Bring hovered area to front */
-.radar-chart .area:hover {
-  fill-opacity: 1;
-  stroke-width: 3px;
-  transform: scale(1.05);
-  z-index: 10; /* Increase z-index to layer above others */
+.radar-chart .axis text.legend.right {
+  font-size: 11px;
+  transform: translateX(10px); /* Adjusted to prevent text from being cut off */
+  fill: #000; /* Ensure text is visible */
+}
+
+.radar-chart .axis text.legend.middle {
+  font-size: 11px;
+  transform: translate(-35px, 10px); /* Move text appropriately */
+  fill: #000; /* Ensure text is visible */
+}
+
+/* Ensure text elements are not hidden */
+.radar-chart .axis text {
+  visibility: visible;
+}
+
+/* Optional: Enhance text readability */
+.radar-chart .axis text {
+  font-family: 'Crimson Pro', serif;
+  font-weight: bold;
+  pointer-events: none; /* Prevent tooltip interference */
 }
 
 /* Ensure areas are positioned correctly for layering */
@@ -980,6 +1006,62 @@ hr.my-4 {
 
 .legend-item text {
   cursor: pointer;
+}
+
+/* ...existing code... */
+
+/* Ensure that .line classes do not override stroke colors */
+.line {
+    fill: none;
+    stroke-width: 1.5px; /* Optional: define stroke width for better visibility */
+    /* Remove or comment out the generic stroke color if present */
+    /* stroke: #333; */
+}
+
+/* Define colors for metrics */
+.metric-deaths {
+    /* Ensure this does not override data colors */
+    /* stroke: red; */ /* Commented out */
+}
+
+.metric-cases {
+    /* Ensure this does not override data colors */
+    /* stroke: steelblue; */ /* Commented out */
+}
+
+.metric-doses {
+    /* Ensure this does not override data colors */
+    /* stroke: green; */ /* Commented out */
+}
+
+/* Ensure Axis Text Visibility and Styling */
+.radar-chart .axis text {
+    font-family: 'Crimson Pro', serif; /* Consistent font */
+    font-size: 12px; /* Readable size */
+    fill: #000; /* Black color for visibility */
+    visibility: visible; /* Ensure text is not hidden */
+    pointer-events: none; /* Prevent text from capturing mouse events */
+}
+
+/* Optional: Adjust specific legend text positions */
+.radar-chart .axis text.legend.left {
+    transform: translateX(-20px);
+}
+
+.radar-chart .axis text.legend.right {
+    transform: translateX(10px);
+}
+
+.radar-chart .axis text.legend.middle {
+    transform: translate(-35px, 10px);
+}
+
+/* ...existing code... */
+
+/* Example: Style for active polygons */
+.radar-chart .axis polygon.active {
+  stroke: #ff0000; /* Highlight active polygon */
+  stroke-width: 2px;
 }
 
 /* ...existing code... */
