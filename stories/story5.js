@@ -109,6 +109,7 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
         .attr("x", width / 2)
         .attr("y", height + margin.bottom - 10)
         .attr("text-anchor", "middle")
+        .style("font-size", "24px") // Increased font size
         .text("COVID-19 doses (cumulative, per hundred)");
 
     svg.append("text")
@@ -117,6 +118,7 @@ d3.csv("../Datasets/story5_weekly_data_filtered.csv").then(function(data) {
         .attr("transform", "rotate(-90)")
         .attr("y", -60)
         .attr("x", -height/2)
+        .style("font-size", "24px") // Increased font size
         .text("Daily New Deaths per Million");
 
     const zoom = d3.zoom()
