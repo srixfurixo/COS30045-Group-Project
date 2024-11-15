@@ -477,8 +477,8 @@ function init() {
           allCountries: processCountryData(allData)
         };
 
-        // Default view shows both top 5 and bottom 5
-        var combinedData = window.allChartData.top5.concat(window.allChartData.bottom5);
+        // Use prepareRadarData for initial combined data
+        var combinedData = prepareRadarData(window.allChartData.top5, window.allChartData.bottom5);
         RadarChart.draw("#radarChart", combinedData, radarConfig);
         createLegend(combinedData);
 
@@ -517,19 +517,8 @@ function init() {
     });
 }
 
-// Function to get color for top and bottom groups
-function getTopColor(index) {
-  var topColors = ["#1f77b4", "#ff7f0e", "#2ca02c"]; // Distinct colors for top 3
-  return topColors[index % topColors.length];
-}
-
-function getBottomColor(index) {
-  var bottomColors = ["#d62728", "#9467bd", "#8c564b"]; // Distinct colors for bottom 3
-  return bottomColors[index % bottomColors.length];
-}
-
-// New function to process top and bottom datasets separately
-function processTopBottomData(data, isTop) {
+// New function to process datasets
+function processCountryData(data) {
   var vaccines = ["Pfizer/BioNTech", "Moderna", "Oxford/AstraZeneca", "Johnson&Johnson", "Sputnik V"];
   return data.map(function(country, index) {
     return {
@@ -540,38 +529,18 @@ function processTopBottomData(data, isTop) {
           value: parseFloat(country[vaccine]) || 0
         };
       }),
-      color: isTop ? getTopColor(index) : getBottomColor(index)
+      color: getColor(index)
     };
   });
 }
 
-// Function to transform data for radar chart input format
-function prepareRadarData(top5Data, bottom5Data) {
-  // Process top 3 countries
-  var top3 = processTopBottomData(top5Data.slice(0, 3), true);
-
-  // Process bottom 3 countries
-  var bottom3 = processTopBottomData(bottom5Data.slice(0, 3), false);
-
-  // Combine top3 and bottom3 data
-  return top3.concat(bottom3);
-}
-
-// Update the processCountryData function to handle all groups separately if needed
-function processCountryData(data, isTop = true) {
-  var vaccines = ["Pfizer/BioNTech", "Moderna", "Oxford/AstraZeneca", "Johnson&Johnson", "Sputnik V"];
-  return data.map(function(country, index) {
-    return {
-      className: country.Country,
-      axes: vaccines.map(function(vaccine) {
-        return {
-          axis: vaccine,
-          value: parseFloat(country[vaccine]) || 0
-        };
-      }),
-      color: isTop ? getTopColor(index) : getBottomColor(index)
-    };
-  });
+// Function to get color
+function getColor(index) {
+  var colors = [
+    "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
+    "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
+  ]; // Expanded color palette for 10 unique colors
+  return colors[index % colors.length];
 }
 
 // Function to populate the country dropdown
@@ -587,14 +556,12 @@ function populateCountryDropdown(allData) {
 function setupEventListeners() {
   d3.select("#showTop5").on("click", function() {
     var data = window.allChartData.top5;
-    RadarChart.draw("#radarChart", data, radarConfig);
-    createLegend(data);
+    updateChart(data);
   });
 
   d3.select("#showBottom5").on("click", function() {
     var data = window.allChartData.bottom5;
-    RadarChart.draw("#radarChart", data, radarConfig);
-    createLegend(data);
+    updateChart(data);
   });
 
   d3.select("#showBoth").on("click", function() {
@@ -615,8 +582,53 @@ function setupEventListeners() {
 
 // Function to update the radar chart
 function updateChart(data) {
+  // Reassign colors to ensure uniqueness
+  data.forEach(function(d, i) {
+    d.color = getColor(i);
+  });
   RadarChart.draw("#radarChart", data, radarConfig);
   createLegend(data);
+}
+
+// Function to transform data for radar chart input format
+function prepareRadarData(top5Data, bottom5Data) {
+  var vaccines = ["Pfizer/BioNTech", "Moderna", "Oxford/AstraZeneca", "Johnson&Johnson", "Sputnik V"];
+
+  // Define color arrays with distinct colors for top and bottom groups
+  var topColors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#aec7e8", "#ffbb78"]; // Colors for top 5 countries
+  var bottomColors = ["#d62728", "#9467bd", "#8c564b", "#c5b0d5", "#ff9896"]; // Colors for bottom 5 countries
+
+  // Process top 5 countries
+  var top5 = top5Data.map(function(country, index) {
+    return {
+      className: country.className,
+      axes: country.axes,
+      color: topColors[index % topColors.length]
+    };
+  });
+
+  // Process bottom 5 countries
+  var bottom5 = bottom5Data.map(function(country, index) {
+    return {
+      className: country.className,
+      axes: country.axes,
+      color: bottomColors[index % bottomColors.length]
+    };
+  });
+
+  // Combine top5 and bottom5 data
+  var combinedData = top5.concat(bottom5);
+
+  // Update radarConfig maxValue based on combined data
+  var calculatedMaxValue = d3.max(combinedData, function(d) {
+    return d3.max(d.axes, function(o) { return o.value; });
+  });
+
+  radarConfig.maxValue = calculatedMaxValue || 1.0; // Ensure maxValue is at least 1.0
+  console.log("Combined Data for 'Show Both':", combinedData);
+  console.log("New radarConfig.maxValue:", radarConfig.maxValue);
+
+  return combinedData;
 }
 
 // Function to create the legend
