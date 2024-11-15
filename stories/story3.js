@@ -4,8 +4,8 @@ var allDataFile = "../Datasets/cumulative_vaccine_data.csv";
 
 var radarConfig = {
   containerClass: 'radar-chart',
-  w: 700,
-  h: 400,
+  w: 875, // Increased by 25%
+  h: 500, // Increased by 25%
   factor: 0.85,
   factorLegend: 1,
   levels: 5,
@@ -41,8 +41,8 @@ var radarConfig = {
 var RadarChart = {
   defaultConfig: {
     containerClass: 'radar-chart',
-    w: 400,
-    h: 400,
+    w: 500, // Increased by 25%
+    h: 500, // Increased by 25%
     factor: 0.95,
     factorLegend: 1,
     levels: 3,

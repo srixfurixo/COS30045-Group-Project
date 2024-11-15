@@ -888,7 +888,7 @@ hr.my-4 {
 
 #radarChart {
   width: 100%;
-  height: 400px;
+  height: 500px; /* Increased by 25% */
   display: flex;
   flex-direction: column;
   align-items: center;
