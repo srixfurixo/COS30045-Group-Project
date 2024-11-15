@@ -1065,3 +1065,27 @@ hr.my-4 {
 }
 
 /* ...existing code... */
+
+/* Style for the legend to differentiate top and bottom groups */
+.legend {
+  font-family: 'Crimson Pro', serif;
+}
+
+.legend rect {
+  stroke: none; /* Ensure no stroke overrides */
+}
+
+.legend text {
+  font-size: 11px;
+  fill: #737373;
+}
+
+.legend top-group text {
+  font-weight: bold;
+}
+
+.legend bottom-group text {
+  font-style: italic;
+}
+
+/* ...existing code... */

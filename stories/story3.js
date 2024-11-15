@@ -4,8 +4,8 @@ var allDataFile = "../Datasets/cumulative_vaccine_data.csv";
 
 var radarConfig = {
   containerClass: 'radar-chart',
-  w: 875, // Increased by 25%
-  h: 500, // Increased by 25%
+  w: 700,
+  h: 400,
   factor: 0.85,
   factorLegend: 1,
   levels: 5,
@@ -41,8 +41,8 @@ var radarConfig = {
 var RadarChart = {
   defaultConfig: {
     containerClass: 'radar-chart',
-    w: 500, // Increased by 25%
-    h: 500, // Increased by 25%
+    w: 400,
+    h: 400,
     factor: 0.95,
     factorLegend: 1,
     levels: 3,
@@ -284,7 +284,19 @@ var RadarChart = {
         }
 
         polygon.enter().append(polygonType)
-        .classed({area: 1, 'd3-enter': 1});
+        .classed({area: 1, 'd3-enter': 1})
+        .on('mouseover', function (dd){
+          d3.event.stopPropagation();
+          container.classed('focus', 1);
+          d3.select(this).classed('focused', 1);
+          setTooltip(tooltip, dd.className, { axis: 'All Vaccines', value: d3.sum(dd.axes, function(o){ return o.value; }) });
+        })
+        .on('mouseout', function(){
+          d3.event.stopPropagation();
+          container.classed('focus', 0);
+          d3.select(this).classed('focused', 0);
+          setTooltip(tooltip, false, null);
+        });
 
         polygon.exit()
         .classed('d3-exit', 1) // trigger css transition
@@ -313,11 +325,6 @@ var RadarChart = {
         .each('start', function() {
           d3.select(this).classed('d3-enter', 0); // trigger css transition
         });
-
-        d3.selectAll('.area')
-          .style('fill-opacity', function(d) { return d.opacity; })
-          .style('stroke-width', function(d) { return d.strokeWidth + 'px'; })
-          .style('stroke', function(d) { return d.color; });
 
         if(cfg.circles && cfg.radius) {
 
@@ -422,8 +429,7 @@ var RadarChart = {
   },
   draw: function(id, d, options) {
     var chart = RadarChart.chart().config(options);
-    var cfg = chart.config();
-
+    var cfg = chart.config()
     d3.select(id).select('svg').remove();
     d3.select(id)
     .append("svg")
@@ -511,8 +517,19 @@ function init() {
     });
 }
 
-// Function to process datasets
-function processCountryData(data, isTop5 = false) {
+// Function to get color for top and bottom groups
+function getTopColor(index) {
+  var topColors = ["#1f77b4", "#ff7f0e", "#2ca02c"]; // Distinct colors for top 3
+  return topColors[index % topColors.length];
+}
+
+function getBottomColor(index) {
+  var bottomColors = ["#d62728", "#9467bd", "#8c564b"]; // Distinct colors for bottom 3
+  return bottomColors[index % bottomColors.length];
+}
+
+// New function to process top and bottom datasets separately
+function processTopBottomData(data, isTop) {
   var vaccines = ["Pfizer/BioNTech", "Moderna", "Oxford/AstraZeneca", "Johnson&Johnson", "Sputnik V"];
   return data.map(function(country, index) {
     return {
@@ -523,27 +540,38 @@ function processCountryData(data, isTop5 = false) {
           value: parseFloat(country[vaccine]) || 0
         };
       }),
-      color: isTop5 ? getTopColor(index) : getBottomColor(index)
+      color: isTop ? getTopColor(index) : getBottomColor(index)
     };
   });
 }
 
-// Function to get color for top 5 countries
-function getTopColor(index) {
-  var topColors = ["#006400", "#228B22", "#32CD32", "#7CFC00", "#ADFF2F"];
-  return topColors[index % topColors.length];
+// Function to transform data for radar chart input format
+function prepareRadarData(top5Data, bottom5Data) {
+  // Process top 3 countries
+  var top3 = processTopBottomData(top5Data.slice(0, 3), true);
+
+  // Process bottom 3 countries
+  var bottom3 = processTopBottomData(bottom5Data.slice(0, 3), false);
+
+  // Combine top3 and bottom3 data
+  return top3.concat(bottom3);
 }
 
-// Function to get color for bottom 5 countries
-function getBottomColor(index) {
-  var bottomColors = ["#8B0000", "#B22222", "#FF4500", "#FF6347", "#FF7F50"];
-  return bottomColors[index % bottomColors.length];
-}
-
-// Function to get color
-function getColor(index) {
-  var colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"];
-  return colors[index % colors.length];
+// Update the processCountryData function to handle all groups separately if needed
+function processCountryData(data, isTop = true) {
+  var vaccines = ["Pfizer/BioNTech", "Moderna", "Oxford/AstraZeneca", "Johnson&Johnson", "Sputnik V"];
+  return data.map(function(country, index) {
+    return {
+      className: country.Country,
+      axes: vaccines.map(function(vaccine) {
+        return {
+          axis: vaccine,
+          value: parseFloat(country[vaccine]) || 0
+        };
+      }),
+      color: isTop ? getTopColor(index) : getBottomColor(index)
+    };
+  });
 }
 
 // Function to populate the country dropdown
@@ -555,29 +583,22 @@ function populateCountryDropdown(allData) {
   });
 }
 
-// Function to set active button
-function setActiveButton(buttonId) {
-  d3.selectAll('.btn-group .btn').classed('btn-primary', false).classed('btn-secondary', true);
-  d3.select(buttonId).classed('btn-primary', true).classed('btn-secondary', false);
-}
-
 // Function to set up event listeners
 function setupEventListeners() {
   d3.select("#showTop5").on("click", function() {
-    setActiveButton("#showTop5");
     var data = window.allChartData.top5;
-    updateChart(data);
+    RadarChart.draw("#radarChart", data, radarConfig);
+    createLegend(data);
   });
 
   d3.select("#showBottom5").on("click", function() {
-    setActiveButton("#showBottom5");
     var data = window.allChartData.bottom5;
-    updateChart(data);
+    RadarChart.draw("#radarChart", data, radarConfig);
+    createLegend(data);
   });
 
   d3.select("#showBoth").on("click", function() {
-    setActiveButton("#showBoth");
-    var data = window.allChartData.top5.concat(window.allChartData.bottom5);
+    var data = prepareRadarData(window.allChartData.top5, window.allChartData.bottom5);
     updateChart(data);
   });
 
@@ -596,46 +617,6 @@ function setupEventListeners() {
 function updateChart(data) {
   RadarChart.draw("#radarChart", data, radarConfig);
   createLegend(data);
-}
-
-// Function to transform data for radar chart input format
-function prepareRadarData(top5Data, bottom5Data) {
-  var vaccines = ["Pfizer/BioNTech", "Moderna", "Oxford/AstraZeneca", "Johnson&Johnson", "Sputnik V"];
-
-  // Define color arrays
-  var topColors = ["#006400", "#228B22", "#32CD32", "#7CFC00", "#ADFF2F"]; // Green shades
-  var bottomColors = ["#8B0000", "#B22222", "#FF4500", "#FF6347", "#FF7F50"]; // Red shades
-
-  // Process top countries
-  var top5 = top5Data.map(function(country, index) {
-    return {
-      className: country.Country, // Use 'country' from CSV
-      axes: vaccines.map(function(vaccine) {
-        return {
-          axis: vaccine,
-          value: parseFloat(country[vaccine]) || 0
-        };
-      }),
-      color: topColors[index % topColors.length] // Assign color from topColors
-    };
-  });
-
-  // Process bottom countries
-  var bottom5 = bottom5Data.map(function(country, index) {
-    return {
-      className: country.Country, // Use 'country' from CSV
-      axes: vaccines.map(function(vaccine) {
-        return {
-          axis: vaccine,
-          value: parseFloat(country[vaccine]) || 0
-        };
-      }),
-      color: bottomColors[index % bottomColors.length] // Assign color from bottomColors
-    };
-  });
-
-  // Combine top5 and bottom5 data
-  return top5.concat(bottom5);
 }
 
 // Function to create the legend
