@@ -470,7 +470,7 @@ article p {
 .y-axis text {
     font-family: 'Crimson Pro', serif;
     font-size: 12px;
-    fill: #000;
+    fill: #000;  /* Ensure axis text is black */
 }
 
 .small-multiple-tooltip {

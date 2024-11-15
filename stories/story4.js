@@ -83,6 +83,7 @@ function init() {
         svg.append("text")
             .attr("transform", `translate(-50, ${h / 2}) rotate(-90)`)
             .style("text-anchor", "middle")
+            .style("fill", "steelblue")  // Set the color to blue
             .text("Mortality");
 
         svg.append("text")
